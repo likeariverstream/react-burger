@@ -11,3 +11,33 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@-moz-document url-prefix() {
+	:root {
+		scrollbar-color: #8585AD #2F2F37;
+	}
+}
+
+.custom-scroll::-webkit-scrollbar {
+	width: 12px;
+}
+.custom-scroll::-webkit-scrollbar-track {
+	background: #2F2F37;
+}
+.custom-scroll::-webkit-scrollbar-thumb {
+	background: #8585AD;
+	border: 3px solid #2F2F37;
+	border-radius: 6px;
+}
+
+.body::-webkit-scrollbar {
+	width: 12px;
+}
+.body::-webkit-scrollbar-track {
+	background: #2F2F37;
+}
+.body::-webkit-scrollbar-thumb {
+	background: #8585AD;
+	border: 3px solid #2F2F37;
+	border-radius: 6px;
+}

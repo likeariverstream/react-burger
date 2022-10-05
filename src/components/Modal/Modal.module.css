@@ -1,0 +1,30 @@
+.modal {
+  position: absolute;
+  width: 640px;
+  height: 575px;
+  left: 640px;
+  top: 208px;
+  z-index: 3;
+  background: #1C1C21;
+  /* /interface/modal edge */
+  border: 1px solid rgba(76, 76, 255, 0.2);
+  /* card/x-large */
+  box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 40px
+}
+
+.icon {
+  position: absolute;
+  right: 43px;
+  top: 63px;
+  margin-right: 0;
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  background-position: 50% 50%;
+}
+
+.icon:hover {
+  opacity: .7;
+}
+
