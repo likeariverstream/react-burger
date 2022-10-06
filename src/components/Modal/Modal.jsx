@@ -20,7 +20,6 @@ export default function Modal({ ingredient, onClick, onClose }) {
 
   React.useEffect(() => {
     document.addEventListener('keydown', closeByEsc);
-
     return () => document.removeEventListener('keydown', closeByEsc)
   }, []);
 
@@ -35,5 +34,3 @@ export default function Modal({ ingredient, onClick, onClose }) {
     document.getElementById('root')
   )
 }
-
-
