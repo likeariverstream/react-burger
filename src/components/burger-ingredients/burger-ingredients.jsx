@@ -21,7 +21,8 @@ const ingredientShape = PropTypes.shape({
 
 export default function BurgerIngredients({ data, onClick, handleOpenIngredientDetails }) {
 
-  return (<div className={styles.scroll}>
+  return (
+  data && <div className={styles.scroll}>
     <p className={`${styles.title} text text_type_main-medium mt-10`}>
       Булки
     </p>
