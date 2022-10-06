@@ -2,13 +2,19 @@
   width: 272px;
   height: 208px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0 0 16px;
+  column-gap: 5px;
 }
 
 .scroll {
   width: 600px;
   flex-direction: column;
   display: flex;
-  overflow-y: scroll;
+  overflow-y: auto;
   height: calc(912px - 132px);
 }
 
@@ -35,20 +41,60 @@
   display: flex;
   max-width: 600px;
   flex-wrap: wrap;
+  column-gap: 8px;
+  margin-bottom: 5px;
 }
 
 .sauces {
   display: flex;
   max-width: 600px;
   flex-wrap: wrap;
+  column-gap: 8px;
+  row-gap: 35px;
 }
 
 .mains {
   display: flex;
   max-width: 600px;
   flex-wrap: wrap;
+  column-gap: 8px;
+  row-gap: 35px;
+
 }
 
 .image {
+  display: block;
+  width: 240px;
+  height: 120px;
+  margin: 0;
+  margin-top: 23px;
+  transition: all .1s ease-in;;
+}
+
+.image:hover {
+  cursor: pointer;
+  opacity: .6;
+	filter: drop-shadow(0px 4px 32px rgba(51, 51, 255, 0.5));
+}
+
+.price {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.counter {
+  position: relative;
+  top: 24px;
+  left: 138px;
+}
+
+.name {
+  transition: .2s ease-in-out;
+}
+
+.name:hover {
+  opacity: .6;
   cursor: pointer;
 }

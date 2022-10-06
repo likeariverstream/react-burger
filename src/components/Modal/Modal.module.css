@@ -1,7 +1,7 @@
 .modal {
   position: absolute;
-  width: 640px;
-  height: 575px;
+  width: 720px;
+  min-height: 539px;
   left: 640px;
   top: 208px;
   z-index: 3;
@@ -15,8 +15,8 @@
 
 .icon {
   position: absolute;
-  right: 43px;
-  top: 63px;
+  right: 40px;
+  top: 59px;
   margin-right: 0;
   width: 24px;
   height: 24px;

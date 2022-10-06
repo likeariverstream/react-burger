@@ -1,15 +1,23 @@
+html {
+	max-width: 1920px;
+}
+
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0 auto 0;
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	max-width: 1920px;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+		monospace;
 }
 
 @-moz-document url-prefix() {
@@ -21,9 +29,11 @@ code {
 .custom-scroll::-webkit-scrollbar {
 	width: 12px;
 }
+
 .custom-scroll::-webkit-scrollbar-track {
 	background: #2F2F37;
 }
+
 .custom-scroll::-webkit-scrollbar-thumb {
 	background: #8585AD;
 	border: 3px solid #2F2F37;
@@ -33,9 +43,11 @@ code {
 .body::-webkit-scrollbar {
 	width: 12px;
 }
+
 .body::-webkit-scrollbar-track {
 	background: #2F2F37;
 }
+
 .body::-webkit-scrollbar-thumb {
 	background: #8585AD;
 	border: 3px solid #2F2F37;

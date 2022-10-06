@@ -1,60 +1,94 @@
 import React from "react";
 import styles from './BurgerIngredients.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import PropTypes from 'prop-types';
 
-export default function BurgerIngredients({ data, onClick }) {
+const ingredientShape = PropTypes.shape({
+  _id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  proteins: PropTypes.number,
+  fat: PropTypes.number.isRequired,
+  carbohydrates: PropTypes.number.isRequired,
+  calories: PropTypes.number.isRequired,
+  price: PropTypes.number.isRequired,
+  image: PropTypes.string.isRequired,
+  image_mobile: PropTypes.string,
+  image_large: PropTypes.string,
+  __v: PropTypes.number,
+});
 
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(ingredientShape).isRequired
+}
+
+export default function BurgerIngredients({ data, onClick, handleOpenIngredientDetails }) {
+
+  console.log(data)
   return (<div className={styles.scroll}>
     <p className={`${styles.title} text text_type_main-medium mt-10`}>
       Булки
     </p>
     <div className={styles.buns}>
       {data.map((element) => {
-        if (element[1].type === 'bun') {
-          return <div key={element[1]._id} className={styles.ingredient}>
-           { element[1].count > 0 && <Counter id={element[1]._id} count={element[1].count} size="default" />}
+        if (element.type === 'bun') {
+          return <div key={element._id} className={styles.ingredient}>
+            {element.count > 0 &&
+              <div className={styles.counter}>
+                <Counter id={element._id} count={element.count} size="default" />
+              </div>}
             <img className={styles.image}
-              id={element[1]._id}
-              src={element[1].image}
-              alt={element[1].name}
-              onClick={onClick}
+              id={element._id}
+              src={element.image}
+              alt={element.name}
+              onClick={handleOpenIngredientDetails}
             />
-            <div>
-              <p className="text text_type_digits-medium">
-                {element[1].price}<CurrencyIcon type="primary" />
+            <div className={styles.price}>
+              <p className="text text_type_digits-default" >
+                {element.price}
               </p>
-
+              <CurrencyIcon type="primary" />
             </div>
-            <p className="text text_type_main-default">
-              {element[1].name}
+            <p className={`${styles.name} text text_type_main-default`}
+              onClick={onClick}
+              id={element._id}
+            >
+              {element.name}
             </p>
           </div>
         }
       })
       }
     </div>
-    <p className={`${styles.title} text text_type_main-medium mt-10`}>
+    <p className={`${styles.title} text text_type_main-medium mt-10 pt-5`}>
       Соусы
     </p>
     <div className={styles.sauces}>
       {data.map((element) => {
-        if (element[1].type === 'sauce') {
-          return <div key={element[1]._id} className={styles.ingredient}>
-           { element[1].count > 0 && <Counter id={element[1]._id} count={element[1].count} size="default" />}
+        if (element.type === 'sauce') {
+          return <div key={element._id} className={styles.ingredient}>
+            {element.count > 0 &&
+              <div className={styles.counter}>
+                <Counter id={element._id} count={element.count} size="default" />
+              </div>}
             <img className={styles.image}
-              id={element[1]._id}
-              src={element[1].image}
-              alt={element[1].name}
-              onClick={onClick}
+              id={element._id}
+              src={element.image}
+              alt={element.name}
+              onClick={handleOpenIngredientDetails}
             />
-            <div>
-              <p className="text text_type_digits-medium">
-                {element[1].price}<CurrencyIcon type="primary" />
+            <div className={styles.price}>
+              <p className="text text_type_digits-default">
+                {element.price}
               </p>
+              <CurrencyIcon type="primary" />
 
             </div>
-            <p className="text text_type_main-default">
-              {element[1].name}
+            <p className={`${styles.name} text text_type_main-default`}
+              onClick={onClick}
+              id={element._id}
+            >
+              {element.name}
             </p>
           </div>
         }
@@ -66,22 +100,29 @@ export default function BurgerIngredients({ data, onClick }) {
     </p>
     <div className={styles.mains}>
       {data.map((element) => {
-        if (element[1].type === 'main') {
-          return <div key={element[1]._id} className={styles.ingredient}>
-           { element[1].count > 0 && <Counter id={element[1]._id} count={element[1].count} size="default" />}
+        if (element.type === 'main') {
+          return <div key={element._id} className={styles.ingredient}>
+            {element.count > 0 &&
+              <div className={styles.counter}>
+                <Counter id={element._id} count={element.count} size="default" />
+              </div>}
             <img className={styles.image}
-              id={element[1]._id}
-              src={element[1].image}
-              alt={element[1].name}
-              onClick={onClick} />
-            <div>
-              <p className="text text_type_digits-medium">
-                {element[1].price}<CurrencyIcon type="primary" />
+              id={element._id}
+              src={element.image}
+              alt={element.name}
+              onClick={handleOpenIngredientDetails} />
+            <div className={styles.price}>
+              <p className="text text_type_digits-default">
+                {element.price}
               </p>
+              <CurrencyIcon type="primary" />
 
             </div>
-            <p className="text text_type_main-default">
-              {element[1].name}
+            <p className={`${styles.name} text text_type_main-default`}
+              onClick={onClick}
+              id={element._id}
+            >
+              {element.name}
             </p>
           </div>
         }

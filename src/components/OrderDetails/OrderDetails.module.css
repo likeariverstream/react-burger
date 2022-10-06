@@ -1,4 +1,19 @@
+.order {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  margin-top: 119px;
+}
 .image {
-  width: 120px;
-  height: 120px;
+  position: initial;
+  display: block;
+  max-width: 120px;
+  max-height: 120px;
+  align-self: center;
+  margin-bottom: 64px;
+}
+
+.subtitle {
+  margin: 32px 0 61px 0;
 }
