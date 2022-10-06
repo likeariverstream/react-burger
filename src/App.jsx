@@ -1,12 +1,12 @@
 import React from 'react';
-import AppHeader from './components/AppHeader/AppHeader';
+import AppHeader from './components/app-header/app-header';
 import styles from './App.module.css'
-import BurgerIngredientsTabs from './components/BurgerIngredientsTabs/BurgerIngredientsTabs';
-import BurgerIngredients from './components/BurgerIngredients/BurgerIngredients';
-import BurgerConstructor from './components/BurgerConstructor/BurgerConstructor';
+import BurgerIngredientsTabs from './components/burger-ingredients-tabs/burger-ingredients-tabs';
+import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
+import BurgerConstructor from './components/burger-constructor/burger-constructor';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import PriceCount from './components/PriceCount/PriceCount';
-import Modal from './components/Modal/Modal';
+import PriceCount from './components/price-count/price-count';
+import Modal from './components/modal/modal.jsx';
 
 function App() {
   const [data, setState] = React.useState([
@@ -60,6 +60,7 @@ function App() {
       forceUpdate();
     }
     setElement(element);
+   
   }
 
   const closeModal = () => {

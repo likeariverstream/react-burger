@@ -1,14 +1,14 @@
 import React from "react";
-import styles from './IngredientDetails.module.css';
+import styles from './ingredient-details.module.css';
 import PropTypes from 'prop-types';
-import ingredientShape from '../BurgerIngredients/BurgerIngredients.jsx'
+import ingredientShape from '../burger-ingredients/burger-ingredients.jsx'
 
 IngredientDetails.propTypes = {
   ingredient: ingredientShape
 }
 
 export default function IngredientDetails({ ingredient }) {
-  console.log(ingredient)
+
   return (
     <div className={styles.ingredient}>
       <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>

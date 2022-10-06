@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './ModalOverlay.module.css';
+import styles from './modal-overlay.module.css';
 
 export default function ModalOverlay({onMouseDown}) {
 

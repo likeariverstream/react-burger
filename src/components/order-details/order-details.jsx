@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './OrderDetails.module.css';
+import styles from './order-details.module.css';
 import image from '../../images/done.png';
 
 export default function OrderDetails() {

@@ -1,5 +1,5 @@
 import React from "react";
-import styles from './BurgerIngredients.module.css';
+import styles from './burger-ingredients.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 
@@ -24,7 +24,6 @@ BurgerIngredients.propTypes = {
 
 export default function BurgerIngredients({ data, onClick, handleOpenIngredientDetails }) {
 
-  console.log(data)
   return (<div className={styles.scroll}>
     <p className={`${styles.title} text text_type_main-medium mt-10`}>
       Булки
