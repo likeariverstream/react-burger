@@ -18,9 +18,6 @@ const ingredientShape = PropTypes.shape({
   __v: PropTypes.number,
 });
 
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientShape).isRequired
-}
 
 export default function BurgerIngredients({ data, onClick, handleOpenIngredientDetails }) {
 
@@ -131,4 +128,8 @@ export default function BurgerIngredients({ data, onClick, handleOpenIngredientD
     </div>
 
   </div>)
+}
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.arrayOf(ingredientShape).isRequired
 }

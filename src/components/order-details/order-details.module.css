@@ -12,6 +12,12 @@
   max-height: 120px;
   align-self: center;
   margin-bottom: 64px;
+  transition: all .1s ease-in;;
+}
+
+.image:hover {
+  cursor: pointer;
+  opacity: .6;
 }
 
 .subtitle {

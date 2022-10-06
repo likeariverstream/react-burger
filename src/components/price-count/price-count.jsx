@@ -21,10 +21,6 @@ const priceCountShape = PropTypes.shape({
   count: PropTypes.number
 });
 
-PriceCount.propTypes = {
-  data: PropTypes.arrayOf(priceCountShape).isRequired
-}
-
 export default function PriceCount({data}) {
   data.reduce((acc, item) => acc + item.price, 0);
   return (
@@ -33,4 +29,9 @@ export default function PriceCount({data}) {
       <CurrencyIcon type="primary" />
     </div>
   )
+}
+
+
+PriceCount.propTypes = {
+  data: PropTypes.arrayOf(priceCountShape).isRequired
 }

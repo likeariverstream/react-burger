@@ -47,6 +47,7 @@ function App() {
     let element = data.find(item => item._id === e.target.id);
     setElement(element);
     setOpen(!isOpen);
+    console.log(element)
   }
 
   const handleElementClick = (e) => {

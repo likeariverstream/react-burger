@@ -3,10 +3,6 @@ import styles from './ingredient-details.module.css';
 import PropTypes from 'prop-types';
 import ingredientShape from '../burger-ingredients/burger-ingredients.jsx'
 
-IngredientDetails.propTypes = {
-  ingredient: ingredientShape
-}
-
 export default function IngredientDetails({ ingredient }) {
 
   return (
@@ -46,4 +42,8 @@ export default function IngredientDetails({ ingredient }) {
       </div>
     </div>
   )
+}
+
+IngredientDetails.propTypes = {
+  ingredient: ingredientShape
 }
