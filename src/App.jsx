@@ -7,7 +7,7 @@ import BurgerConstructor from './components/burger-constructor/burger-constructo
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import PriceCount from './components/price-count/price-count';
 import Modal from './components/modal/modal.jsx';
-
+//использовать контекст
 function App() {
   const [data, setState] = React.useState([
     {
@@ -43,9 +43,9 @@ function App() {
   const [isOpen, setOpen] = React.useState(false)
   let [element, setElement] = React.useState({});
 
-  const handleOpenIngredientDetails = (e) => {
-    let element = data.find(item => item._id === e.target.id);
-    setElement(element);
+  const handleOpenIngredientDetails = (e, item) => {
+
+    setElement(item);
     setOpen(!isOpen);
   }
 
@@ -72,7 +72,6 @@ function App() {
 
   React.useEffect(() => {
   }, [isOpen])
-
   return (
     <div className="App">
       <AppHeader />
