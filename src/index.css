@@ -1,5 +1,7 @@
 html {
 	max-width: 1920px;
+	max-height: 1000px;
+	margin: 0 auto;
 }
 
 body {
@@ -7,7 +9,6 @@ body {
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
-	max-width: 1920px;
 	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
 		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
 		sans-serif;

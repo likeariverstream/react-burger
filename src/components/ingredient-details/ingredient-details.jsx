@@ -1,7 +1,6 @@
 import React from "react";
 import styles from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
-import ingredientShape from '../burger-ingredients/burger-ingredients.jsx'
+import { ingredientType } from "../../utils/types";
 
 export default function IngredientDetails({ ingredient }) {
 
@@ -45,5 +44,5 @@ export default function IngredientDetails({ ingredient }) {
 }
 
 IngredientDetails.propTypes = {
-  ingredient: ingredientShape
+  ingredient: ingredientType
 }

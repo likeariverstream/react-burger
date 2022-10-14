@@ -1,5 +1,6 @@
 import React from "react";
 import styles from './modal-overlay.module.css';
+import PropTypes from 'prop-types';
 
 export default function ModalOverlay({onMouseDown}) {
 
@@ -7,4 +8,8 @@ export default function ModalOverlay({onMouseDown}) {
     <div className={styles.overlay} onMouseDown={onMouseDown}>
     </div>
   )
+}
+
+ModalOverlay.propTypes = {
+  onMouseDown: PropTypes.func.isRequired
 }

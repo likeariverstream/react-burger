@@ -20,10 +20,8 @@ export default function OrderDetails() {
       <p className="text text_type_main-small">
         Ваш заказ начали готовить
       </p>
-      <p className="text text_type_main-small" 
-      style={{marginTop: 12,
-         marginBottom: 120}}>
-        Дождитесь готовности на орбитальной станции
+      <p className={`${styles.message} text text_type_main-small`} >
+        Дождитесь готовности на орбитальной станции//
       </p>
     </div>
 

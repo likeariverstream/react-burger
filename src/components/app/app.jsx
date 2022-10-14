@@ -1,13 +1,15 @@
 import React from 'react';
-import AppHeader from './components/app-header/app-header';
-import styles from './App.module.css'
-import BurgerIngredientsTabs from './components/burger-ingredients-tabs/burger-ingredients-tabs';
-import BurgerIngredients from './components/burger-ingredients/burger-ingredients';
-import BurgerConstructor from './components/burger-constructor/burger-constructor';
+import AppHeader from '../app-header/app-header';
+import styles from './app.module.css'
+import BurgerIngredientsTabs from '../burger-ingredients-tabs/burger-ingredients-tabs';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import PriceCount from './components/price-count/price-count';
-import Modal from './components/modal/modal.jsx';
-//использовать контекст
+import PriceCount from '../price-count/price-count';
+import Modal from '../modal/modal.jsx';
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderDetails from '../order-details/order-details';
+
 function App() {
   const [data, setState] = React.useState([
     {
@@ -30,7 +32,12 @@ function App() {
   const url = 'https://norma.nomoreparties.space/api/ingredients';
   React.useEffect(() => {
     fetch(url)
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка ${res.status}`)
+      })
       .then((result) => {
         setState((result.data))
       })
@@ -41,16 +48,15 @@ function App() {
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
   const [isOpen, setOpen] = React.useState(false)
-  let [element, setElement] = React.useState({});
+  const [element, setElement] = React.useState({}); // исправил на const и теперь окно с деталями заказа не открывается)
 
   const handleOpenIngredientDetails = (e, item) => {
-
     setElement(item);
     setOpen(!isOpen);
   }
 
   const handleElementClick = (e) => {
-    let element = data.find(item => item._id === e.target.id);
+    const element = data.find(item => item._id === e.target.id);
     if (!element.count) {
       element.count = 0;
     }
@@ -65,13 +71,12 @@ function App() {
   const closeModal = () => {
     setOpen(!isOpen);
   }
+
   const handleButtonClick = () => {
-    setElement(element = null)
+    setElement(false)
     setOpen(!isOpen);
   }
 
-  React.useEffect(() => {
-  }, [isOpen])
   return (
     <div className="App">
       <AppHeader />
@@ -89,13 +94,21 @@ function App() {
           <BurgerConstructor data={arr} />
           <div className={styles.count}>
             <PriceCount data={arr} />
-            <Button style={{ width: 215, alignSelf: 'end' }} type="primary" size="large" htmlType='submit' onClick={handleButtonClick}>
-              Оформить заказ
-            </Button>
+            <div className={styles.button} >
+              <Button
+                type="primary" size="large"
+                htmlType='submit'
+                onClick={handleButtonClick}>
+                Оформить заказ
+              </Button>
+            </div>
           </div>
         </section>
       </main>
-      {isOpen ? <Modal ingredient={element} onClick={closeModal} onClose={closeModal} /> : null}
+      {isOpen ? <Modal onClick={closeModal} onClose={closeModal} >
+        {element ? <IngredientDetails ingredient={element} /> : <OrderDetails />}
+      </Modal>
+        : null}
     </div >
   )
 }

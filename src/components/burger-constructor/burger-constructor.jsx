@@ -27,7 +27,7 @@ export default function BurgerConstructor({ data }) {
 
   return (
     <div className={styles.container}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+      <div className={styles.title}>
         {data.map((element, index) => {
           return element.type === 'bun' &&
             <div key={generateKey(element._id, index)} className="ml-6">
@@ -40,7 +40,7 @@ export default function BurgerConstructor({ data }) {
               />
             </div>
         })}
-        <div className={styles.scroll} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        <div className={styles.scroll}>
           {data.map((element, index) => {
             return element.type !== 'bun' &&
               <div key={generateKey(element._id, index)}>

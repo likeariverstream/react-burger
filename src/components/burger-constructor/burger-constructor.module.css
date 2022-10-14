@@ -9,12 +9,20 @@
   margin-left: 20px;
 }
 
+.title {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+
 .scroll {
   width: 568x;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
   height: 440px;
+  gap: 10px;
 }
 
 .scroll::-webkit-scrollbar {
