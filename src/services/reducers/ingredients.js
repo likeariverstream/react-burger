@@ -9,9 +9,8 @@ import {
   GET_INGREDIENTS_FAILED
 } from '../actions/ingredients'
 
-const initialState = {
+const ingredientsState = {
   ingredientsList: [],
-  constructorList: [],
   ingredientDetails: {},
   orderDetails: {},
   ingredientsRequest: false,
@@ -20,7 +19,7 @@ const initialState = {
   currentTab: 'one'
 }
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = ingredientsState, action) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {

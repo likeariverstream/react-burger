@@ -1,19 +1,16 @@
 import React from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './price-count.module.css';
-import PropTypes from 'prop-types';
-import { priceCountType } from "../../utils/types";
+import { useSelector } from "react-redux";
 
-export default function PriceCount({data}) {
-  data.reduce((acc, item) => acc + item.price, 0);
+export default function PriceCount() {
+  const data = useSelector(state => state.constructorList.constructorList)
+  const bun = data.filter(element => element.type === 'bun');
+  const totalPrice = [...data, ...bun].reduce((acc, item) => acc + item.price, 0);
   return (
     <div className={styles.count}>
-      <p className="text text_type_digits-medium mr-3">{ data.reduce((acc, item) => acc + item.price, 0) }</p>
+      <p className="text text_type_digits-medium mr-3">{totalPrice}</p>
       <CurrencyIcon type="primary" />
     </div>
   )
-}
-
-PriceCount.propTypes = {
-  data: PropTypes.arrayOf(priceCountType).isRequired
 }

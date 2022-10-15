@@ -1,10 +1,10 @@
 import React from "react";
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from 'prop-types';
-import { priceCountType } from "../../utils/types";
+import { useSelector } from "react-redux";
 
-export default function BurgerConstructor({ data }) {
+export default function BurgerConstructor() {
+  const data = useSelector(state => state.constructorList.constructorList);
   const generateKey = (id, index) => {
     return `${id}_${new Date().getTime()}_${index}`
   }
@@ -51,10 +51,6 @@ export default function BurgerConstructor({ data }) {
             </div>
         })}
       </div>
-    </div>)
-
-}
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(priceCountType).isRequired
+    </div>
+    ) 
 }

@@ -1,12 +1,11 @@
 import React from "react";
 import styles from './burger-ingredients.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from 'prop-types';
-import { ingredientType } from "../../utils/types";
+import { useSelector } from "react-redux";
 
 
-export default function BurgerIngredients({ data, onClick, handleOpenIngredientDetails }) {
-
+export default function BurgerIngredients({ onClick, handleOpenIngredientDetails }) {
+  const data = useSelector(state => state.ingredients.ingredientsList);
   return (
     data && <div className={styles.scroll}>
       <p className={`${styles.title} text text_type_main-medium mt-10`}>
@@ -32,7 +31,7 @@ export default function BurgerIngredients({ data, onClick, handleOpenIngredientD
                 <CurrencyIcon type="primary" />
               </div>
               <p className={`${styles.name} text text_type_main-default`}
-                onClick={onClick}
+                onClick={(e) => onClick(e, element)}
                 id={element._id}
               >
                 {element.name}
@@ -67,7 +66,7 @@ export default function BurgerIngredients({ data, onClick, handleOpenIngredientD
 
               </div>
               <p className={`${styles.name} text text_type_main-default`}
-                onClick={onClick}
+                onClick={(e) => onClick(e, element)}
                 id={element._id}
               >
                 {element.name}
@@ -101,7 +100,7 @@ export default function BurgerIngredients({ data, onClick, handleOpenIngredientD
 
               </div>
               <p className={`${styles.name} text text_type_main-default`}
-                onClick={onClick}
+                onClick={(e) => onClick(e, element)}
                 id={element._id}
               >
                 {element.name}
@@ -114,10 +113,4 @@ export default function BurgerIngredients({ data, onClick, handleOpenIngredientD
       </div>
 
     </div>)
-}
-
-BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(ingredientType).isRequired,
-  onClick: PropTypes.func.isRequired,
-  handleOpenIngredientDetails: PropTypes.func.isRequired
 }

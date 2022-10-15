@@ -9,25 +9,14 @@ import PriceCount from '../price-count/price-count';
 import Modal from '../modal/modal.jsx';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
+import { GET_INGREDIENTS_SUCCESS } from '../../services/actions/ingredients';
+import { GET_CONSTRUCTOR_ITEMS } from '../../services/actions/constructor';
+import { SET_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details'
+import { useDispatch, useSelector } from 'react-redux'
 
 function App() {
-  const [data, setState] = React.useState([
-    {
-      _id: "60d3b41abdacab0026a733c6",
-      name: "Краторная булка N-200i",
-      type: "bun",
-      proteins: 80,
-      fat: 24,
-      carbohydrates: 53,
-      calories: 420,
-      price: 1255,
-      image: "https://code.s3.yandex.net/react/code/bun-02.png",
-      image_mobile: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
-      image_large: "https://code.s3.yandex.net/react/code/bun-02-large.png",
-      __v: 0
-    }
-  ]
-  );
+  const dispatch = useDispatch();
+  const data = useSelector(state => state.constructorList.constructorList);
 
   const url = 'https://norma.nomoreparties.space/api/ingredients';
   React.useEffect(() => {
@@ -38,35 +27,32 @@ function App() {
         }
         return Promise.reject(`Ошибка ${res.status}`)
       })
-      .then(({data}) => {
-
-        setState(data)
+      .then(({ data }) => {
+        dispatch({
+          type: GET_INGREDIENTS_SUCCESS,
+          data
+        })
       })
       .catch((err) => console.warn(err))
   }, []);
 
-  const [arr, setArr] = React.useState([])
-  const [, updateState] = React.useState();
-  const forceUpdate = React.useCallback(() => updateState({}), []);
   const [isOpen, setOpen] = React.useState(false)
   const [element, setElement] = React.useState({});
 
-  const handleOpenIngredientDetails = (e, item) => {
-    setElement(item);
+  const handleOpenIngredientDetails = (e, element) => {
+    dispatch({
+      type: SET_INGREDIENT_DETAILS,
+      element
+    })
     setOpen(!isOpen);
   }
-
-  const handleElementClick = (e) => {
-    const element = data.find(item => item._id === e.target.id);
-    if (!element.count) {
-      element.count = 0;
-    }
-    if (!arr.find(m => (m.type === 'bun')) || element.type !== 'bun') {
-      element.count = element.count + 1
-      arr.push(element);
-      forceUpdate();
-    }
-    setElement(element);
+  
+  const handleElementClick = (e, element) => {
+    if(!data.find(m => m.type === 'bun') || element.type !== 'bun')
+    dispatch({
+      type: GET_CONSTRUCTOR_ITEMS,
+      element
+    })
   }
 
   const closeModal = () => {
@@ -87,14 +73,14 @@ function App() {
             Соберите бургер
           </p>
           <BurgerIngredientsTabs />
-          <BurgerIngredients data={data}
+          <BurgerIngredients
             onClick={handleElementClick}
             handleOpenIngredientDetails={handleOpenIngredientDetails} />
         </section>
         <section className={styles.constructor} >
-          <BurgerConstructor data={arr} />
+          <BurgerConstructor />
           <div className={styles.count}>
-            <PriceCount data={arr} />
+            <PriceCount />
             <div className={styles.button} >
               <Button
                 type="primary" size="large"
@@ -105,9 +91,9 @@ function App() {
             </div>
           </div>
         </section>
-      </main>
+      </main> 
       {isOpen ? <Modal onClick={closeModal} onClose={closeModal} >
-        {element ? <IngredientDetails ingredient={element} /> : <OrderDetails />}
+        {element ? <IngredientDetails /> : <OrderDetails />}
       </Modal>
         : null}
     </div >

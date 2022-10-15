@@ -1,9 +1,9 @@
 import React from "react";
 import styles from './ingredient-details.module.css';
-import { ingredientType } from "../../utils/types";
+import { useSelector } from "react-redux";
 
-export default function IngredientDetails({ ingredient }) {
-
+export default function IngredientDetails() {
+  const ingredient = useSelector(state => state.ingredtientDetails.ingredientDetails)
   return (
     <div className={styles.ingredient}>
       <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>
@@ -41,8 +41,4 @@ export default function IngredientDetails({ ingredient }) {
       </div>
     </div>
   )
-}
-
-IngredientDetails.propTypes = {
-  ingredient: ingredientType
 }
