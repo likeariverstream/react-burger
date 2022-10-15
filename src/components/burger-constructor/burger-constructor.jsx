@@ -1,26 +1,10 @@
 import React from "react";
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import PropTypes from 'prop-types'
-
-const constructorShape = PropTypes.shape({
-  calories: PropTypes.number.isRequired,
-  carbohydrates: PropTypes.number.isRequired,
-  count: PropTypes.number.isRequired,
-  fat: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  image_large: PropTypes.string,
-  image_mobile: PropTypes.string,
-  name: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  proteins: PropTypes.number,
-  type: PropTypes.string.isRequired,
-  __v: PropTypes.number,
-  _id: PropTypes.string.isRequired
-});
+import PropTypes from 'prop-types';
+import { priceCountType } from "../../utils/types";
 
 export default function BurgerConstructor({ data }) {
-  
   const generateKey = (id, index) => {
     return `${id}_${new Date().getTime()}_${index}`
   }
@@ -50,13 +34,13 @@ export default function BurgerConstructor({ data }) {
                   text={element.name}
                   price={element.price}
                   thumbnail={element.image}
-                  />
+                />
               </div>
           })}
         </div>
         {data.map((element, index) => {
           return element.type === 'bun' &&
-          <div key={generateKey(element._id, index)} className="ml-6">
+            <div key={generateKey(element._id, index)} className="ml-6">
               <ConstructorElement
                 type="bottom"
                 isLocked={true}
@@ -71,6 +55,6 @@ export default function BurgerConstructor({ data }) {
 
 }
 
-BurgerConstructor.propTypes ={
-  data: PropTypes.arrayOf(constructorShape).isRequired
+BurgerConstructor.propTypes = {
+  data: PropTypes.arrayOf(priceCountType).isRequired
 }

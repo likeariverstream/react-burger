@@ -38,8 +38,9 @@ function App() {
         }
         return Promise.reject(`Ошибка ${res.status}`)
       })
-      .then((result) => {
-        setState((result.data))
+      .then(({data}) => {
+
+        setState(data)
       })
       .catch((err) => console.warn(err))
   }, []);
@@ -48,7 +49,7 @@ function App() {
   const [, updateState] = React.useState();
   const forceUpdate = React.useCallback(() => updateState({}), []);
   const [isOpen, setOpen] = React.useState(false)
-  const [element, setElement] = React.useState({}); // исправил на const и теперь окно с деталями заказа не открывается)
+  const [element, setElement] = React.useState({});
 
   const handleOpenIngredientDetails = (e, item) => {
     setElement(item);
