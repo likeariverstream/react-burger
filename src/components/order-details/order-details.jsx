@@ -5,7 +5,6 @@ import image from '../../images/done.png';
 export default function OrderDetails() {
   const generateId = () => {
     const value = `${new Date().getTime()}`
-    
     return `${value.substring(value.length - 6)}`
   }
   
@@ -21,7 +20,7 @@ export default function OrderDetails() {
         Ваш заказ начали готовить
       </p>
       <p className={`${styles.message} text text_type_main-small`} >
-        Дождитесь готовности на орбитальной станции//
+        Дождитесь готовности на орбитальной станции
       </p>
     </div>
 

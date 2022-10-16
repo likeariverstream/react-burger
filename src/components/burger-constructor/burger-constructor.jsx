@@ -1,17 +1,35 @@
 import React from "react";
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useDrop } from "react-dnd";
+import { GET_CONSTRUCTOR_ITEMS } from '../../services/actions/constructor';
 
 export default function BurgerConstructor() {
   const data = useSelector(state => state.constructorList.constructorList);
+  const dispatch = useDispatch();
   const generateKey = (id, index) => {
     return `${id}_${new Date().getTime()}_${index}`
   }
 
+  const [{ isOver }, dropTarget] = useDrop(() => ({
+    accept: 'ingredient',
+    drop: (item) => addConstructorElement(item.element),
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver()
+    })
+  }))
+  
+  const isElement = data.find(element => element.type === 'bun') ? false : true; 
+  const addConstructorElement = (element) => {
+    isElement && dispatch({ //здесь всегда true
+        type: GET_CONSTRUCTOR_ITEMS,
+        element
+      })
+  }
+
   return (
-    <div className={styles.container}>
-      <div className={styles.title}>
+    <div className={styles.container} ref={dropTarget}>
         {data.map((element, index) => {
           return element.type === 'bun' &&
             <div key={generateKey(element._id, index)} className="ml-6">
@@ -50,7 +68,7 @@ export default function BurgerConstructor() {
               />
             </div>
         })}
-      </div>
     </div>
-    ) 
+
+  )
 }

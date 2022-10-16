@@ -1,11 +1,12 @@
 import React from "react";
 import styles from './burger-ingredients.module.css';
-import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
+import Ingredient from '../ingredient/ingredient';
 
 
 export default function BurgerIngredients({ onClick, handleOpenIngredientDetails }) {
   const data = useSelector(state => state.ingredients.ingredientsList);
+
   return (
     data && <div className={styles.scroll}>
       <p className={`${styles.title} text text_type_main-medium mt-10`}>
@@ -14,29 +15,11 @@ export default function BurgerIngredients({ onClick, handleOpenIngredientDetails
       <div className={styles.buns}>
         {data.map((element) => {
           if (element.type === 'bun') {
-            return <div key={element._id} className={styles.ingredient}>
-              {element.count > 0 &&
-                <div className={styles.counter}>
-                  <Counter id={element._id} count={element.count} size="default" />
-                </div>}
-              <img className={styles.image}
-                id={element._id}
-                src={element.image}
-                alt={element.name}
-                onClick={(e) => handleOpenIngredientDetails(e, element)} />
-              <div className={styles.price}>
-                <p className="text text_type_digits-default" >
-                  {element.price}
-                </p>
-                <CurrencyIcon type="primary" />
-              </div>
-              <p className={`${styles.name} text text_type_main-default`}
-                onClick={(e) => onClick(e, element)}
-                id={element._id}
-              >
-                {element.name}
-              </p>
-            </div>
+            return <Ingredient
+              key={element._id}
+              element={element}
+              onClick={onClick}
+              handleOpenIngredientDetails={handleOpenIngredientDetails} />
           }
         })
         }
@@ -47,31 +30,11 @@ export default function BurgerIngredients({ onClick, handleOpenIngredientDetails
       <div className={styles.sauces}>
         {data.map((element) => {
           if (element.type === 'sauce') {
-            return <div key={element._id} className={styles.ingredient}>
-              {element.count > 0 &&
-                <div className={styles.counter}>
-                  <Counter id={element._id} count={element.count} size="default" />
-                </div>}
-              <img className={styles.image}
-                id={element._id}
-                src={element.image}
-                alt={element.name}
-                onClick={(e) => handleOpenIngredientDetails(e, element)}
-              />
-              <div className={styles.price}>
-                <p className="text text_type_digits-default">
-                  {element.price}
-                </p>
-                <CurrencyIcon type="primary" />
-
-              </div>
-              <p className={`${styles.name} text text_type_main-default`}
-                onClick={(e) => onClick(e, element)}
-                id={element._id}
-              >
-                {element.name}
-              </p>
-            </div>
+            return <Ingredient
+              key={element._id}
+              element={element}
+              onClick={onClick}
+              handleOpenIngredientDetails={handleOpenIngredientDetails} />
           }
         })
         }
@@ -82,35 +45,14 @@ export default function BurgerIngredients({ onClick, handleOpenIngredientDetails
       <div className={styles.mains}>
         {data.map((element) => {
           if (element.type === 'main') {
-            return <div key={element._id} className={styles.ingredient}>
-              {element.count > 0 &&
-                <div className={styles.counter}>
-                  <Counter id={element._id} count={element.count} size="default" />
-                </div>}
-              <img className={styles.image}
-                id={element._id}
-                src={element.image}
-                alt={element.name}
-                onClick={(e) => handleOpenIngredientDetails(e, element)} />
-              <div className={styles.price}>
-                <p className="text text_type_digits-default">
-                  {element.price}
-                </p>
-                <CurrencyIcon type="primary" />
-
-              </div>
-              <p className={`${styles.name} text text_type_main-default`}
-                onClick={(e) => onClick(e, element)}
-                id={element._id}
-              >
-                {element.name}
-              </p>
-            </div>
+            return <Ingredient
+              key={element._id}
+              element={element}
+              onClick={onClick}
+              handleOpenIngredientDetails={handleOpenIngredientDetails} />
           }
         })
         }
-
       </div>
-
     </div>)
 }

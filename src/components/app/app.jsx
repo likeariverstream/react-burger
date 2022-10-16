@@ -1,6 +1,6 @@
 import React from 'react';
 import AppHeader from '../app-header/app-header';
-import styles from './app.module.css'
+import styles from './app.module.css';
 import BurgerIngredientsTabs from '../burger-ingredients-tabs/burger-ingredients-tabs';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
@@ -11,8 +11,12 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 import { GET_INGREDIENTS_SUCCESS } from '../../services/actions/ingredients';
 import { GET_CONSTRUCTOR_ITEMS } from '../../services/actions/constructor';
-import { SET_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details'
-import { useDispatch, useSelector } from 'react-redux'
+import { SET_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details';
+import { useDispatch, useSelector } from 'react-redux';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
+
 
 function App() {
   const dispatch = useDispatch();
@@ -37,24 +41,17 @@ function App() {
   }, []);
 
   const [isOpen, setOpen] = React.useState(false)
-  const [element, setElement] = React.useState({});
+  const [element, setElement] = React.useState();
 
   const handleOpenIngredientDetails = (e, element) => {
     dispatch({
       type: SET_INGREDIENT_DETAILS,
       element
     })
+    setElement(true);
     setOpen(!isOpen);
   }
   
-  const handleElementClick = (e, element) => {
-    if(!data.find(m => m.type === 'bun') || element.type !== 'bun')
-    dispatch({
-      type: GET_CONSTRUCTOR_ITEMS,
-      element
-    })
-  }
-
   const closeModal = () => {
     setOpen(!isOpen);
   }
@@ -65,8 +62,10 @@ function App() {
   }
 
   return (
+      <DndProvider backend={HTML5Backend}>
     <div className="App">
       <AppHeader />
+        <div ></div>
       <main className={styles.content}>
         <section className={styles.ingredients}>
           <p className={`${styles.title} text text_type_main-large mt-10 mb-5`} >
@@ -74,29 +73,27 @@ function App() {
           </p>
           <BurgerIngredientsTabs />
           <BurgerIngredients
-            onClick={handleElementClick}
             handleOpenIngredientDetails={handleOpenIngredientDetails} />
         </section>
         <section className={styles.constructor} >
           <BurgerConstructor />
           <div className={styles.count}>
             <PriceCount />
-            <div className={styles.button} >
               <Button
-                type="primary" size="large"
+                type="primary" size="medium"
                 htmlType='submit'
                 onClick={handleButtonClick}>
                 Оформить заказ
               </Button>
-            </div>
           </div>
         </section>
       </main> 
       {isOpen ? <Modal onClick={closeModal} onClose={closeModal} >
-        {element ? <IngredientDetails /> : <OrderDetails />}
+        { element ? <IngredientDetails /> : <OrderDetails />}
       </Modal>
         : null}
     </div >
+        </DndProvider>
   )
 }
 
