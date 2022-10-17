@@ -8,27 +8,34 @@ import { useSelector, useDispatch } from 'react-redux';
 import { GET_CONSTRUCTOR_ITEMS } from '../../services/actions/constructor';
 
 
-export default function Ingredient({ element, onClick, handleOpenIngredientDetails }) {
-
-  const [{ isDragging }, dragRef] = useDrag({
+export default function Ingredient({ element, handleOpenIngredientDetails }) {
+  const [count, setCount] = React.useState(0);
+  const [{ isDragging, didDrop }, dragRef] = useDrag({
     type: 'ingredient',
     item: {
       id: element._id,
-      element
+      element,
+      type: element.type
     },
+    end: (item) => handleCount(item),
     collect: (monitor) => ({
-      isDragging: !!monitor.isDragging()
+      isDragging: !!monitor.isDragging(),
+      didDrop: monitor.didDrop()
     })
   });
-  return (
-    <div className={styles.ingredient} ref={dragRef}
-      style={{ outline: isDragging ? '5px solid pink' : '0px' }}>
 
-      {element.count > 0 &&
+  const handleCount = (item) => {
+   return ((item.type !== 'bun') || count === 0) ? setCount(count + 1) : false;
+  }
+  return (
+    <div className={styles.ingredient}>
+
+      {count > 0 &&
         <div className={styles.counter} id={element._id}>
-          <Counter id={element._id} count={element.count} size="default" />
+          <Counter id={element._id} count={count} size="default" />
         </div>}
       <img className={styles.image}
+        ref={dragRef}
         id={element._id}
         src={element.image}
         alt={element.name}
@@ -40,7 +47,6 @@ export default function Ingredient({ element, onClick, handleOpenIngredientDetai
         <CurrencyIcon type="primary" />
       </div>
       <p className={`${styles.name} text text_type_main-default`}
-        onClick={(e) => onClick(e, element)}
         id={element._id}
       >
         {element.name}

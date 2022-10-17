@@ -9,7 +9,8 @@ export const constructorReducer = (state = constructorState, action) => {
     case GET_CONSTRUCTOR_ITEMS: {
       return {
         ...state,
-        constructorList: [...state.constructorList, action.element]
+        constructorList: !state.constructorList.find(element => element.type === 'bun') || action.element.type !== 'bun'
+         ? [...state.constructorList, action.element] : [...state.constructorList]
       }
     }
     default: {

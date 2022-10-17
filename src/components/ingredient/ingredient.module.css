@@ -37,12 +37,3 @@
   top: 24px;
   left: 138px;
 }
-
-.name {
-  transition: .2s ease-in-out;
-}
-
-.name:hover {
-  opacity: .6;
-  cursor: pointer;
-}

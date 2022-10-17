@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import Ingredient from '../ingredient/ingredient';
 
 
-export default function BurgerIngredients({ onClick, handleOpenIngredientDetails }) {
+export default function BurgerIngredients({ handleOpenIngredientDetails }) {
   const data = useSelector(state => state.ingredients.ingredientsList);
 
   return (
@@ -18,7 +18,6 @@ export default function BurgerIngredients({ onClick, handleOpenIngredientDetails
             return <Ingredient
               key={element._id}
               element={element}
-              onClick={onClick}
               handleOpenIngredientDetails={handleOpenIngredientDetails} />
           }
         })
@@ -33,7 +32,6 @@ export default function BurgerIngredients({ onClick, handleOpenIngredientDetails
             return <Ingredient
               key={element._id}
               element={element}
-              onClick={onClick}
               handleOpenIngredientDetails={handleOpenIngredientDetails} />
           }
         })
@@ -48,7 +46,6 @@ export default function BurgerIngredients({ onClick, handleOpenIngredientDetails
             return <Ingredient
               key={element._id}
               element={element}
-              onClick={onClick}
               handleOpenIngredientDetails={handleOpenIngredientDetails} />
           }
         })

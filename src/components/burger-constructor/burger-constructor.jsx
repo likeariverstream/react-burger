@@ -20,9 +20,8 @@ export default function BurgerConstructor() {
     })
   }))
   
-  const isElement = data.find(element => element.type === 'bun') ? false : true; 
   const addConstructorElement = (element) => {
-    isElement && dispatch({ //здесь всегда true
+   dispatch({
         type: GET_CONSTRUCTOR_ITEMS,
         element
       })
