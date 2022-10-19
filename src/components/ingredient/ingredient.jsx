@@ -9,46 +9,44 @@ import { GET_CONSTRUCTOR_ITEMS } from '../../services/actions/constructor';
 
 
 export default function Ingredient({ element, handleOpenIngredientDetails }) {
-  const [count, setCount] = React.useState(0);
-  const [{ isDragging, didDrop }, dragRef] = useDrag({
+  const counts = useSelector(state => state.ingredientCounts.ingredientsList);
+  const countValue = counts.filter((item) => item._id === element._id).length
+  const count = element.type !== 'bun'
+    ? countValue
+    : countValue * 2;
+
+  const [didDrop, dragRef] = useDrag(() => ({
     type: 'ingredient',
     item: {
       id: element._id,
       element,
-      type: element.type
+      type: element.type,
     },
-    end: (item) => handleCount(item),
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging(),
-      didDrop: monitor.didDrop()
+    collect: monitor => ({
+      didDrop: !!monitor.didDrop()
     })
-  });
+  }), []);
 
-  const handleCount = (item) => {
-   return ((item.type !== 'bun') || count === 0) ? setCount(count + 1) : false;
-  }
   return (
     <div className={styles.ingredient}>
-
       {count > 0 &&
-        <div className={styles.counter} id={element._id}>
+        <div className={styles.counter}>
           <Counter id={element._id} count={count} size="default" />
         </div>}
       <img className={styles.image}
+        style={{cursor: didDrop ? 'grab' : 'default'}}
         ref={dragRef}
         id={element._id}
         src={element.image}
         alt={element.name}
         onClick={(e) => handleOpenIngredientDetails(e, element)} />
       <div className={styles.price}>
-        <p className="text text_type_digits-default" >
+        <p className="text text_type_digits-default mr-2" >
           {element.price}
         </p>
         <CurrencyIcon type="primary" />
       </div>
-      <p className={`${styles.name} text text_type_main-default`}
-        id={element._id}
-      >
+      <p className={`${styles.name} text text_type_main-default`}>
         {element.name}
       </p>
     </div>

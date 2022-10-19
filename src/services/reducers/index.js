@@ -3,10 +3,12 @@ import { constructorReducer } from './constructor';
 import {combineReducers} from 'redux';
 import { ingredtientDetailsReducer } from './ingredient-details';
 import {orderDetailsReducer} from './order-details';
+import { ingredientCountsReducer } from './ingredient-counts';
 
 export const rootReducer = combineReducers({
   ingredients: ingredientsReducer,
   constructorList: constructorReducer,
   ingredtientDetails: ingredtientDetailsReducer,
-  orderDetails: orderDetailsReducer
+  orderDetails: orderDetailsReducer,
+  ingredientCounts: ingredientCountsReducer
 })

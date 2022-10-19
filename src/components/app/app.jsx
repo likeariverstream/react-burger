@@ -51,49 +51,75 @@ function App() {
     setElement(true);
     setOpen(!isOpen);
   }
-  
+
   const closeModal = () => {
     setOpen(!isOpen);
   }
 
   const handleButtonClick = () => {
     setElement(false)
+    requestOrderDetails();
     setOpen(!isOpen);
   }
 
+  const [orderId, setOrderId] = React.useState();
+
+  const requestOrderDetails = () => {
+    const idList = (data.map(element => element._id))
+    const url = 'https://norma.nomoreparties.space/api/orders';
+    const options = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ingredients: idList
+      })
+    };
+    fetch(url, options)
+      .then((res) => {
+        if (res.ok) {
+          return res.json()
+        }
+        return Promise.reject(`Ошибка ${res.status}`)
+      })
+      .then(({ success, name, order }) => {
+        setOrderId(order.number);
+      })
+      .catch((err) => console.warn(err))
+  }
+
   return (
-      <DndProvider backend={HTML5Backend}>
-    <div className="App">
-      <AppHeader />
+    <DndProvider backend={HTML5Backend}>
+      <div className="App">
+        <AppHeader />
         <div ></div>
-      <main className={styles.content}>
-        <section className={styles.ingredients}>
-          <p className={`${styles.title} text text_type_main-large mt-10 mb-5`} >
-            Соберите бургер
-          </p>
-          <BurgerIngredientsTabs />
-          <BurgerIngredients
-            handleOpenIngredientDetails={handleOpenIngredientDetails} />
-        </section>
-        <section className={styles.constructor} >
-          <BurgerConstructor />
-          <div className={styles.count}>
-            <PriceCount />
+        <main className={styles.content}>
+          <section className={styles.ingredients}>
+            <p className={`${styles.title} text text_type_main-large mt-10 mb-5`} >
+              Соберите бургер
+            </p>
+            <BurgerIngredientsTabs />
+            <BurgerIngredients
+              handleOpenIngredientDetails={handleOpenIngredientDetails} />
+          </section>
+          <section className={styles.constructor} >
+            <BurgerConstructor />
+            {data.length > 0 ? <div className={styles.count}>
+              <PriceCount />
               <Button
                 type="primary" size="medium"
                 htmlType='submit'
                 onClick={handleButtonClick}>
                 Оформить заказ
               </Button>
-          </div>
-        </section>
-      </main> 
-      {isOpen ? <Modal onClick={closeModal} onClose={closeModal} >
-        { element ? <IngredientDetails /> : <OrderDetails />}
-      </Modal>
-        : null}
-    </div >
-        </DndProvider>
+            </div> : null}
+          </section>
+        </main>
+        {isOpen ? <Modal onClick={closeModal} onClose={closeModal} >
+          {element ? <IngredientDetails /> : <OrderDetails orderId={orderId} />}
+        </Modal>
+          : null}
+      </div >
+    </DndProvider>
   )
 }
 
