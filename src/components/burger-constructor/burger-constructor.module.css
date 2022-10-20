@@ -11,12 +11,13 @@
 
 .scroll {
   position: relative;
-  width: 568x;
+  width: 568px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
   height: 440px;
   gap: 10px;
+  justify-content: stretch;
 }
 
 

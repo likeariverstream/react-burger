@@ -14,10 +14,7 @@ export default function BurgerConstructor() {
   const [, dropTarget] = useDrop(() => ({
     accept: 'ingredient',
     hasOver: () => console.log('цель'),
-    drop: (item) => addConstructorElement(item.element),
-    collect: (monitor) => ({
-      hasOver: monitor.isOver()
-    })
+    drop: (item) => addConstructorElement(item.element)
   }))
 
   const addConstructorElement = (element) => {
