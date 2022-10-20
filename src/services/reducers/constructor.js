@@ -19,16 +19,16 @@ export const constructorReducer = (state = constructorState, action) => {
       return {
         ...state,
         constructorList: action.element.type !== 'bun'
-          ? state.constructorList.filter((element, i) =>  i !== action.index)
+          ? state.constructorList.filter((element) => element.id !== action.element.id)
           : [...state.constructorList]
+        }
       }
-    }
-    case GET_BUN_ITEM: {
-      return {
-        ...state,
-        constructorList: state.constructorList.find(element => element.type === 'bun') || action.element.type === 'bun'
-        ? state.constructorList.map((element) => element.type === action.element.type ? action.element : element)
-        : [...state.constructorList]
+      case GET_BUN_ITEM: {
+        return {
+          ...state,
+          constructorList: action.element.type === 'bun'
+          ? [ ...state.constructorList.filter(element => element.type !== 'bun'), action.element] 
+          : [...state.constructorList]
       }
     }
     default: {

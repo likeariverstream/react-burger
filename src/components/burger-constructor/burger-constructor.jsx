@@ -1,10 +1,9 @@
 import React from "react";
 import styles from './burger-constructor.module.css';
-import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
-import { useDrop, useDrag } from "react-dnd";
+import { useDrop } from "react-dnd";
 import { GET_CONSTRUCTOR_ITEM, DELETE_CONSTRUCTOR_ITEM, GET_BUN_ITEM } from '../../services/actions/constructor';
-import { INGREDIENT_COUNT_INCREASE, INGREDIENT_COUNT_DECREASE, BUN_COUNT_REPLACE } from "../../services/actions/ingredient-counts";
 import { nanoid } from "nanoid";
 import BurgerElement from "../burger-element/burger-element";
 
@@ -22,39 +21,24 @@ export default function BurgerConstructor() {
   }))
 
   const addConstructorElement = (element) => {
+    element = { ...element, id: nanoid() }
     dispatch({
       type: GET_CONSTRUCTOR_ITEM,
-      data: [].push(element),
       element
     })
-    dispatch({
-      type: INGREDIENT_COUNT_INCREASE,
-      element
-    })
-
     dispatch({
       type: GET_BUN_ITEM,
       element
     })
-    dispatch({
-      type: BUN_COUNT_REPLACE,
-      element
-    })
-
   }
-  const deleteElement = (element, index) => {
+  const deleteElement = (element) => {
     dispatch({
       type: DELETE_CONSTRUCTOR_ITEM,
-      element,
-      index
-    })
-    dispatch({
-      type: INGREDIENT_COUNT_DECREASE,
       element
     })
   }
 
-  const handleDropElement = React.useCallback ((element) => {
+  const handleDropElement = React.useCallback((element) => {
     console.log(element.element);
   }, [])
 
@@ -62,7 +46,7 @@ export default function BurgerConstructor() {
     <div className={styles.container} ref={dropTarget} >
       {data.map((element) => {
         return element.type === 'bun' &&
-          <div key={nanoid()} className="ml-8">
+          <div key={element.id} className="ml-8">
             <ConstructorElement
               type="top"
               isLocked={true}
@@ -75,18 +59,17 @@ export default function BurgerConstructor() {
       <div className={styles.scroll}  >
         {data.map((element, index) => {
           return element.type !== 'bun' &&
-            <div key={nanoid()}>
               <BurgerElement
+                key={element.id}
                 onDrop={(item) => handleDropElement(item)}
-                id={nanoid()}
+                id={element.id}
                 element={element}
-                deleteElement={() => deleteElement(element, index)} />
-            </div>
+                deleteElement={() => deleteElement(element)} />
         })}
       </div>
       {data.map((element) => {
         return element.type === 'bun' &&
-          <div key={nanoid()} className="ml-8">
+          <div key={element.id} className="ml-8">
             <ConstructorElement
               type="bottom"
               isLocked={true}

@@ -9,7 +9,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
 
-export default function BurgerElement({ element, deleteElement, index, id, onDrop}) {
+export default function BurgerElement({ element, deleteElement, onDrop}) {
   
   const data = useSelector(state => state.constructorList.constructorList);
 
@@ -30,7 +30,7 @@ export default function BurgerElement({ element, deleteElement, index, id, onDro
     type: 'item',
     isDragging: console.log('11'),
     item: {
-      id,
+      id: element.id,
       element
     },
     end: (item, monitor) => {
@@ -46,12 +46,12 @@ export default function BurgerElement({ element, deleteElement, index, id, onDro
 
   }), [])
   return (
-      <div className={styles.box} key={nanoid()}
+      <div className={styles.box}
         style={{
           opacity: isDragging ? 0.5 : 1
         }}
         ref={(node) => dragElement(dropElement(node))}
-        id={id}
+        id={element.id}
         onDrop={onDrop}
         >
         <div className={styles.drag}><DragIcon type="primary" /></div>
@@ -60,7 +60,7 @@ export default function BurgerElement({ element, deleteElement, index, id, onDro
             text={element.name}
             price={element.price}
             thumbnail={element.image}
-            handleClose={() => deleteElement(element, index)}
+            handleClose={() => deleteElement(element)}
           />
         </div>
       </div>

@@ -4,13 +4,12 @@ import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-c
 import { useDrag } from "react-dnd";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { useSelector, useDispatch } from 'react-redux';
-import { GET_CONSTRUCTOR_ITEMS } from '../../services/actions/constructor';
+import { useSelector } from 'react-redux';
 
 
 export default function Ingredient({ element, handleOpenIngredientDetails }) {
-  const counts = useSelector(state => state.ingredientCounts.ingredientsList);
-  const countValue = counts.filter((item) => item._id === element._id).length
+  const data = useSelector(state => state.constructorList.constructorList);
+  const countValue = data.filter((item) => item._id === element._id).length
   const count = element.type !== 'bun'
     ? countValue
     : countValue * 2;

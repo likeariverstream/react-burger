@@ -3,7 +3,6 @@ import styles from './burger-ingredients.module.css';
 import { useSelector } from "react-redux";
 import Ingredient from '../ingredient/ingredient';
 
-
 export default function BurgerIngredients({ handleOpenIngredientDetails }) {
   const data = useSelector(state => state.ingredients.ingredientsList);
 
