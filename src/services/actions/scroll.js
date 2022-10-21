@@ -1,0 +1,2 @@
+export const SCROLL_TO_ITEM = 'SCROLL_TO_ITEM';
+export const SELECT_TAB_ITEM = 'SELECT_TAB_ITEM';

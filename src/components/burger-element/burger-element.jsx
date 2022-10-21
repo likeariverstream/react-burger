@@ -31,7 +31,6 @@ export default function BurgerElement({ element, id, index, deleteElement, moveE
       if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
         return
       }
-
       moveElement(dragIndex, hoverIndex)
       item.index = hoverIndex
     }

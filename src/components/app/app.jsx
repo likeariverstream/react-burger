@@ -21,7 +21,6 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 function App() {
   const dispatch = useDispatch();
   const data = useSelector(state => state.constructorList.constructorList);
-
   const url = 'https://norma.nomoreparties.space/api/ingredients';
   React.useEffect(() => {
     fetch(url)
