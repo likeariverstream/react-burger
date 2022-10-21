@@ -1,69 +1,76 @@
 import React from 'react';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { nanoid } from 'nanoid';
-import { useSelector } from "react-redux";
-
 import styles from './burger-element.module.css'
 import { useDrop, useDrag } from "react-dnd";
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 
+export default function BurgerElement({ element, id, index, deleteElement, moveElement }) {
 
-export default function BurgerElement({ element, deleteElement, onDrop}) {
-  
-  const data = useSelector(state => state.constructorList.constructorList);
-
-  const [{ isOver, canDrop, getItem }, dropElement] = useDrop(() => ({
+  const [{ handlerId }, drop] = useDrop({
     accept: 'item',
-    onDrop: onDrop,
-    canDrop: () => console.log(),
-    isOver: () => console.log(),
-    // drop: (element) => handleDropElement(element),
-    collect: (monitor) => ({
-      canDrop: monitor.canDrop(),
-      isOver: monitor.isOver()
-    })
-  }), [])
-
-
-  const [{ isDragging }, dragElement] = useDrag(() => ({
-    type: 'item',
-    isDragging: console.log('11'),
-    item: {
-      id: element.id,
-      element
-    },
-    end: (item, monitor) => {
-      const dropResult = monitor.getDropResult()
-      console.log(dropResult)
-      if(item && dropResult) {
-        console.log('бросок!')
+    collect(monitor) {
+      return {
+        handlerId: monitor.getHandlerId()
       }
     },
-    collect: (monitor) => ({
-      isDragging: !!monitor.isDragging()
-    })
+    hover(item, monitor) {
+      if (!ref.current) {
+        return
+      }
+      const dragIndex = item.index;
+      const hoverIndex = index
+      if (dragIndex === hoverIndex) {
+        return
+      }
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset = monitor.getClientOffset()
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return
+      }
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return
+      }
 
-  }), [])
+      moveElement(dragIndex, hoverIndex)
+      item.index = hoverIndex
+    }
+  })
+
+  const [{ isDragging }, drag] = useDrag({
+    type: 'item',
+    item: () => {
+      return { id, index }
+    },
+
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging()
+    }),
+
+  })
+  const ref = React.useRef(null);
+
+  drag(drop(ref));
+
   return (
-      <div className={styles.box}
-        style={{
-          opacity: isDragging ? 0.5 : 1
-        }}
-        ref={(node) => dragElement(dropElement(node))}
-        id={element.id}
-        onDrop={onDrop}
-        >
-        <div className={styles.drag}><DragIcon type="primary" /></div>
-        <div className={styles.element} >
-          <ConstructorElement
-            text={element.name}
-            price={element.price}
-            thumbnail={element.image}
-            handleClose={() => deleteElement(element)}
-          />
-        </div>
+    <div className={styles.box}
+      style={{
+        opacity: isDragging ? 0.5 : 1
+      }}
+      ref={ref}
+      id={element.id}
+      data-handler-id={handlerId}
+    >
+      <div className={styles.drag}><DragIcon type="primary" /></div>
+      <div className={styles.element} >
+        <ConstructorElement
+          text={element.name}
+          price={element.price}
+          thumbnail={element.image}
+          handleClose={() => deleteElement(element)}
+        />
       </div>
+    </div>
 
   )
 }

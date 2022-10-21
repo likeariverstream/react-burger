@@ -3,14 +3,28 @@ import styles from './burger-constructor.module.css';
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
-import { GET_CONSTRUCTOR_ITEM, DELETE_CONSTRUCTOR_ITEM, GET_BUN_ITEM } from '../../services/actions/constructor';
+import {
+  GET_CONSTRUCTOR_ITEM,
+  DELETE_CONSTRUCTOR_ITEM,
+  GET_BUN_ITEM,
+  MOVE_CONSTRUCTOR_ITEM
+} from '../../services/actions/constructor';
 import { nanoid } from "nanoid";
 import BurgerElement from "../burger-element/burger-element";
+import update from 'immutability-helper'
 
 export default function BurgerConstructor() {
   const data = useSelector(state => state.constructorList.constructorList);
   const dispatch = useDispatch();
 
+  const moveElement = React.useCallback((dragIndex, hoverIndex) => {
+    dispatch({
+      type: MOVE_CONSTRUCTOR_ITEM,
+      dragIndex,
+      hoverIndex
+    })
+  }, [])
+  
   const [, dropTarget] = useDrop(() => ({
     accept: 'ingredient',
     hasOver: () => console.log('цель'),
@@ -53,15 +67,17 @@ export default function BurgerConstructor() {
             />
           </div>
       })}
-      <div className={styles.scroll}  >
+      <div className={styles.scroll}>
         {data.map((element, index) => {
           return element.type !== 'bun' &&
-              <BurgerElement
-                key={element.id}
-                onDrop={(item) => handleDropElement(item)}
-                id={element.id}
-                element={element}
-                deleteElement={() => deleteElement(element)} />
+            <BurgerElement
+              moveElement={moveElement}
+              index={index}
+              key={element.id}
+              onDrop={(item) => handleDropElement(item)}
+              id={element.id}
+              element={element}
+              deleteElement={() => deleteElement(element)} />
         })}
       </div>
       {data.map((element) => {
