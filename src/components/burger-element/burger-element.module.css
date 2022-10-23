@@ -2,9 +2,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .drag {
+  margin-right: 8px;
   cursor: grab;
   transition: all .1s ease-in;
   cursor: grab;

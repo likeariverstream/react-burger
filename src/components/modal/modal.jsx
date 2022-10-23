@@ -17,11 +17,13 @@ export default function Modal({ onClick, onClose, children }) {
   }, []);
 
   return createPortal(
-    <>
+     <>
       <ModalOverlay onMouseDown={onClick} />
       <div className={styles.modal}>
         {children}
-        <div className={styles.icon}><CloseIcon onClick={onClick} /></div>
+        <div className={styles.icon}>
+          <CloseIcon onClick={onClick} />
+        </div>
       </div>
     </>,
     document.getElementById('root')
@@ -31,4 +33,6 @@ export default function Modal({ onClick, onClose, children }) {
 Modal.propTypes = {
   onClick: PropTypes.func.isRequired,
   onClose: PropTypes.func.isRequired,
+  children: PropTypes.element.isRequired
 }
+

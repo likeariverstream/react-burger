@@ -2,6 +2,8 @@ import React from 'react';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-element.module.css'
 import { useDrop, useDrag } from "react-dnd";
+import PropTypes from 'prop-types';
+import { constructorElementType } from '../../utils/types';
 
 export default function BurgerElement({ element, id, index, deleteElement, moveElement }) {
 
@@ -70,8 +72,13 @@ export default function BurgerElement({ element, id, index, deleteElement, moveE
         />
       </div>
     </div>
-
   )
 }
 
-
+BurgerElement.propTypes = {
+  element: constructorElementType.isRequired,
+  id: PropTypes.string.isRequired,
+  index: PropTypes.number.isRequired,
+  deleteElement: PropTypes.func.isRequired,
+  moveElement: PropTypes.func.isRequired
+}

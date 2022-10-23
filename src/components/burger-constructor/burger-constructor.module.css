@@ -3,31 +3,30 @@
   flex-direction: column;
   display: flex;
   flex-direction: column;
-  height: 656px;
+  height: 677px;
   gap: 10px;
   margin-top: 100px;
-  margin-left: 20px;
+  margin-left: 10px;
+}
+
+.top {
+  height: 86px;
+  margin: 0 17px 0 36px;
 }
 
 .scroll {
-  position: relative;
-  width: 568px;
+  width: 592px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  height: 440px;
-  gap: 10px;
+  height: 470px;
+  gap: 16px;
   justify-content: stretch;
 }
 
-
-.drop {
-  position: absolute;
-  width: 568x;
-  display: flex;
-  flex-direction: column;
-  height: 440px;
-  gap: 10px;
+.bottom {
+  margin: 0 17px 0 36px;
+  height: 86px;
 }
 
 .box {

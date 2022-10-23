@@ -1,4 +1,4 @@
-import {SET_INGREDIENT_DETAILS} from '../actions/ingredient-details';
+import {SET_INGREDIENT_DETAILS, DELETE_INGREDIENT_DETAILS} from '../actions/ingredient-details';
 
 const ingredientDetailsState = {
   ingredientDetails: {}
@@ -11,6 +11,12 @@ export const ingredtientDetailsReducer = (state = ingredientDetailsState, action
       return {
         ...state,
         ingredientDetails: action.element
+      }
+    }
+    case DELETE_INGREDIENT_DETAILS: {
+      return {
+        ...state,
+        ingredientDetails: {}
       }
     }
     default: {

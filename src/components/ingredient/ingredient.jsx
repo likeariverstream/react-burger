@@ -5,7 +5,13 @@ import { useDrag } from "react-dnd";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import { ingredientType } from '../../utils/types';
 
+Ingredient.propTypes = {
+  element: ingredientType.isRequired,
+  handleOpenIngredientDetails: PropTypes.func.isRequired
+}
 
 export default function Ingredient({ element, handleOpenIngredientDetails }) {
   const data = useSelector(state => state.constructorList.constructorList);
@@ -33,7 +39,7 @@ export default function Ingredient({ element, handleOpenIngredientDetails }) {
           <Counter id={element._id} count={count} size="default" />
         </div>}
       <img className={styles.image}
-        style={{cursor: didDrop ? 'grab' : 'default'}}
+        style={{ cursor: didDrop ? 'grab' : 'default' }}
         ref={dragRef}
         id={element._id}
         src={element.image}

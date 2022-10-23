@@ -1,7 +1,6 @@
 import React from 'react';
 import AppHeader from '../app-header/app-header';
 import styles from './app.module.css';
-import BurgerIngredientsTabs from '../burger-ingredients-tabs/burger-ingredients-tabs';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,13 +9,14 @@ import Modal from '../modal/modal.jsx';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 import { GET_INGREDIENTS_SUCCESS } from '../../services/actions/ingredients';
-import { GET_CONSTRUCTOR_ITEMS } from '../../services/actions/constructor';
-import { SET_INGREDIENT_DETAILS } from '../../services/actions/ingredient-details';
+import {
+  SET_INGREDIENT_DETAILS,
+  DELETE_INGREDIENT_DETAILS
+} from '../../services/actions/ingredient-details';
 import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-
-
+import { GET_ORDER_SUCCESS } from '../../services/actions/order-details'
 
 function App() {
   const dispatch = useDispatch();
@@ -53,6 +53,9 @@ function App() {
 
   const closeModal = () => {
     setOpen(!isOpen);
+    dispatch({
+      type: DELETE_INGREDIENT_DETAILS
+    })
   }
 
   const handleButtonClick = () => {
@@ -60,8 +63,6 @@ function App() {
     requestOrderDetails();
     setOpen(!isOpen);
   }
-
-  const [orderId, setOrderId] = React.useState();
 
   const requestOrderDetails = () => {
     const idList = (data.map(element => element._id))
@@ -81,7 +82,10 @@ function App() {
         return Promise.reject(`Ошибка ${res.status}`)
       })
       .then(({ success, name, order }) => {
-        setOrderId(order.number);
+        dispatch({
+          type: GET_ORDER_SUCCESS,
+          id: order.number
+        })
       })
       .catch((err) => console.warn(err))
   }
@@ -96,7 +100,7 @@ function App() {
             <p className={`${styles.title} text text_type_main-large mt-10 mb-5`} >
               Соберите бургер
             </p>
-            <BurgerIngredientsTabs />
+
             <BurgerIngredients
               handleOpenIngredientDetails={handleOpenIngredientDetails} />
           </section>
@@ -114,7 +118,8 @@ function App() {
           </section>
         </main>
         {isOpen ? <Modal onClick={closeModal} onClose={closeModal} >
-          {element ? <IngredientDetails /> : <OrderDetails orderId={orderId} />}
+
+          {element ? <IngredientDetails /> : <OrderDetails />}
         </Modal>
           : null}
       </div >

@@ -33,7 +33,7 @@
 }
 
 .counter {
-  position: relative;
+  position: absolute;
   top: 24px;
-  left: 138px;
+  left: 289px;
 }
