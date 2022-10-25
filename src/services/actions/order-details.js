@@ -1,4 +1,4 @@
-import { baseUrl } from "../../utils/constans";
+import { baseUrl } from "../../utils/constants";
 import { request } from "../../utils/utils";
 import { clearConstructorList } from "./constructor";
 

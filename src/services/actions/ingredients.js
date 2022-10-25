@@ -1,4 +1,4 @@
-import { baseUrl } from "../../utils/constans";
+import { baseUrl } from "../../utils/constants";
 import { request } from "../../utils/utils";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
@@ -14,9 +14,9 @@ export const getIngredients = () => {
   const url = `${baseUrl}/ingredients`;
   return (dispatch) => {
     request(url)
-    .then(({ data }) => {
-      dispatch(getIngredientsSuccess(data))
-    })
-    .catch((err) => console.warn(err))
+      .then(({ data }) => {
+        dispatch(getIngredientsSuccess(data))
+      })
+      .catch((err) => console.warn(err))
   }
 }

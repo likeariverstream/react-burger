@@ -6,11 +6,11 @@ import { useSelector } from "react-redux";
 export default function PriceCount() {
   const data = useSelector(state => state.constructorList.constructorList)
   const bun = React.useMemo(() => {
-    data.filter(element => element.type === 'bun');
+    return data.filter(element => element.type === 'bun');
   }, [data])
 
   const totalPrice = React.useMemo(() => {
-    [...data, ...bun].reduce((acc, item) => acc + item.price, 0);
+    return [...data, ...bun].reduce((acc, item) => acc + item.price, 0);
   }, [data, bun])
 
   return (

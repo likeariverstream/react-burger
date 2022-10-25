@@ -23,24 +23,34 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
   }, [])
 
   React.useEffect(() => {
-    const ref = scrollRef.current;
-    const toggleTab = () => {
-      const targets = {
-        buns: bunsRef.current.getBoundingClientRect().top,
-        sauces: saucesRef.current.getBoundingClientRect().top,
-        mains: mainsRef.current.getBoundingClientRect().top,
-        scroll: ref.scrollTop,
-      }
-      targets.scroll < targets.buns ?
-        setCurrent('one')
-        :
-        targets.buns < targets.scroll < targets.sauces ?
-          setCurrent('two')
-          : targets.sauces < targets.scroll
-            ? setCurrent('three') : setCurrent(false)
+    const targets = [
+      bunsRef.current,
+      saucesRef.current,
+      mainsRef.current
+    ]
+    const options = {
+      root: scrollRef.current,
+      rootMargin: '0px 0px -90% 0px'
     }
-    ref.addEventListener('scroll', toggleTab)
-    return () => ref.removeEventListener('scroll', toggleTab);
+
+    const callback = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+         if (entry.target === bunsRef.current) {
+          setCurrent('one')
+         }
+         if (entry.target === saucesRef.current) {
+          setCurrent('two')
+         }
+         if (entry.target === mainsRef.current) {
+          setCurrent('three')
+         }
+        }
+      })
+
+    }
+    const observer = new IntersectionObserver(callback, options);
+    targets.forEach(target => observer.observe(target));
   }, [])
 
   return (
