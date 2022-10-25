@@ -15,33 +15,33 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
 
   const handleClick = React.useCallback((value) => {
     value === 'one'
-      ? (bunsRef.current.scrollIntoView())
+      ? bunsRef.current.scrollIntoView({ behavior: 'smooth' })
       : value === 'two'
-        ? saucesRef.current.scrollIntoView()
-        : mainsRef.current.scrollIntoView()
+        ? saucesRef.current.scrollIntoView({ behavior: 'smooth' })
+        : mainsRef.current.scrollIntoView({ behavior: 'smooth' })
     setCurrent(value)
   }, [])
 
   React.useEffect(() => {
+    const ref = scrollRef.current;
     const toggleTab = () => {
       const targets = {
         buns: bunsRef.current.getBoundingClientRect().top,
         sauces: saucesRef.current.getBoundingClientRect().top,
         mains: mainsRef.current.getBoundingClientRect().top,
-        scroll: scrollRef.current.scrollTop,
+        scroll: ref.scrollTop,
       }
       targets.scroll < targets.buns ?
         setCurrent('one')
         :
         targets.buns < targets.scroll < targets.sauces ?
           setCurrent('two')
-          : targets.sauces < targets.scroll < targets.mains
+          : targets.sauces < targets.scroll
             ? setCurrent('three') : setCurrent(false)
     }
-    scrollRef.current.addEventListener('scroll', toggleTab)
-    return scrollRef.current.addEventListener('scroll', toggleTab)
+    ref.addEventListener('scroll', toggleTab)
+    return () => ref.removeEventListener('scroll', toggleTab);
   }, [])
-
 
   return (
     data && <>
@@ -66,10 +66,10 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
         <div className={styles.buns}>
           {data.map((element) => {
             if (element.type === 'bun') {
-              return <Ingredient
+              return (<Ingredient
                 key={element._id}
                 element={element}
-                handleOpenIngredientDetails={handleOpenIngredientDetails} />
+                handleOpenIngredientDetails={handleOpenIngredientDetails} />);
             }
           })
           }
@@ -80,10 +80,10 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
         <div className={styles.sauces}>
           {data.map((element) => {
             if (element.type === 'sauce') {
-              return <Ingredient
+              return (<Ingredient
                 key={element._id}
                 element={element}
-                handleOpenIngredientDetails={handleOpenIngredientDetails} />
+                handleOpenIngredientDetails={handleOpenIngredientDetails} />);
             }
           })
           }
@@ -94,11 +94,10 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
         <div className={styles.mains}>
           {data.map((element) => {
             if (element.type === 'main') {
-              return <Ingredient
-
+              return (<Ingredient
                 key={element._id}
                 element={element}
-                handleOpenIngredientDetails={handleOpenIngredientDetails} />
+                handleOpenIngredientDetails={handleOpenIngredientDetails} />);
             }
           })
           }

@@ -8,54 +8,40 @@ import PriceCount from '../price-count/price-count';
 import Modal from '../modal/modal.jsx';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
-import { GET_INGREDIENTS_SUCCESS } from '../../services/actions/ingredients';
+import { getIngredients } from '../../services/actions/ingredients';
 import {
-  SET_INGREDIENT_DETAILS,
-  DELETE_INGREDIENT_DETAILS
+  setIngredientDetails,
+  deleteIngredientDetails
 } from '../../services/actions/ingredient-details';
 import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { GET_ORDER_SUCCESS } from '../../services/actions/order-details'
+import { getOrderDetails } from '../../services/actions/order-details';
 
 function App() {
   const dispatch = useDispatch();
   const data = useSelector(state => state.constructorList.constructorList);
-  const url = 'https://norma.nomoreparties.space/api/ingredients';
+  
+  const idList = React.useMemo(() => {
+    data.map(element => element._id)
+  }, [data])
+
   React.useEffect(() => {
-    fetch(url)
-      .then((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка ${res.status}`)
-      })
-      .then(({ data }) => {
-        dispatch({
-          type: GET_INGREDIENTS_SUCCESS,
-          data
-        })
-      })
-      .catch((err) => console.warn(err))
+    dispatch(getIngredients());
   }, []);
 
   const [isOpen, setOpen] = React.useState(false)
   const [element, setElement] = React.useState();
 
   const handleOpenIngredientDetails = (e, element) => {
-    dispatch({
-      type: SET_INGREDIENT_DETAILS,
-      element
-    })
+    dispatch(setIngredientDetails(element))
     setElement(true);
     setOpen(!isOpen);
   }
 
   const closeModal = () => {
     setOpen(!isOpen);
-    dispatch({
-      type: DELETE_INGREDIENT_DETAILS
-    })
+    dispatch(deleteIngredientDetails())
   }
 
   const handleButtonClick = () => {
@@ -64,43 +50,20 @@ function App() {
     setOpen(!isOpen);
   }
 
+
   const requestOrderDetails = () => {
-    const idList = (data.map(element => element._id))
-    const url = 'https://norma.nomoreparties.space/api/orders';
-    const options = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        ingredients: idList
-      })
-    };
-    fetch(url, options)
-      .then((res) => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка ${res.status}`)
-      })
-      .then(({ success, name, order }) => {
-        dispatch({
-          type: GET_ORDER_SUCCESS,
-          id: order.number
-        })
-      })
-      .catch((err) => console.warn(err))
+    dispatch(getOrderDetails(idList))
   }
 
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="App">
         <AppHeader />
-        <div ></div>
         <main className={styles.content}>
           <section className={styles.ingredients}>
             <p className={`${styles.title} text text_type_main-large mt-10 mb-5`} >
               Соберите бургер
             </p>
-
             <BurgerIngredients
               handleOpenIngredientDetails={handleOpenIngredientDetails} />
           </section>
@@ -117,10 +80,9 @@ function App() {
             </div> : null}
           </section>
         </main>
-        {isOpen ? <Modal onClick={closeModal} onClose={closeModal} >
-
+        {isOpen ? (<Modal onClick={closeModal} onClose={closeModal} >
           {element ? <IngredientDetails /> : <OrderDetails />}
-        </Modal>
+        </Modal>)
           : null}
       </div >
     </DndProvider>

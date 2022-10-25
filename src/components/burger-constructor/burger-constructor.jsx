@@ -4,10 +4,10 @@ import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-comp
 import { useSelector, useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
 import {
-  GET_CONSTRUCTOR_ITEM,
-  DELETE_CONSTRUCTOR_ITEM,
-  GET_BUN_ITEM,
-  MOVE_CONSTRUCTOR_ITEM
+  getConstructorItem,
+  deleteConstructorItem,
+  getBunItem,
+  moveConstructorItem
 } from '../../services/actions/constructor';
 import { nanoid } from "nanoid";
 import BurgerElement from "../burger-element/burger-element";
@@ -17,11 +17,7 @@ export default function BurgerConstructor() {
   const dispatch = useDispatch();
 
   const moveElement = React.useCallback((dragIndex, hoverIndex) => {
-    dispatch({
-      type: MOVE_CONSTRUCTOR_ITEM,
-      dragIndex,
-      hoverIndex
-    })
+    dispatch(moveConstructorItem(dragIndex, hoverIndex))
   }, [])
 
   const [, dropTarget] = useDrop(() => ({
@@ -32,20 +28,11 @@ export default function BurgerConstructor() {
 
   const addConstructorElement = (element) => {
     element = { ...element, id: nanoid() }
-    dispatch({
-      type: GET_CONSTRUCTOR_ITEM,
-      element
-    })
-    dispatch({
-      type: GET_BUN_ITEM,
-      element
-    })
+    dispatch(getConstructorItem(element))
+    dispatch(getBunItem(element))
   }
   const deleteElement = (element) => {
-    dispatch({
-      type: DELETE_CONSTRUCTOR_ITEM,
-      element
-    })
+    dispatch(deleteConstructorItem(element))
   }
 
   const handleDropElement = React.useCallback((element) => {
@@ -57,7 +44,7 @@ export default function BurgerConstructor() {
       <div className={styles.top}>
         {data.map((element) => {
           return element.type === 'bun' &&
-            <div key={element.id} >
+            (<div key={element.id} >
               <ConstructorElement
                 type="top"
                 isLocked={true}
@@ -65,25 +52,25 @@ export default function BurgerConstructor() {
                 price={element.price}
                 thumbnail={element.image}
               />
-            </div>
+            </div>)
         })}
       </div>
       <div className={styles.scroll}>
         {data.map((element, index) => {
           return element.type !== 'bun' &&
-            <BurgerElement
+            (<BurgerElement
               moveElement={moveElement}
               index={index}
               key={element.id}
               onDrop={(item) => handleDropElement(item)}
               id={element.id}
               element={element}
-              deleteElement={() => deleteElement(element)} />
+              deleteElement={() => deleteElement(element)} />)
         })}
       </div>
       <div className={styles.bottom}>{data.map((element) => {
         return element.type === 'bun' &&
-          <div key={element.id}>
+          (<div key={element.id}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
@@ -91,7 +78,7 @@ export default function BurgerConstructor() {
               price={element.price}
               thumbnail={element.image}
             />
-          </div>
+          </div>)
       })}
       </div>
     </div>

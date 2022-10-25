@@ -15,7 +15,10 @@ Ingredient.propTypes = {
 
 export default function Ingredient({ element, handleOpenIngredientDetails }) {
   const data = useSelector(state => state.constructorList.constructorList);
-  const countValue = data.filter((item) => item._id === element._id).length
+  const countValue = React.useMemo(() => {
+    return data.filter((item) => item._id === element._id).length
+  }, [data, element._id]);
+
   const count = element.type !== 'bun'
     ? countValue
     : countValue * 2;

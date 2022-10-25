@@ -5,7 +5,8 @@ import styles from './modal.module.css'
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import PropTypes from 'prop-types';
 
-export default function Modal({ onClick, onClose, children }) {
+export default function Modal({ onClick, onClose, children}) {
+  
   React.useEffect(() => {
     const closeByEsc = ((e) => {
       if (e.key === 'Escape') {
@@ -19,7 +20,7 @@ export default function Modal({ onClick, onClose, children }) {
   return createPortal(
      <>
       <ModalOverlay onMouseDown={onClick} />
-      <div className={styles.modal}>
+      <div  className={styles.modal}>
         {children}
         <div className={styles.icon}>
           <CloseIcon onClick={onClick} />
@@ -35,4 +36,3 @@ Modal.propTypes = {
   onClose: PropTypes.func.isRequired,
   children: PropTypes.element.isRequired
 }
-

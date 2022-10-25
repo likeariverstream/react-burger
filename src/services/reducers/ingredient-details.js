@@ -1,8 +1,10 @@
-import {SET_INGREDIENT_DETAILS, DELETE_INGREDIENT_DETAILS} from '../actions/ingredient-details';
+import {
+  SET_INGREDIENT_DETAILS,
+  DELETE_INGREDIENT_DETAILS
+} from '../actions/ingredient-details';
 
 const ingredientDetailsState = {
   ingredientDetails: {}
-
 }
 
 export const ingredtientDetailsReducer = (state = ingredientDetailsState, action) => {
@@ -15,7 +17,7 @@ export const ingredtientDetailsReducer = (state = ingredientDetailsState, action
     }
     case DELETE_INGREDIENT_DETAILS: {
       return {
-        ...state,
+        ...state, 
         ingredientDetails: {}
       }
     }
