@@ -23,7 +23,7 @@ function App() {
   const data = useSelector(state => state.constructorList.constructorList);
   
   const idList = React.useMemo(() => {
-    data.map(element => element._id)
+    return data.map(element => element._id)
   }, [data])
 
   React.useEffect(() => {
