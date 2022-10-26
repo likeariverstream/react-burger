@@ -27,7 +27,7 @@ export const getOrderDetails = (idList) => {
   };
   return (dispatch) => {
     request(url, options)
-      .then(({ order: { number} }) => {
+      .then(({ order: { number } }) => {
         dispatch(getOrderSucces(number))
       })
       .then(() => dispatch(clearConstructorList()))
