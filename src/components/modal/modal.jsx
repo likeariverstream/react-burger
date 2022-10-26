@@ -27,7 +27,7 @@ export default function Modal({ onClick, onClose, children}) {
         </div>
       </div>
     </>,
-    document.getElementById('root')
+    document.getElementById('modals')
   )
 }
 
