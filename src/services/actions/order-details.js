@@ -31,6 +31,6 @@ export const getOrderDetails = (idList) => {
         dispatch(getOrderSucces(number))
       })
       .then(() => dispatch(clearConstructorList()))
-      .catch((err) => console.warn(err))
+      .catch(console.warn)
   }
 }

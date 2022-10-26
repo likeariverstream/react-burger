@@ -17,6 +17,6 @@ export const getIngredients = () => {
       .then(({ data }) => {
         dispatch(getIngredientsSuccess(data))
       })
-      .catch((err) => console.warn(err))
+      .catch(console.warn)
   }
 }
