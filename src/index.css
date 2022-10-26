@@ -1,5 +1,14 @@
+html {
+  max-width: 1920px;
+  max-height: 1000px;
+  margin: 0 auto;
+}
+
 body {
-  margin: 0;
+  margin: 0 auto 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -10,4 +19,38 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+@-moz-document url-prefix() {
+  :root {
+    scrollbar-color: #8585AD #2F2F37;
+  }
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 12px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: #8585AD;
+  border: 3px solid #2F2F37;
+  border-radius: 6px;
+}
+
+.body::-webkit-scrollbar {
+  width: 12px;
+}
+
+.body::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.body::-webkit-scrollbar-thumb {
+  background: #8585AD;
+  border: 3px solid #2F2F37;
+  border-radius: 6px;
 }

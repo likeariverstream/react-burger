@@ -1,0 +1,55 @@
+
+.scroll {
+  width: 600px;
+  flex-direction: column;
+  display: flex;
+  overflow-y: auto;
+  height: calc(912px - 132px);
+}
+
+.scroll::-webkit-scrollbar {
+  width: 12px;
+}
+
+.scroll::-webkit-scrollbar-track {
+  background: #2F2F37;
+}
+
+.scroll::-webkit-scrollbar-thumb {
+  background: #8585AD;
+  border: 3px solid #2F2F37;
+  border-radius: 6px;
+}
+
+.title {
+  max-width: 640px;
+  text-align: start;
+}
+
+.buns {
+  display: flex;
+  max-width: 600px;
+  flex-wrap: wrap;
+  column-gap: 8px;
+  margin-bottom: 5px;
+}
+
+.sauces {
+  display: flex;
+  max-width: 600px;
+  flex-wrap: wrap;
+  column-gap: 8px;
+  row-gap: 35px;
+}
+
+.mains {
+  display: flex;
+  max-width: 600px;
+  flex-wrap: wrap;
+  column-gap: 8px;
+  row-gap: 35px;
+}
+
+.container {
+  display: flex;
+}

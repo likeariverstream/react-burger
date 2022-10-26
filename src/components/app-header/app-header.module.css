@@ -1,0 +1,110 @@
+.header {
+  background: #1C1C21;
+  min-height: 88px;
+  max-width: 1920px;
+  box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.nav {
+  max-width: 1240px;
+  min-height: 88px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.constructor {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #F2F2F3;
+  min-width: 178px;
+  max-height: 56px;
+}
+
+.icon {
+  width: 24px;
+  height: 22px;
+  transition: .2s ease-in-out;
+
+}
+
+.icon:hover {
+  opacity: .6;
+  cursor: pointer;
+}
+
+.title {
+  display: inline-block;
+  margin: 0 0 0 9px;
+  transition: .2s ease-in-out;
+  color: #8585AD;
+}
+
+.active {
+  transition: .2s ease-in-out;
+  color: #F2F2F3;
+}
+.active:hover {
+  color: #8585AD;
+  cursor: pointer;
+}
+
+
+
+.title:hover {
+  color: #F2F2F3;
+  opacity: .6;
+  cursor: pointer;
+}
+
+
+
+
+.order {
+  display: flex;
+  flex-direction: row;
+  margin-right: 8px;
+  padding: 16px 8px;
+  background: #1C1C21;
+  border-radius: 40px;
+  min-width: 178px;
+  max-height: 56px;
+}
+
+.title {
+  display: inline-block;
+  margin: 0 0 0 9px;
+}
+
+.personal {
+  min-width: 159x;
+  max-height: 56px;
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+}
+
+.logo {
+  justify-self: center;
+  margin-right: 212px;
+}

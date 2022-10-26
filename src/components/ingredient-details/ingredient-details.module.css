@@ -1,0 +1,34 @@
+.ingredient {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.caption {
+  display: grid;
+  row-gap: 8px;
+  column-gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  text-align: center;
+  color: #8585AD;
+  order: 0;
+  align-self: center;
+  flex-grow: 0;
+  width: 520px;
+}
+
+.title {
+  text-align: start;
+  margin: 52px 0 12px 40px;
+}
+
+.subtitle {
+  text-align: center;
+  margin: 15px 0 38px 0;
+}
+
+.image {
+  width: 480px;
+  height: 240px;
+  align-self: center;
+}
