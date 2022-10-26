@@ -15,33 +15,43 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
 
   const handleClick = React.useCallback((value) => {
     value === 'one'
-      ? (bunsRef.current.scrollIntoView())
+      ? bunsRef.current.scrollIntoView({ behavior: 'smooth' })
       : value === 'two'
-        ? saucesRef.current.scrollIntoView()
-        : mainsRef.current.scrollIntoView()
+        ? saucesRef.current.scrollIntoView({ behavior: 'smooth' })
+        : mainsRef.current.scrollIntoView({ behavior: 'smooth' })
     setCurrent(value)
   }, [])
 
   React.useEffect(() => {
-    const toggleTab = () => {
-      const targets = {
-        buns: bunsRef.current.getBoundingClientRect().top,
-        sauces: saucesRef.current.getBoundingClientRect().top,
-        mains: mainsRef.current.getBoundingClientRect().top,
-        scroll: scrollRef.current.scrollTop,
-      }
-      targets.scroll < targets.buns ?
-        setCurrent('one')
-        :
-        targets.buns < targets.scroll < targets.sauces ?
-          setCurrent('two')
-          : targets.sauces < targets.scroll < targets.mains
-            ? setCurrent('three') : setCurrent(false)
+    const targets = [
+      bunsRef.current,
+      saucesRef.current,
+      mainsRef.current
+    ]
+    const options = {
+      root: scrollRef.current,
+      rootMargin: '0px 0px -90% 0px'
     }
-    scrollRef.current.addEventListener('scroll', toggleTab)
-    return scrollRef.current.addEventListener('scroll', toggleTab)
-  }, [])
 
+    const callback = (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+         if (entry.target === bunsRef.current) {
+          setCurrent('one')
+         }
+         if (entry.target === saucesRef.current) {
+          setCurrent('two')
+         }
+         if (entry.target === mainsRef.current) {
+          setCurrent('three')
+         }
+        }
+      })
+
+    }
+    const observer = new IntersectionObserver(callback, options);
+    targets.forEach(target => observer.observe(target));
+  }, [])
 
   return (
     data && <>
@@ -66,10 +76,10 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
         <div className={styles.buns}>
           {data.map((element) => {
             if (element.type === 'bun') {
-              return <Ingredient
+              return (<Ingredient
                 key={element._id}
                 element={element}
-                handleOpenIngredientDetails={handleOpenIngredientDetails} />
+                handleOpenIngredientDetails={handleOpenIngredientDetails} />);
             }
           })
           }
@@ -80,10 +90,10 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
         <div className={styles.sauces}>
           {data.map((element) => {
             if (element.type === 'sauce') {
-              return <Ingredient
+              return (<Ingredient
                 key={element._id}
                 element={element}
-                handleOpenIngredientDetails={handleOpenIngredientDetails} />
+                handleOpenIngredientDetails={handleOpenIngredientDetails} />);
             }
           })
           }
@@ -94,11 +104,10 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
         <div className={styles.mains}>
           {data.map((element) => {
             if (element.type === 'main') {
-              return <Ingredient
-
+              return (<Ingredient
                 key={element._id}
                 element={element}
-                handleOpenIngredientDetails={handleOpenIngredientDetails} />
+                handleOpenIngredientDetails={handleOpenIngredientDetails} />);
             }
           })
           }

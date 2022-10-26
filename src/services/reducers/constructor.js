@@ -1,4 +1,9 @@
-import { GET_CONSTRUCTOR_ITEM, DELETE_CONSTRUCTOR_ITEM, GET_BUN_ITEM, MOVE_CONSTRUCTOR_ITEM } from '../actions/constructor';
+import {
+  GET_CONSTRUCTOR_ITEM,
+  DELETE_CONSTRUCTOR_ITEM,
+  GET_BUN_ITEM, MOVE_CONSTRUCTOR_ITEM,
+  CLEAR_CONSTRUCTOR_LIST
+} from '../actions/constructor';
 import update from 'immutability-helper';
 
 const constructorState = {
@@ -16,18 +21,18 @@ export const constructorReducer = (state = constructorState, action) => {
       }
     }
     case DELETE_CONSTRUCTOR_ITEM: {
-      return {  
+      return {
         ...state,
         constructorList: action.element.type !== 'bun'
           ? state.constructorList.filter((element) => element.id !== action.element.id)
           : [...state.constructorList]
-        }
       }
-      case GET_BUN_ITEM: {
-        return {
-          ...state,
-          constructorList: action.element.type === 'bun'
-          ? [ ...state.constructorList.filter(element => element.type !== 'bun'), action.element] 
+    }
+    case GET_BUN_ITEM: {
+      return {
+        ...state,
+        constructorList: action.element.type === 'bun'
+          ? [...state.constructorList.filter(element => element.type !== 'bun'), action.element]
           : [...state.constructorList]
       }
     }
@@ -35,11 +40,17 @@ export const constructorReducer = (state = constructorState, action) => {
       return {
         ...state,
         constructorList: [...update(state.constructorList, {
-            $splice: [
-              [action.dragIndex, 1],
-              [action.hoverIndex, 0, state.constructorList[action.dragIndex]]
-            ]
-          })]
+          $splice: [
+            [action.dragIndex, 1],
+            [action.hoverIndex, 0, state.constructorList[action.dragIndex]]
+          ]
+        })]
+      }
+    }
+    case CLEAR_CONSTRUCTOR_LIST: {
+      return {
+        ...state,
+        constructorList: []
       }
     }
     default: {

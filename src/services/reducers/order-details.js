@@ -22,6 +22,7 @@ export const orderDetailsReducer = (state = orderDetailsState, action) => {
     case GET_ORDER_SUCCESS: {
       return {
         ...state,
+        orderRequest: false,
         orderFailed: false,
         orderSuccess: false,
         id: action.id

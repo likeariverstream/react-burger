@@ -20,6 +20,5 @@ export default function OrderDetails() {
         Дождитесь готовности на орбитальной станции
       </p>
     </div>
-
   )
 }
