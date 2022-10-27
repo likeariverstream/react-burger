@@ -18,7 +18,7 @@ export default function BurgerConstructor() {
 
   const moveElement = React.useCallback((dragIndex, hoverIndex) => {
     dispatch(moveConstructorItem(dragIndex, hoverIndex))
-  }, [])
+  }, [dispatch])
 
   const [, dropTarget] = useDrop(() => ({
     accept: 'ingredient',
@@ -35,9 +35,6 @@ export default function BurgerConstructor() {
     dispatch(deleteConstructorItem(element))
   }
 
-  const handleDropElement = React.useCallback((element) => {
-    console.log(element.element);
-  }, [])
 
   return (
     <div className={styles.container} ref={dropTarget} >
@@ -62,7 +59,6 @@ export default function BurgerConstructor() {
               moveElement={moveElement}
               index={index}
               key={element.id}
-              onDrop={(item) => handleDropElement(item)}
               id={element.id}
               element={element}
               deleteElement={() => deleteElement(element)} />)

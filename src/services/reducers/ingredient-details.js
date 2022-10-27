@@ -12,7 +12,7 @@ export const ingredtientDetailsReducer = (state = ingredientDetailsState, action
     case SET_INGREDIENT_DETAILS: {
       return {
         ...state,
-        ingredientDetails: action.element
+        ingredientDetails: action.payload
       }
     }
     case DELETE_INGREDIENT_DETAILS: {

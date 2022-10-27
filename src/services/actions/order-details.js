@@ -9,7 +9,7 @@ export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
 
 const getOrderSucces = (id) => ({
   type: GET_ORDER_SUCCESS,
-  id
+  payload: id
 });
 
 export const getOrderRequest = () => ({
