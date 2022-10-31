@@ -18,7 +18,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { getOrderDetails } from '../../services/actions/order-details';
 
-function App() {
+export default function App() {
   const dispatch = useDispatch();
   const data = useSelector(state => state.constructorList.constructorList);
   
@@ -28,7 +28,7 @@ function App() {
 
   React.useEffect(() => {
     dispatch(getIngredients());
-  }, []);
+  }, [dispatch]);
 
   const [isOpen, setOpen] = React.useState(false)
   const [element, setElement] = React.useState();
@@ -87,5 +87,3 @@ function App() {
     </DndProvider>
   )
 }
-
-export default App;

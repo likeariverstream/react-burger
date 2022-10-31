@@ -12,7 +12,7 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
   const mainsRef = React.useRef();
   const scrollRef = React.useRef()
   const [current, setCurrent] = React.useState('one');
-
+  
   const handleClick = React.useCallback((value) => {
     value === 'one'
       ? bunsRef.current.scrollIntoView({ behavior: 'smooth' })

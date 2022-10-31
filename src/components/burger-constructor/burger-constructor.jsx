@@ -7,7 +7,6 @@ import {
   getConstructorItem,
   deleteConstructorItem,
   getBunItem,
-  moveConstructorItem
 } from '../../services/actions/constructor';
 import { nanoid } from "nanoid";
 import BurgerElement from "../burger-element/burger-element";
@@ -16,13 +15,8 @@ export default function BurgerConstructor() {
   const data = useSelector(state => state.constructorList.constructorList);
   const dispatch = useDispatch();
 
-  const moveElement = React.useCallback((dragIndex, hoverIndex) => {
-    dispatch(moveConstructorItem(dragIndex, hoverIndex))
-  }, [dispatch])
-
   const [, dropTarget] = useDrop(() => ({
     accept: 'ingredient',
-    hasOver: () => console.log('цель'),
     drop: (item) => addConstructorElement(item.element)
   }))
 
@@ -35,6 +29,9 @@ export default function BurgerConstructor() {
     dispatch(deleteConstructorItem(element))
   }
 
+  const handleDropElement = React.useCallback((element) => {
+    console.log(element.element);
+  }, [])
 
   return (
     <div className={styles.container} ref={dropTarget} >
@@ -56,9 +53,9 @@ export default function BurgerConstructor() {
         {data.map((element, index) => {
           return element.type !== 'bun' &&
             (<BurgerElement
-              moveElement={moveElement}
               index={index}
               key={element.id}
+              onDrop={(item) => handleDropElement(item)}
               id={element.id}
               element={element}
               deleteElement={() => deleteElement(element)} />)

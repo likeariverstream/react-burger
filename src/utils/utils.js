@@ -1,6 +1,6 @@
-export const request = (url, options) => {
-  return fetch(url, options)
-    .then(checkResponse)
+export const request = async (url, options) => {
+  const res = await fetch(url, options)
+  return checkResponse(res)
 }
 
 const checkResponse = (res) => {

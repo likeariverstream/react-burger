@@ -2,8 +2,6 @@ import React from 'react';
 import styles from './ingredient.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/types';

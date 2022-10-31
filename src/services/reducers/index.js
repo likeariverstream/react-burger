@@ -9,4 +9,4 @@ export const rootReducer = combineReducers({
   constructorList: constructorReducer,
   ingredtientDetails: ingredtientDetailsReducer,
   orderDetails: orderDetailsReducer,
-})
+});

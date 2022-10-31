@@ -4,8 +4,16 @@ import styles from './burger-element.module.css'
 import { useDrop, useDrag } from "react-dnd";
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/types';
+import { useDispatch } from 'react-redux';
+import {
+  moveConstructorItem
+} from '../../services/actions/constructor';
 
-export default function BurgerElement({ element, id, index, deleteElement, moveElement }) {
+export default function BurgerElement({ element, id, index, deleteElement }) {
+  const dispatch = useDispatch();
+  const moveElement = React.useCallback((dragIndex, hoverIndex) => {
+    dispatch(moveConstructorItem(dragIndex, hoverIndex))
+  }, [dispatch])
 
   const [{ handlerId }, drop] = useDrop({
     accept: 'item',
@@ -80,5 +88,4 @@ BurgerElement.propTypes = {
   id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   deleteElement: PropTypes.func.isRequired,
-  moveElement: PropTypes.func.isRequired
 }
