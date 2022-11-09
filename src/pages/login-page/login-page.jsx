@@ -21,6 +21,7 @@ export function LoginPage() {
     }
     dispatch(getUserInfoThunk())
     dispatch(getLoginUser(user));
+    history.push('/profile')
 
   }
 
