@@ -5,6 +5,7 @@ import { useDrag } from "react-dnd";
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/types';
+import { Link, Redirect, useLocation } from 'react-router-dom';
 
 Ingredient.propTypes = {
   element: ingredientType.isRequired,
@@ -16,7 +17,7 @@ export default function Ingredient({ element, handleOpenIngredientDetails }) {
   const countValue = React.useMemo(() => {
     return data.filter((item) => item._id === element._id).length
   }, [data, element._id]);
-
+  
   const count = element.type !== 'bun'
     ? countValue
     : countValue * 2;
@@ -32,20 +33,29 @@ export default function Ingredient({ element, handleOpenIngredientDetails }) {
       didDrop: !!monitor.didDrop()
     })
   }), []);
+  const options = {
+    id: element._id,
+    src: element.image,
+    ref: dragRef,
+    onClick: () => handleOpenIngredientDetails(element),
+    price: element.price,
+    name: element.name,
+  }
+
+  let location = useLocation();
 
   return (
     <div className={styles.ingredient}>
       {count > 0 &&
         <div className={styles.counter}>
-          <Counter id={element._id} count={count} size="default" />
+          <Counter count={count} size="default" />
         </div>}
+
       <img className={styles.image}
         style={{ cursor: didDrop ? 'grab' : 'default' }}
-        ref={dragRef}
-        id={element._id}
-        src={element.image}
+        {...options}
         alt={element.name}
-        onClick={(e) => handleOpenIngredientDetails(e, element)} />
+        />
       <div className={styles.price}>
         <p className="text text_type_digits-default mr-2" >
           {element.price}

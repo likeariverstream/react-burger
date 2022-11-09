@@ -58,25 +58,30 @@ export default function BurgerElement({ element, id, index, deleteElement }) {
 
   })
   const ref = React.useRef(null);
-
   drag(drop(ref));
+  const options = {
+    text: element.name,
+    price: element.price,
+    thumbnail: element.image,
+    
+    id: element.id,
+  }
+
 
   return (
     <div className={styles.box}
+      ref={ref}
       style={{
         opacity: isDragging ? 0.5 : 1
       }}
-      ref={ref}
-      id={element.id}
+      {...options}
       data-handler-id={handlerId}
     >
       <div className={styles.drag}><DragIcon type="primary" /></div>
       <div className={styles.element} >
         <ConstructorElement
-          text={element.name}
-          price={element.price}
-          thumbnail={element.image}
-          handleClose={() => deleteElement(element)}
+        handleClose={() => deleteElement(element)}
+          {...options}
         />
       </div>
     </div>

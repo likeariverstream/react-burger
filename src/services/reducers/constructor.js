@@ -6,11 +6,11 @@ import {
 } from '../actions/constructor';
 import update from 'immutability-helper';
 
-const constructorState = {
+const initialState = {
   constructorList: []
 }
 
-export const constructorReducer = (state = constructorState, action) => {
+export const constructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_CONSTRUCTOR_ITEM: {
       return {

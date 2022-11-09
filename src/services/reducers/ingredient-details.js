@@ -1,13 +1,14 @@
 import {
   SET_INGREDIENT_DETAILS,
-  DELETE_INGREDIENT_DETAILS
+  DELETE_INGREDIENT_DETAILS,
+
 } from '../actions/ingredient-details';
 
-const ingredientDetailsState = {
-  ingredientDetails: {}
+const initialState = {
+  ingredientDetails: {},
 }
 
-export const ingredtientDetailsReducer = (state = ingredientDetailsState, action) => {
+export const ingredientDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_INGREDIENT_DETAILS: {
       return {
@@ -17,7 +18,7 @@ export const ingredtientDetailsReducer = (state = ingredientDetailsState, action
     }
     case DELETE_INGREDIENT_DETAILS: {
       return {
-        ...state, 
+        ...state,
         ingredientDetails: {}
       }
     }

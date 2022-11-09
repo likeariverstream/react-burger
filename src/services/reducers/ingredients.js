@@ -2,21 +2,22 @@
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
-  GET_INGREDIENTS_FAILED
+  GET_INGREDIENTS_FAILED,
 } from '../actions/ingredients'
 
-const ingredientsState = {
+const initialState = {
   ingredientsList: [],
   ingredientDetails: {},
   orderDetails: {},
   ingredientsRequest: false,
   ingredientsSuccess: false,
   ingredientsFailed: false,
-  currentTab: 'one'
+  currentTab: 'one',
 }
 
-export const ingredientsReducer = (state = ingredientsState, action) => {
+export const ingredientsReducer = (state = initialState, action) => {
   switch (action.type) {
+
     case GET_INGREDIENTS_REQUEST: {
       return {
         ...state,
