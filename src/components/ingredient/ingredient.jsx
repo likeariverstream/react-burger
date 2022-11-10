@@ -5,7 +5,6 @@ import { useDrag } from "react-dnd";
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/types';
-import { Link, Redirect, useLocation } from 'react-router-dom';
 
 Ingredient.propTypes = {
   element: ingredientType.isRequired,
@@ -41,8 +40,6 @@ export default function Ingredient({ element, handleOpenIngredientDetails }) {
     price: element.price,
     name: element.name,
   }
-
-  let location = useLocation();
 
   return (
     <div className={styles.ingredient}>

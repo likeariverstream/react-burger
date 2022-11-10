@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 
 
 export function AppHeader() {
-  const login = useSelector(state => state.login.login) || JSON.parse(sessionStorage.getItem('login'));
+  const login = JSON.parse(sessionStorage.getItem('login'));
 
   return (
     <header className={styles.header}>
@@ -45,7 +45,6 @@ export function AppHeader() {
           </p>
         </NavLink>
       </nav>
-
     </header>
   )
 }

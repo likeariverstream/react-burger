@@ -67,7 +67,6 @@ export default function BurgerElement({ element, id, index, deleteElement }) {
     id: element.id,
   }
 
-
   return (
     <div className={styles.box}
       ref={ref}

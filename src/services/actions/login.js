@@ -34,12 +34,10 @@ export const getLoginUser = (user) => {
         const { success, refreshToken, accessToken } = data;
         if (success) {
           sessionStorage
-          .setItem('login', JSON.stringify(true));
+            .setItem('login', JSON.stringify(true));
           dispatch(loginUser(data));
           setCookie('access', accessToken.split('Bearer ')[1]);
           setCookie('refresh', refreshToken);
-          // window.history.pushState('/', '', '/')
-          // window.history.go('/')
         }
       })
       .catch(console.warn)
@@ -69,4 +67,3 @@ export const logoutUserThunk = (user) => {
       .catch(console.warn)
   }
 }
-

@@ -1,5 +1,5 @@
 import {
-  GET_ORDER_REQUEST,
+  DELETE_ORDER,
   GET_ORDER_SUCCESS,
   GET_ORDER_FAILED
 } from '../actions/order-details'
@@ -13,10 +13,11 @@ const initialState = {
 
 export const orderDetailsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_ORDER_REQUEST: {
+    case DELETE_ORDER: {
       return {
         ...state,
-        orderRequest: action.payload
+        id: '',
+        orderSuccess: false
       }
     }
     case GET_ORDER_SUCCESS: {
@@ -24,7 +25,7 @@ export const orderDetailsReducer = (state = initialState, action) => {
         ...state,
         orderRequest: false,
         orderFailed: false,
-        orderSuccess: false,
+        orderSuccess: true,
         id: action.payload
       }
     }

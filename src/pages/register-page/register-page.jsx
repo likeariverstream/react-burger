@@ -69,7 +69,6 @@ export function RegisterPage() {
           htmlType='submit'
           type='primary'
           size='medium'>Зарегистрироваться</Button>
-
         <p className={`${styles.text} text text_type_main-default mt-20 mb-4`}>Уже зарегистрированы?
           <Link to='/login' className={`${styles.link} ml-2`}>Войти</Link></p>
         {success ? <Redirect to={'/login'} /> : <Redirect to={'/register'} />}

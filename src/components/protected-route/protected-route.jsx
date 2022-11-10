@@ -1,11 +1,10 @@
-import { Route } from "react-router-dom";
-import { Redirect } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
+import PropTypes from 'prop-types'
 
-export const ProtectedRoute = ({ children, ...rest }) => {
+export const ProtectedRoute = ({ children }) => {
   const login = JSON.parse(sessionStorage.getItem('login'));
   return (
     <Route
-      {...rest}
       render={() =>
         login ? (
           children
@@ -13,4 +12,8 @@ export const ProtectedRoute = ({ children, ...rest }) => {
       }
     />
   );
+}
+
+ProtectedRoute.propTypes = {
+  children: PropTypes.element.isRequired,
 }

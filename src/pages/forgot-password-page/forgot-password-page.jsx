@@ -5,8 +5,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPasswordSuccessThunk } from '../../services/actions/forgot-password';
 import { Redirect } from 'react-router-dom';
-// это функция компонента страницы восстановления пароля
-// возвращает разметку с инпутами и кнопкой
+
 export function ForgotPasswordPage() {
   const dispatch = useDispatch();
   const history = useHistory()

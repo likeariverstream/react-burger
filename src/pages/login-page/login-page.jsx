@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserInfoThunk } from '../../services/actions/user';
 
 export function LoginPage() {
-
+  
   const dispatch = useDispatch();
   const history = useHistory();
   const login = JSON.parse(sessionStorage.getItem('login'));

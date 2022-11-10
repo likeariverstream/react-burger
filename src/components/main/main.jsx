@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './main.module.css';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import PriceCount from '../price-count/price-count';
+import { PriceCount } from '../price-count/price-count';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';

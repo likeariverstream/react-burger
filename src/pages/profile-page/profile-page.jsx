@@ -98,12 +98,11 @@ export function ProfilePage() {
           className={styles.tab}
           activeClassName={styles.active}>
           <h3 onClick={logoutUser} className='text text_type_main-medium mb-4'>Выход</h3>
-
         </NavLink>
         <p className={`${styles.text} mt-20`}>В этом разделе вы можете
-          изменить свои персональные данные</p>
+          изменять свои персональные данные</p>
       </nav>
-      <section className={styles.section}>
+      <section className={styles.section}>  
         <form className={styles.section} onSubmit={saveInfo}>
           <div className='mt-6'>
             <Input type='text' placeholder={'Имя'} icon={'EditIcon'}

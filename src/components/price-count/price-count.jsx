@@ -3,7 +3,7 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import styles from './price-count.module.css';
 import { useSelector } from "react-redux";
 
-export default function PriceCount() {
+export function PriceCount() {
   const data = useSelector(state => state.constructorList.constructorList)
   const bun = React.useMemo(() => {
     return data.filter(element => element.type === 'bun');

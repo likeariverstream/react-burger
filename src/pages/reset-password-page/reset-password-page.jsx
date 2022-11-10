@@ -3,11 +3,11 @@ import React from 'react';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect } from 'react-router-dom';
 import { getResetPasswordSuccessThunk } from '../../services/actions/reset-password';
-// это функция компонента страницы восстановления пароля
-// возвращает разметку с инпутами и кнопкой
+import { useSelector } from 'react-redux';
+
 export function ResetPasswordPage() {
   const login = JSON.parse(sessionStorage.getItem('login'));
-
+  const recovered = useSelector(state => state.recoverPassword.success)
   const resetPassword = (e) => {
     e.preventDefault();
     getResetPasswordSuccessThunk()
@@ -22,6 +22,10 @@ export function ResetPasswordPage() {
   
   if (login) {
     return (<Redirect to={'/profile'} />)
+  }
+
+  if (!recovered) {
+    return (<Redirect to={'/forgot-password'} />)
   }
 
   return (

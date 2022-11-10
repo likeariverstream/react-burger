@@ -20,7 +20,7 @@ export const getPasswordSuccessThunk = () => {
   return (dispatch) => {
     request(url, options)
       .then(({ success, message }) => {
-     
+        
         dispatch(getPasswordSuccess(success));
       })
       .catch(console.warn);
