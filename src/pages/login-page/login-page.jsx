@@ -7,23 +7,24 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserInfoThunk } from '../../services/actions/user';
 
 export function LoginPage() {
+
   const dispatch = useDispatch();
   const history = useHistory();
-  const order = useSelector(state => state.constructorList.constructorList);
   const login = JSON.parse(sessionStorage.getItem('login'));
-  const info = useSelector(state => state.info.success)
-  const location = useLocation()
-  const handleClick = (e) => {
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     const user = {
       email,
       password
     }
-    dispatch(getUserInfoThunk())
-    dispatch(getLoginUser(user));
-    history.push('/profile')
-
+    dispatch(getLoginUser(user))
   }
+  React.useEffect(() => {
+    if (login) {
+      history.push('/')
+    }
+  }, [login, history])
 
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
@@ -33,17 +34,9 @@ export function LoginPage() {
     alert('Icon Click Callback')
   }
 
-  if (login) {
-    return (
-      <Redirect to={{ pathname: '/profile' }} />)
-  }
-
-  
-
   return (
-
     <main className={styles.main}>
-      <form className={styles.main} onSubmit={handleClick}>
+      <form className={styles.main} onSubmit={handleSubmit}>
         <h3 className={`${styles.title} text text_type_main-medium`}>Вход</h3>
         <div className='mt-6'>
           <Input type='email' placeholder={'E-mail'}

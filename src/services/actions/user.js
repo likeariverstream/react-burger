@@ -1,6 +1,7 @@
 import { baseUrl } from "../../utils/constants";
-import { request } from "../../utils/utils";
+import { request, refreshToken } from "../../utils/utils";
 import { getCookie } from "../../utils/coockie";
+
 
 export const GET_USER_INFO = 'GET_USER_INFO';
 export const PATCH_USER_INFO = 'PATCH_USER_INFO';
@@ -32,7 +33,11 @@ export const getUserInfoThunk = () => {
           dispatch(getUserInfo(data));
         }
       })
-      .catch(console.warn)
+      .catch((err) => {
+        if (err) {
+          refreshToken()
+        }
+      })
   }
 }
 
@@ -59,6 +64,10 @@ export const patchUserInfoThunk = (email, name, password) => {
           dispatch(patchUserInfo(data));
         }
       })
-      .catch(console.warn)
+      .catch((err) => {
+        if (err) {
+          refreshToken()
+        }
+      })
   }
 }

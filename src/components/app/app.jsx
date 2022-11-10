@@ -1,10 +1,5 @@
 import React from 'react';
 import { AppHeader } from '../app-header/app-header';
-import styles from './app.module.css';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import PriceCount from '../price-count/price-count';
 import Modal from '../modal/modal.jsx';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
@@ -18,18 +13,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { getOrderDetails } from '../../services/actions/order-details';
-import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { IngredientPage } from '../../pages/ingredient-page/ingredient-page';
 import { LoginPage } from '../../pages/login-page/login-page';
 import { RegisterPage } from '../../pages/register-page/register-page';
 import { ForgotPasswordPage } from '../../pages/forgot-password-page/forgot-password-page';
 import { ResetPasswordPage } from '../../pages/reset-password-page/reset-password-page';
 import { ProfilePage } from '../../pages/profile-page/profile-page';
+import { ProtectedRoute } from '../protected-route/protected-route';
+import { NotFound404 } from '../../pages/not-found-page/not-found-page';
 
 export default function App() {
-  const login = JSON.parse(sessionStorage.getItem('login'));
+  const login = useSelector(state => state.login.login) || JSON.parse(sessionStorage.getItem('login'));
 
-  const recover = useSelector(state => state.recoverPassword.success);
+
   const dispatch = useDispatch();
   const history = useHistory();
   const data = useSelector(state => state.constructorList.constructorList);
@@ -62,46 +59,49 @@ export default function App() {
     history.replace('/')
   }
 
-  const handleButtonClick = () => {
-
+  const handleButtonClick = React.useCallback(() => {
+    if (login) {
       setElement(false);
-      requestOrderDetails();
+      dispatch(getOrderDetails(idList))
       setOpen(true);
-      history.replace('/profile');
+    }
+    if (!login) {
+      history.push('/login');
+    }
+  }, [dispatch, history, login, idList])
 
-  }
 
-  const requestOrderDetails = () => {
-    dispatch(getOrderDetails(idList))
-  }
 
   return (
-    <Switch >
-
-      <DndProvider backend={HTML5Backend}>
+    
+    <DndProvider backend={HTML5Backend}>
+        <Switch >
         {ingredients && <div className="App">
           <AppHeader />
-          <Route path={`/ingredients/:${_id}`} >
+          <Route path={`/ingredients/:${_id}`}  exact={true}>
             <IngredientPage />
           </Route>
-          <Route path='/login'>
+          <Route path='/login' exact={true}>
             <LoginPage />
           </Route>
-          <Route path='/register'>
+          <Route path='/register' exact={true}>
             <RegisterPage />
           </Route>
-          <Route path='/forgot-password'>
+          <Route path='/forgot-password' exact={true}>
             <ForgotPasswordPage />
           </Route>
-          <Route path='/reset-password'>
+          <Route path='/reset-password' exact={true}>
             <ResetPasswordPage />
           </Route>
-          <Route path='/profile'>
+          <ProtectedRoute path='/profile' exact={true}>
             <ProfilePage />
-          </Route>
+          </ProtectedRoute>
           <Route path='/' exact={true}>
             <Main handleOpenIngredientDetails={handleOpenIngredientDetails}
               handleButtonClick={handleButtonClick} />
+          </Route>
+          <Route>
+            <NotFound404 />
           </Route>
 
           {isOpen ?
@@ -114,7 +114,7 @@ export default function App() {
             )
             : null}
         </div >}
+            </Switch>
       </DndProvider>
-    </Switch>
   )
 }

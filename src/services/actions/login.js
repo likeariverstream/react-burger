@@ -1,9 +1,11 @@
 import { baseUrl } from "../../utils/constants";
 import { request } from "../../utils/utils";
 import { setCookie, getCookie } from "../../utils/coockie";
-import { Redirect } from "react-router-dom";
+
+
 export const LOGIN_USER = 'LOGIN_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
+
 const loginUser = (payload) => ({
   type: LOGIN_USER,
   payload
@@ -31,23 +33,20 @@ export const getLoginUser = (user) => {
       .then((data) => {
         const { success, refreshToken, accessToken } = data;
         if (success) {
+          sessionStorage
+          .setItem('login', JSON.stringify(true));
+          dispatch(loginUser(data));
           setCookie('access', accessToken.split('Bearer ')[1]);
           setCookie('refresh', refreshToken);
-          dispatch(loginUser(data));
-          sessionStorage
-            .setItem('login', JSON.stringify(true));
+          // window.history.pushState('/', '', '/')
+          // window.history.go('/')
         }
-      })
-      .then (() => {
-        return (
-          <Redirect to={{ pathname: '/profile' }} />)
       })
       .catch(console.warn)
   }
 }
 
 export const logoutUserThunk = (user) => {
-
   const url = `${baseUrl}/auth/logout`;
   const options = {
     method: 'POST',

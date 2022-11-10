@@ -6,8 +6,6 @@ const initialState = {
     email: '',
     name: ''
   },
-  // accessToken: '',
-  // refreshToken: ''
 };
 
 export const getUserInfoReducer = (state = initialState, action) => {
@@ -17,8 +15,6 @@ export const getUserInfoReducer = (state = initialState, action) => {
         ...state,
         success: action.payload.success,
         user: action.payload.user,
-        // accessToken: action.payload.accessToken,
-        // refreshToken: action.payload.refreshToken
       }
     }
     case PATCH_USER_INFO: {
@@ -26,8 +22,6 @@ export const getUserInfoReducer = (state = initialState, action) => {
         ...state,
         success: action.payload.success,
         user: action.payload.user,
-        // accessToken: action.payload.accessToken,
-        // refreshToken: action.payload.refreshToken
       }
     }
     default: {

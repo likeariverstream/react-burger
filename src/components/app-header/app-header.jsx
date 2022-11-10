@@ -6,7 +6,8 @@ import { useSelector } from 'react-redux';
 
 
 export function AppHeader() {
-  const success = useSelector(state => state.login.success);
+  const login = useSelector(state => state.login.login) || JSON.parse(sessionStorage.getItem('login'));
+
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -33,7 +34,7 @@ export function AppHeader() {
           </NavLink>
         </div>
         <div className={styles.logo}><Logo /></div>
-        <NavLink to={success ? { pathname: '/profile' } : { pathname: '/login' }}
+        <NavLink to={login ? { pathname: '/profile' } : { pathname: '/login' }}
           className={styles.personal}
         >
           <div className={styles.icon}>

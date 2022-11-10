@@ -1,11 +1,9 @@
 import { LOGIN_USER, LOGOUT_USER } from "../actions/login";
 
 const initialState = {
-  login: false,
+  login: null,
   logout: false,
   user: {},
-  accessToken: '',
-  refreshToken: ''
 };
 
 export const loginUserReducer = (state = initialState, action) => {
@@ -24,8 +22,6 @@ export const loginUserReducer = (state = initialState, action) => {
         login: action.payload.success,
         logout: !action.payload.success,
         user: action.payload.user,
-        accessToken: action.payload.accessToken,
-        refreshToken: action.payload.refreshToken
       }
     }
     default: {
