@@ -1,12 +1,18 @@
 import React from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './price-count.module.css';
-import { useSelector } from "react-redux";
+import { useSelector, TypedUseSelectorHook } from "react-redux";
+import { TrootState } from "../..";
+import { Tingredient } from "../../utils/types";
 
-export function PriceCount() {
-  const data = useSelector(state => state.constructorList.constructorList)
-  const bun = React.useMemo(() => {
-    return data.filter(element => element.type === 'bun');
+
+export const PriceCount = () => {
+  const useTypedSelector: TypedUseSelectorHook<TrootState> = useSelector;
+  const {constructorList: data} = useTypedSelector(state => state.constructorList)
+
+    
+  const bun: Tingredient[] = React.useMemo(() =>  {
+    return data.filter((element) => element.type === 'bun');
   }, [data]) 
 
   const totalPrice = React.useMemo(() => {
@@ -20,3 +26,5 @@ export function PriceCount() {
     </div>
   )
 }
+
+

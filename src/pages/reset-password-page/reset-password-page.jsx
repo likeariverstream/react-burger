@@ -4,8 +4,10 @@ import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { Link, Redirect } from 'react-router-dom';
 import { getResetPasswordSuccessThunk } from '../../services/actions/reset-password';
 import { useSelector } from 'react-redux';
+import { FunctionComponent } from 'react';
 
-export function ResetPasswordPage() {
+export const ResetPasswordPage = ()  => {
+
   const login = JSON.parse(sessionStorage.getItem('login'));
   const recovered = useSelector(state => state.recoverPassword.success)
   const resetPassword = (e) => {
@@ -19,7 +21,7 @@ export function ResetPasswordPage() {
     setTimeout(() => inputRef.current.focus(), 0)
     alert('Icon Click Callback')
   }
-  
+
   if (login) {
     return (<Redirect to={'/profile'} />)
   }
@@ -27,6 +29,7 @@ export function ResetPasswordPage() {
   if (!recovered) {
     return (<Redirect to={'/forgot-password'} />)
   }
+
 
   return (
     <main className={styles.main}>

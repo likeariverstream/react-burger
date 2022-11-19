@@ -1,11 +1,13 @@
 import React from "react";
 import styles from './order-details.module.css';
 import image from '../../images/done.png';
-import { useSelector } from "react-redux";
+import { useSelector, TypedUseSelectorHook } from "react-redux";
+import { TrootState } from "../..";
 
-export function OrderDetails() {
-  const orderId = useSelector(state => state.orderDetails.id);
-  const success = useSelector(state => state.orderDetails.orderSuccess)
+export const OrderDetails = () => {
+  const useTypedSelector: TypedUseSelectorHook<TrootState> = useSelector;
+  const {id: orderId} = useTypedSelector(state => state.orderDetails);
+  const {orderSuccess: success} = useTypedSelector(state => state.orderDetails)
   return (
     success ? (<div className={styles.order}>
       <h2 className={`${styles.title} text text_type_digits-large`}>{orderId}</h2>
@@ -22,6 +24,6 @@ export function OrderDetails() {
       </p>
     </div>) : (<div className={styles.order}>
       <h3 className={`${styles.subtitle} text text_type_main-large`}>Ожидание...</h3>
-    </div>) 
+    </div>)
   )
 }

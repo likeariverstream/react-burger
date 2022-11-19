@@ -66,7 +66,7 @@ export function ProfilePage() {
     name: 'name',
     error: false,
     ref: inputRef,
-    onIconClick: () => onIconClick(),
+    onIconClick: (ref) => onIconClick(ref),
     errorText: 'Ошибка',
     size: 'default',
     extraClass: 'ml-1'

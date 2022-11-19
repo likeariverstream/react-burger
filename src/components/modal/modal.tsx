@@ -1,13 +1,20 @@
-import React from "react";
+import React, { Fragment, ReactNode, FC } from "react";
 import { createPortal } from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './modal.module.css'
 import {ModalOverlay} from "../modal-overlay/modal-overlay";
 import PropTypes from 'prop-types';
 
-export default function Modal({ onClick, onClose, children }) {
+type TModal = {
+  onClick: () => void,
+  onClose: () => void,
+  children: ReactNode,
+  TIconTypes: 'secondary' | 'primary' | 'error' | 'success' 
+}
+
+export const Modal: FC<TModal> = ({ onClick, onClose, children }) => {
   React.useEffect(() => {
-    const closeByEsc = ((e) => {
+    const closeByEsc = ((e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         onClose()
       }
@@ -21,11 +28,11 @@ export default function Modal({ onClick, onClose, children }) {
       <div className={styles.modal}>
         {children}
         <div className={styles.icon}>
-          <CloseIcon onClick={onClick} />
+          <CloseIcon type='primary' onClick={onClick} /> 
         </div>
       </div>
     </>,
-    document.getElementById('modals')
+    document.getElementById('modals') as HTMLDivElement
   )
 }
 

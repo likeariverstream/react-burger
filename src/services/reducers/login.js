@@ -6,9 +6,12 @@ const initialState = {
   user: {},
 };
 
+
+
 export const loginUserReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGOUT_USER: {
+      
       return {
         ...state,
         login: !action.payload.success,
@@ -29,4 +32,3 @@ export const loginUserReducer = (state = initialState, action) => {
     }
   }
 }
-

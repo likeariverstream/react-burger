@@ -11,7 +11,7 @@ const initialState = {
   orderFailed: false
 }
 
-export const orderDetailsReducer = (state = initialState, action) => {
+export const orderDetailsReducer = (state = initialState, action: {type: string, payload: string}) => {
   switch (action.type) {
     case DELETE_ORDER: {
       return {

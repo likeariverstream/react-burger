@@ -2,15 +2,25 @@ import {
   GET_CONSTRUCTOR_ITEM,
   DELETE_CONSTRUCTOR_ITEM,
   GET_BUN_ITEM, MOVE_CONSTRUCTOR_ITEM,
-  CLEAR_CONSTRUCTOR_LIST
+  CLEAR_CONSTRUCTOR_LIST,
 } from '../actions/constructor';
 import update from 'immutability-helper';
+import { Tingredient } from '../../utils/types';
 
-const initialState = {
+type TinitialState = {
+  constructorList: Array<Tingredient>
+}
+
+type Tpayload = {
+  dragIndex: number,
+  hoverIndex: number
+} & Tingredient
+
+const initialState: TinitialState = {
   constructorList: []
 }
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (state = initialState, action: { type: string, payload: Tpayload }): TinitialState => {
   switch (action.type) {
     case GET_CONSTRUCTOR_ITEM: {
       return {
@@ -38,13 +48,14 @@ export const constructorReducer = (state = initialState, action) => {
     }
     case MOVE_CONSTRUCTOR_ITEM: {
       return {
-        ...state, 
+        ...state,
         constructorList: update(state.constructorList, {
           $splice: [
             [action.payload.dragIndex, 1],
             [action.payload.hoverIndex, 0, state.constructorList[action.payload.dragIndex]]
           ]
-        })
+        } as {}
+        )
       }
     }
     case CLEAR_CONSTRUCTOR_LIST: {

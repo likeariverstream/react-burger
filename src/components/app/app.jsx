@@ -1,6 +1,6 @@
 import React from 'react';
 import { AppHeader } from '../app-header/app-header';
-import Modal from '../modal/modal.jsx';
+import { Modal } from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { OrderDetails } from '../order-details/order-details';
 import { getIngredients } from '../../services/actions/ingredients';
@@ -28,7 +28,6 @@ import { deleteOrder } from '../../services/actions/order-details';
 export default function App() {
   const login = useSelector(state => state.login.login) || JSON.parse(sessionStorage.getItem('login'));
   const location = useLocation();
-  const background = location.state && location.state.background;
   const dispatch = useDispatch();
   const history = useHistory();
   const data = useSelector(state => state.constructorList.constructorList);
@@ -77,7 +76,7 @@ export default function App() {
     <DndProvider backend={HTML5Backend}>
       {ingredients && <div className="App">
         <AppHeader />
-        <Switch location={background || location}>
+        <Switch location={location}>
           <Route path={`/ingredients/:${_id}`}>
             <IngredientPage />
           </Route>

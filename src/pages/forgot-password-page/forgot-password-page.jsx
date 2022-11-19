@@ -1,20 +1,19 @@
 import styles from './forgot-password-page.module.css';
 import React from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPasswordSuccessThunk } from '../../services/actions/forgot-password';
 import { Redirect } from 'react-router-dom';
 
 export function ForgotPasswordPage() {
   const dispatch = useDispatch();
-  const history = useHistory()
   const success = useSelector(state => state.recoverPassword.success);
   const login = JSON.parse(sessionStorage.getItem('login'));
 
   const [value, setValue] = React.useState('')
   const inputRef = React.useRef(null)
-  
+
   const onIconClick = () => {
     setTimeout(() => inputRef.current.focus(), 0)
     alert('Icon Click Callback')
@@ -22,11 +21,14 @@ export function ForgotPasswordPage() {
   const handleClick = React.useCallback((e) => {
     e.preventDefault();
     dispatch(getPasswordSuccessThunk());
-    success ? history.push('/reset-password') : history.push('/forgot-password')
-  }, [dispatch, history, success])
+  }, [dispatch])
 
   if (login) {
     return (<Redirect to={'/profile'} />)
+  }
+
+  if (success) {
+    return (<Redirect to={'/reset-password'} />)
   }
 
   return (

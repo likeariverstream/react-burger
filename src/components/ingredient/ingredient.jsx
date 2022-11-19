@@ -3,13 +3,6 @@ import styles from './ingredient.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
-import { ingredientType } from '../../utils/types';
-
-Ingredient.propTypes = {
-  element: ingredientType.isRequired,
-  handleOpenIngredientDetails: PropTypes.func.isRequired
-}
 
 export default function Ingredient({ element, handleOpenIngredientDetails }) {
   const data = useSelector(state => state.constructorList.constructorList);

@@ -3,7 +3,6 @@ import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burg
 import styles from './burger-element.module.css'
 import { useDrop, useDrag } from "react-dnd";
 import PropTypes from 'prop-types';
-import { ingredientType } from '../../utils/types';
 import { useDispatch } from 'react-redux';
 import {
   moveConstructorItem
@@ -85,11 +84,4 @@ export default function BurgerElement({ element, id, index, deleteElement }) {
       </div>
     </div>
   )
-}
-
-BurgerElement.propTypes = {
-  element: ingredientType.isRequired,
-  id: PropTypes.string.isRequired,
-  index: PropTypes.number.isRequired,
-  deleteElement: PropTypes.func.isRequired,
 }
