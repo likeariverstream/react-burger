@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
+export const AppHeader: FC = () => {
 
-export function AppHeader() {
-  const login = JSON.parse(sessionStorage.getItem('login'));
+  const login: boolean = JSON.parse(sessionStorage.getItem('login') as string);
 
   return (
     <header className={styles.header}>

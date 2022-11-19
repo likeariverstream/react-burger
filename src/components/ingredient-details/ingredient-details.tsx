@@ -1,9 +1,10 @@
 import React from "react";
 import styles from './ingredient-details.module.css';
-import { useSelector } from "react-redux";
+import { useTypedSelector } from "../../utils/constants";
 
 export default function IngredientDetails() {
-  const ingredient = useSelector(state => state.ingredientDetails.ingredientDetails)
+
+  const { ingredientDetails: ingredient } = useTypedSelector(state => state.ingredientDetails);
   return (
     ingredient && <div className={styles.ingredient}>
       <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>

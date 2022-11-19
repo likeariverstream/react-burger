@@ -1,21 +1,22 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './main.module.css';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import { BurgerConstructor } from '../burger-constructor/burger-constructor';
+import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { PriceCount } from '../price-count/price-count';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { useTypedSelector } from '../../utils/constants';
+import { Tingredient } from '../../utils/types'
 
-Main.propTypes = {
-  handleOpenIngredientDetails: PropTypes.func.isRequired,
-  handleButtonClick: PropTypes.func.isRequired
+type TMain = {
+  handleOpenIngredientDetails: (element: Tingredient) => void,
+  handleButtonClick: () => void
 }
 
-export default function Main({
+export const Main: FC<TMain> = ({
   handleOpenIngredientDetails,
-  handleButtonClick }) {
-  const data = useSelector(state => state.constructorList.constructorList);
+  handleButtonClick }) => {
+
+  const { constructorList: data } = useTypedSelector(state => state.constructorList);
 
   return (
     <main className={styles.content}>
@@ -26,7 +27,7 @@ export default function Main({
         <BurgerIngredients
           handleOpenIngredientDetails={handleOpenIngredientDetails} />
       </section>
-      <section className={styles.constructor} >
+      <section className={styles.order} >
         <BurgerConstructor />
         {data.length > 0 ? <div className={styles.count}>
           <PriceCount />

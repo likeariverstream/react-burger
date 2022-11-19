@@ -3,6 +3,7 @@ import React, { FC, ReactNode } from 'react';
 
 type TProtectedRoute = {
   children: ReactNode,
+  path: string
 }
 
 export const ProtectedRoute: FC<TProtectedRoute> = ({ children }) => {

@@ -1,22 +1,31 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-element.module.css'
-import { useDrop, useDrag } from "react-dnd";
-import PropTypes from 'prop-types';
+import { useDrop, useDrag, DropTargetMonitor, XYCoord } from "react-dnd";
 import { useDispatch } from 'react-redux';
 import {
   moveConstructorItem
 } from '../../services/actions/constructor';
+import { Tingredient } from '../../utils/types';
 
-export default function BurgerElement({ element, id, index, deleteElement }) {
+type TBurgerElement = {
+  element: Tingredient,
+  id: string | undefined,
+  index: number,
+  deleteElement: (element: Tingredient) => void,
+  handlerId?: string | null
+}
+
+
+export const BurgerElement: FC<TBurgerElement> = ({ element, id, index, deleteElement }) => {
   const dispatch = useDispatch();
-  const moveElement = React.useCallback((dragIndex, hoverIndex) => {
+  const moveElement = React.useCallback((dragIndex: number, hoverIndex: number) => {
     dispatch(moveConstructorItem(dragIndex, hoverIndex))
   }, [dispatch])
 
-  const [{ handlerId }, drop] = useDrop({
+  const [{ handlerId }, drop] = useDrop<TBurgerElement, TBurgerElement, { handlerId: symbol | string | null }>({
     accept: 'item',
-    collect(monitor) {
+    collect(monitor: DropTargetMonitor<TBurgerElement, TBurgerElement>) {
       return {
         handlerId: monitor.getHandlerId()
       }
@@ -25,15 +34,16 @@ export default function BurgerElement({ element, id, index, deleteElement }) {
       if (!ref.current) {
         return
       }
-      const dragIndex = item.index;
-      const hoverIndex = index
+      const dragIndex: number = item.index;
+      const hoverIndex: number = index
       if (dragIndex === hoverIndex) {
         return
       }
-      const hoverBoundingRect = ref.current?.getBoundingClientRect();
-      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset()
-      const hoverClientY = clientOffset.y - hoverBoundingRect.top
+      const rect: HTMLElement = ref.current
+      const hoverBoundingRect: DOMRect = rect?.getBoundingClientRect();
+      const hoverMiddleY: number = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+      const clientOffset: XYCoord | null = monitor.getClientOffset()
+      const hoverClientY: number = clientOffset!.y - hoverBoundingRect.top
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
         return
       }
@@ -62,7 +72,6 @@ export default function BurgerElement({ element, id, index, deleteElement }) {
     text: element.name,
     price: element.price,
     thumbnail: element.image,
-    
     id: element.id,
   }
 
@@ -78,7 +87,7 @@ export default function BurgerElement({ element, id, index, deleteElement }) {
       <div className={styles.drag}><DragIcon type="primary" /></div>
       <div className={styles.element} >
         <ConstructorElement
-        handleClose={() => deleteElement(element)}
+          handleClose={() => deleteElement(element)}
           {...options}
         />
       </div>

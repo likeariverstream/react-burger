@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { AppHeader } from '../app-header/app-header';
 import { Modal } from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { OrderDetails } from '../order-details/order-details';
 import { getIngredients } from '../../services/actions/ingredients';
-import Main from '../main/main';
+import { Main } from '../main/main';
 import {
   setIngredientDetails,
   deleteIngredientDetails
 } from '../../services/actions/ingredient-details';
-import { useDispatch, useSelector } from 'react-redux';
 import { getOrderDetails } from '../../services/actions/order-details';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { IngredientPage } from '../../pages/ingredient-page/ingredient-page';
@@ -23,16 +22,18 @@ import { NotFound404 } from '../../pages/not-found-page/not-found-page';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { deleteOrder } from '../../services/actions/order-details';
+import { useTypedSelector, useAppDispatch } from '../../utils/constants';
+import { Tingredient } from '../../utils/types';
 
-
-export default function App() {
-  const login = useSelector(state => state.login.login) || JSON.parse(sessionStorage.getItem('login'));
+export const App: FC = () => {
+  const { login: loginUser } = useTypedSelector(state => state.login)
+  const login = loginUser || JSON.parse(sessionStorage.getItem('login') as string);
   const location = useLocation();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
-  const data = useSelector(state => state.constructorList.constructorList);
-  const ingredients = useSelector(state => state.ingredients.ingredientsList);
-  const { _id } = useSelector(state => state.ingredientDetails.ingredientDetails);
+  const data = useTypedSelector(state => state.constructorList.constructorList);
+  const ingredients = useTypedSelector(state => state.ingredients.ingredientsList);
+  const { _id } = useTypedSelector(state => state.ingredientDetails.ingredientDetails);
   const idList = React.useMemo(() => {
     return data.map(element => element._id)
   }, [data])
@@ -43,7 +44,7 @@ export default function App() {
     dispatch(getIngredients())
   }, [dispatch]);
 
-  const handleOpenIngredientDetails = React.useCallback((element) => {
+  const handleOpenIngredientDetails = React.useCallback((element: Tingredient): void => {
     const { _id } = element;
     const url = `/ingredients/:${_id}`;
     window.history.pushState(null, '', url);
@@ -80,22 +81,22 @@ export default function App() {
           <Route path={`/ingredients/:${_id}`}>
             <IngredientPage />
           </Route>
-          <Route path='/login' exact={true}>
+          <Route path='/login' exact>
             <LoginPage />
           </Route>
-          <Route path='/register' exact={true}>
+          <Route path='/register' exact>
             <RegisterPage />
           </Route>
-          <Route path='/forgot-password' exact={true}>
+          <Route path='/forgot-password' exact>
             <ForgotPasswordPage />
           </Route>
-          <Route path='/reset-password' exact={true}>
+          <Route path='/reset-password' exact>
             <ResetPasswordPage />
           </Route>
-          <ProtectedRoute path='/profile' exact={true}>
+          <ProtectedRoute path='/profile'>
             <ProfilePage />
           </ProtectedRoute>
-          <Route path='/' exact={true}>
+          <Route path='/' exact>
             <Main handleOpenIngredientDetails={handleOpenIngredientDetails}
               handleButtonClick={handleButtonClick} />
           </Route>

@@ -1,37 +1,39 @@
-import React from "react";
+import React, { FC } from "react";
 import styles from './burger-constructor.module.css';
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
+import { useTypedSelector } from "../../utils/constants";
 import {
   getConstructorItem,
   deleteConstructorItem,
   getBunItem,
 } from '../../services/actions/constructor';
 import { nanoid } from "nanoid";
-import BurgerElement from "../burger-element/burger-element";
+import { BurgerElement } from "../burger-element/burger-element";
+import { Tingredient } from "../../utils/types";
 
-export default function BurgerConstructor() {
-  const data = useSelector(state => state.constructorList.constructorList);
+type Titem = {
+  id: string,
+  element: Tingredient,
+  type: string,
+}
+
+export const BurgerConstructor: FC = () => {
+  const { constructorList: data } = useTypedSelector(state => state.constructorList);
   const dispatch = useDispatch();
-
   const [, dropTarget] = useDrop(() => ({
     accept: 'ingredient',
-    drop: (item) => addConstructorElement(item.element)
+    drop: (item: Titem) => addConstructorElement(item.element)
   }))
-
-  const addConstructorElement = (element) => {
+  const addConstructorElement = (element: Tingredient) => {
     element = { ...element, id: nanoid() }
     dispatch(getConstructorItem(element))
     dispatch(getBunItem(element))
   }
-  const deleteElement = (element) => {
+  const deleteElement = (element: Tingredient) => {
     dispatch(deleteConstructorItem(element))
   }
-
-  const handleDropElement = React.useCallback((element) => {
-    console.log(element.element);
-  }, [])
 
   return (
     <div className={styles.container} ref={dropTarget} >
@@ -55,7 +57,6 @@ export default function BurgerConstructor() {
             (<BurgerElement
               index={index}
               key={element.id}
-              onDrop={(item) => handleDropElement(item)}
               id={element.id}
               element={element}
               deleteElement={() => deleteElement(element)} />)

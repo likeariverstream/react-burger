@@ -1,27 +1,32 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './burger-ingredients.module.css';
-import { useSelector } from 'react-redux';
-import Ingredient from '../ingredient/ingredient';
+import { Ingredient } from '../ingredient/ingredient';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
+import { useTypedSelector } from '../../utils/constants';
+import { Tingredient } from '../../utils/types';
 
-export default function BurgerIngredients({ handleOpenIngredientDetails }) {
-  const data = useSelector(state => state.ingredients.ingredientsList);
-  const bunsRef = React.useRef();
-  const saucesRef = React.useRef();
-  const mainsRef = React.useRef();
-  const scrollRef = React.useRef()
+type TBurgerIngredients = {
+  handleOpenIngredientDetails: (element: Tingredient) => void
+}
+
+export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredientDetails }) => {
+
+  const { ingredientsList: data } = useTypedSelector(state => state.ingredients);
+  const bunsRef = React.useRef<HTMLParagraphElement>(null);
+  const mainsRef = React.useRef<HTMLParagraphElement>(null);
+  const saucesRef = React.useRef<HTMLParagraphElement>(null);
+  const scrollRef = React.useRef<HTMLDivElement>(null)
   const [current, setCurrent] = React.useState('one');
 
-  
-  const handleClick = React.useCallback((value) => {
+  const handleClick = React.useCallback((value: string) => {
     value === 'one'
-      ? bunsRef.current.scrollIntoView({ behavior: 'smooth' })
+      ? bunsRef.current?.scrollIntoView({ behavior: 'smooth' })
       : value === 'two'
-        ? saucesRef.current.scrollIntoView({ behavior: 'smooth' })
-        : mainsRef.current.scrollIntoView({ behavior: 'smooth' })
+        ? saucesRef.current?.scrollIntoView({ behavior: 'smooth' })
+        : mainsRef.current?.scrollIntoView({ behavior: 'smooth' })
     setCurrent(value)
   }, [])
+
 
   React.useEffect(() => {
     const targets = [
@@ -34,24 +39,29 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
       rootMargin: '0px 0px -90% 0px'
     }
 
-    const callback = (entries, observer) => {
-      entries.forEach((entry) => {
+    const callback = (entries: IntersectionObserverEntry[]) => {
+      console.log(entries)
+      entries.forEach((entry: IntersectionObserverEntry) => {
         if (entry.isIntersecting) {
-         if (entry.target === bunsRef.current) {
-          setCurrent('one')
-         }
-         if (entry.target === saucesRef.current) {
-          setCurrent('two')
-         }
-         if (entry.target === mainsRef.current) {
-          setCurrent('three')
-         }
+          if (entry.target === bunsRef.current) {
+            setCurrent('one')
+            console.log(entry)
+          }
+          if (entry.target === saucesRef.current) {
+            setCurrent('two')
+          }
+          if (entry.target === mainsRef.current) {
+            setCurrent('three')
+          }
         }
       })
 
     }
     const observer = new IntersectionObserver(callback, options);
-    targets.forEach(target => observer.observe(target));
+    targets.forEach((target) => {
+      if (target)
+        observer.observe(target);
+    });
   }, [])
 
   return (
@@ -75,7 +85,7 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
           Булки
         </p>
         <div className={styles.buns}>
-          {data.map((element) => {
+          {data.map((element: Tingredient) => {
             if (element.type === 'bun') {
               return (<Ingredient
                 key={element._id}
@@ -89,7 +99,7 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
           Соусы
         </p>
         <div className={styles.sauces}>
-          {data.map((element) => {
+          {data.map((element: Tingredient) => {
             if (element.type === 'sauce') {
               return (<Ingredient
                 key={element._id}
@@ -103,7 +113,7 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
           Начинки
         </p>
         <div className={styles.mains}>
-          {data.map((element) => {
+          {data.map((element: Tingredient) => {
             if (element.type === 'main') {
               return (<Ingredient
                 key={element._id}
@@ -115,8 +125,4 @@ export default function BurgerIngredients({ handleOpenIngredientDetails }) {
         </div>
       </div>
     </>)
-}
-
-BurgerIngredients.propTypes = {
-  handleOpenIngredientDetails: PropTypes.func.isRequired
 }

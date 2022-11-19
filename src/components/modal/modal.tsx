@@ -9,7 +9,7 @@ type TModal = {
   onClick: () => void,
   onClose: () => void,
   children: ReactNode,
-  TIconTypes: 'secondary' | 'primary' | 'error' | 'success' 
+  TIconTypes?: 'secondary' | 'primary' | 'error' | 'success' 
 }
 
 export const Modal: FC<TModal> = ({ onClick, onClose, children }) => {

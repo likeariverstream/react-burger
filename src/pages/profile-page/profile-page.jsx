@@ -6,9 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { patchUserInfoThunk, getUserInfoThunk } from '../../services/actions/user';
 import { logoutUserThunk } from '../../services/actions/login';
 
-// это функция компонента страницы профиля
-// возвращает разметку с инпутами и кнопкой
-
 export function ProfilePage() {
   const dispatch = useDispatch();
   const currentName = useSelector(state => state.info.user.name);
@@ -102,7 +99,7 @@ export function ProfilePage() {
         <p className={`${styles.text} mt-20`}>В этом разделе вы можете
           изменять свои персональные данные</p>
       </nav>
-      <section className={styles.section}>  
+      <section className={styles.section}>
         <form className={styles.section} onSubmit={saveInfo}>
           <div className='mt-6'>
             <Input type='text' placeholder={'Имя'} icon={'EditIcon'}
