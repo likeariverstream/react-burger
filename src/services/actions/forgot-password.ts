@@ -1,14 +1,23 @@
 import { baseUrl } from "../../utils/constants";
 import { request } from '../../utils/utils';
+import { AppThunk, AppDispatch } from "../../utils/types";
 
 export const GET_PASSWORD_SUCCESS = 'GET_PASSWORD_SUCCESS';
 
-const getPasswordSuccess = (payload) => ({
+export interface IGetPasswordSuccess {
+  readonly type: typeof GET_PASSWORD_SUCCESS,
+  readonly payload: boolean
+}
+
+export type TForgotPasswordAcion =
+  | IGetPasswordSuccess
+
+const getPasswordSuccess = (payload: boolean): IGetPasswordSuccess => ({
   type: GET_PASSWORD_SUCCESS,
   payload
 })
 
-export const getPasswordSuccessThunk = () => {
+export const getPasswordSuccessThunk: AppThunk = () => {
   const url = `${baseUrl}/password-reset`;
   const options = {
     method: 'POST',
@@ -17,10 +26,10 @@ export const getPasswordSuccessThunk = () => {
       email: ''
     })
   };
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     request(url, options)
       .then(({ success, message }) => {
-        
+
         dispatch(getPasswordSuccess(success));
       })
       .catch(console.warn);

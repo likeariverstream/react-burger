@@ -1,22 +1,46 @@
 import { baseUrl } from "../../utils/constants";
 import { request, refreshToken } from "../../utils/utils";
 import { getCookie } from "../../utils/coockie";
-
+import { AppDispatch, AppThunk } from "../../utils/types";
 
 export const GET_USER_INFO = 'GET_USER_INFO';
 export const PATCH_USER_INFO = 'PATCH_USER_INFO';
 
-const getUserInfo = (payload) => ({
+export type TUser = {
+  email: string,
+  name: string,
+}
+export type TPayload = {
+  success: boolean,
+  user: TUser | {}
+}
+
+export interface IGetUserInfo {
+  readonly type: typeof GET_USER_INFO,
+  readonly payload: TPayload
+}
+
+export interface IPatchUserInfo {
+  readonly type: typeof PATCH_USER_INFO,
+  readonly payload: TPayload
+}
+
+export type TUserAction =
+  | IGetUserInfo
+  | IPatchUserInfo
+
+
+const getUserInfo = (payload: TPayload): IGetUserInfo => ({
   type: GET_USER_INFO,
   payload
 });
 
-const patchUserInfo = (payload) => ({
+const patchUserInfo = (payload: TPayload): IPatchUserInfo => ({
   type: PATCH_USER_INFO,
   payload
 });
 
-export const getUserInfoThunk = () => {
+export const getUserInfoThunk: AppThunk = () => {
   const url = `${baseUrl}/auth/user`;
   const options = {
     headers: {
@@ -25,7 +49,7 @@ export const getUserInfoThunk = () => {
     }
   };
 
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     request(url, options)
       .then((data) => {
         const { success } = data;
@@ -34,14 +58,16 @@ export const getUserInfoThunk = () => {
         }
       })
       .catch((err) => {
-        if (err) {
-          refreshToken()
+        if (err === 'jwt expired') {
+          refreshToken();
         }
+        getUserInfoThunk();
       })
+      
   }
 }
 
-export const patchUserInfoThunk = (email, name, password) => {
+export const patchUserInfoThunk: AppThunk = (email: string, name: string, password: string) => {
   const url = `${baseUrl}/auth/user`;
   const options = {
     method: 'PATCH',
@@ -56,7 +82,7 @@ export const patchUserInfoThunk = (email, name, password) => {
     })
   };
 
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     request(url, options)
       .then((data) => {
         const { success } = data;

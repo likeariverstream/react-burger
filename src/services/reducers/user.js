@@ -1,11 +1,10 @@
 import { GET_USER_INFO, PATCH_USER_INFO } from "../actions/user";
-
 const initialState = {
   success: false,
   user: {
     email: '',
     name: ''
-  },
+  }
 };
 
 export const getUserInfoReducer = (state = initialState, action) => {

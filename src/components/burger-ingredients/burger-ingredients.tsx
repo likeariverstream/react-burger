@@ -40,12 +40,10 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
     }
 
     const callback = (entries: IntersectionObserverEntry[]) => {
-      console.log(entries)
       entries.forEach((entry: IntersectionObserverEntry) => {
         if (entry.isIntersecting) {
           if (entry.target === bunsRef.current) {
             setCurrent('one')
-            console.log(entry)
           }
           if (entry.target === saucesRef.current) {
             setCurrent('two')

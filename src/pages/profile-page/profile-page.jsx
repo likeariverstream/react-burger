@@ -4,7 +4,7 @@ import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-component
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { patchUserInfoThunk, getUserInfoThunk } from '../../services/actions/user';
-import { logoutUserThunk } from '../../services/actions/login';
+import { logoutUserThunk } from '../../services/actions/login.ts';
 
 export function ProfilePage() {
   const dispatch = useDispatch();
@@ -121,17 +121,19 @@ export function ProfilePage() {
               {...options} />
           </div>
           {render ? <div className={styles.box}>
-            <div className={styles.button}><Button
+            <div className={`${styles.button} pl-6 pr-2`}><Button
               onClick={cancelChanges}
               htmlType='button'
               type='primary'
-              size='medium'>Отмена
-            </Button></div>
+              size='medium'>Отменить
+            </Button>
+            </div>
             <div className={styles.button}><Button
               htmlType='submit'
               type='primary'
               size='medium'>Сохранить
-            </Button></div>
+            </Button>
+            </div>
           </div> : null}
         </form>
       </section >

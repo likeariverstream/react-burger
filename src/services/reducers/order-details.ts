@@ -2,16 +2,24 @@ import {
   DELETE_ORDER,
   GET_ORDER_SUCCESS,
   GET_ORDER_FAILED
-} from '../actions/order-details'
+} from '../actions/order-details';
+import { TUnionAction } from '../../services/actions/index';
 
-const initialState = {
+type TInitialState = {
+  id: string,
+  orderRequest: boolean,
+  orderSuccess: boolean,
+  orderFailed: boolean
+}
+
+const initialState: TInitialState = {
   id: '',
   orderRequest: false,
   orderSuccess: false,
   orderFailed: false
 }
 
-export const orderDetailsReducer = (state = initialState, action: {type: string, payload: string}) => {
+export const orderDetailsReducer = (state = initialState, action: TUnionAction): TInitialState => {
   switch (action.type) {
     case DELETE_ORDER: {
       return {
@@ -31,6 +39,7 @@ export const orderDetailsReducer = (state = initialState, action: {type: string,
     }
     case GET_ORDER_FAILED: {
       return {
+        ...state,
         orderFailed: true,
         orderRequest: false
       }

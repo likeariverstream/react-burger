@@ -3,18 +3,26 @@ import {
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
 } from '../actions/ingredients'
+import { TIngredient } from '../../utils/types';
+import { TUnionAction } from '../actions/index'
 
-const initialState = {
+type TInitialState = {
+  ingredientsList: [] | Array<TIngredient>,
+  ingredientsRequest: boolean,
+  ingredientsSuccess: boolean,
+  ingredientsFailed: boolean,
+  currentTab: string
+}
+
+const initialState: TInitialState = {
   ingredientsList: [],
-  ingredientDetails: {},
-  orderDetails: {},
   ingredientsRequest: false,
   ingredientsSuccess: false,
   ingredientsFailed: false,
-  currentTab: 'one',
+  currentTab: 'one'
 }
 
-export const ingredientsReducer = (state = initialState, action) => {
+export const ingredientsReducer = (state = initialState, action: TUnionAction): TInitialState => {
   switch (action.type) {
 
     case GET_INGREDIENTS_REQUEST: {

@@ -1,6 +1,8 @@
-import { TsetCookie } from "./types";
-
-export const setCookie = ({ name, value, props }: TsetCookie): void => {
+export const setCookie = (
+  name: string,
+  value: string,
+  props: { [key: string]: any } & { expires?: number | Date | string } = {}
+): void => {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
@@ -28,4 +30,8 @@ export const getCookie = (name: string): (string | undefined) => {
     new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)')
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
-} 
+}
+
+export const deleteCookie = (name: string) => {
+  setCookie(name, '', { expires: -1 });
+}

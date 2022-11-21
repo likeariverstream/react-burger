@@ -1,16 +1,16 @@
-import { getCookie } from "./coockie"
+import { getCookie, setCookie } from "./coockie"
 import { baseUrl } from "./constants"
 
 export type Trequest = {
-    method?: string,
-    headers: {
-      'Content-Type': string
-    },
-    body?: string 
+  method?: string,
+  headers: {
+    'Content-Type': string
+  },
+  body?: string
 
 }
 
-export const request = async ( url: string, options?: Trequest): Promise<any> => {
+export const request = async (url: string, options?: Trequest): Promise<any> => {
   const res = await fetch(url, options)
   return checkResponse(res)
 }
@@ -34,6 +34,6 @@ export const refreshToken = () => {
     })
   };
   request(url, options)
-    .then(data => console.log(data))
-    .catch(console.warn)
+    .then(({ accessToken }) => setCookie('access', accessToken))
+    .catch (console.warn)
 }

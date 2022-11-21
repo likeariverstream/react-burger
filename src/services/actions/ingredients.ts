@@ -18,7 +18,7 @@ export interface IGetIngredientsFailed {
   readonly type: typeof GET_INGREDIENTS_FAILED
 }
 
-export type TIngredients =
+export type TIngredientsAction =
   | IGetIngredientsSuccess
   | IGetIngredientsRequest
   | IGetIngredientsFailed

@@ -6,6 +6,7 @@ import {
 } from '../actions/constructor';
 import update from 'immutability-helper';
 import { TIngredient } from '../../utils/types';
+import { TUnionAction } from '../../services/actions'
 
 type TIinitialState = {
   constructorList: Array<TIngredient>
@@ -20,12 +21,13 @@ const initialState: TIinitialState = {
   constructorList: []
 }
 
-export const constructorReducer = (state = initialState, action: { type: string, payload: TPayload }): TIinitialState => {
+export const constructorReducer = (state = initialState, action: TUnionAction): TIinitialState => {
   switch (action.type) {
     case GET_CONSTRUCTOR_ITEM: {
       return {
         ...state,
-        constructorList: !state.constructorList.find(element => element.type === 'bun') || action.payload.type !== 'bun'
+        constructorList: !state.constructorList
+        .find(element => element.type === 'bun') || action.payload.type !== 'bun'
           ? [...state.constructorList, action.payload]
           : [...state.constructorList]
       }
@@ -34,7 +36,8 @@ export const constructorReducer = (state = initialState, action: { type: string,
       return {
         ...state,
         constructorList: action.payload.type !== 'bun'
-          ? state.constructorList.filter((element) => element.id !== action.payload.id)
+          ? state.constructorList
+          .filter((element) => element.id !== action.payload.id)
           : [...state.constructorList]
       }
     }
@@ -42,7 +45,8 @@ export const constructorReducer = (state = initialState, action: { type: string,
       return {
         ...state,
         constructorList: action.payload.type === 'bun'
-          ? [...state.constructorList.filter(element => element.type !== 'bun'), action.payload]
+          ? [...state.constructorList
+            .filter(element => element.type !== 'bun'), action.payload]
           : [...state.constructorList]
       }
     }

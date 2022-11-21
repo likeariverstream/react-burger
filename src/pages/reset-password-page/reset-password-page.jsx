@@ -26,6 +26,7 @@ export const ResetPasswordPage = ()  => {
     return (<Redirect to={'/profile'} />)
   }
 
+  
   if (!recovered) {
     return (<Redirect to={'/forgot-password'} />)
   }

@@ -38,7 +38,7 @@ export const App: FC = () => {
     return data.map(element => element._id)
   }, [data])
   const [isOpen, setOpen] = React.useState(false)
-  const [element, setElement] = React.useState(false);
+  const [element, setElement] = React.useState(false);  
 
   React.useEffect(() => {
     dispatch(getIngredients())
