@@ -3,7 +3,7 @@ import styles from './burger-constructor.module.css';
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDispatch } from "react-redux";
 import { useDrop } from "react-dnd";
-import { useTypedSelector } from "../../utils/constants";
+import { useSelector } from "../../utils/hooks";
 import {
   getConstructorItem,
   deleteConstructorItem,
@@ -20,7 +20,7 @@ type Titem = {
 }
 
 export const BurgerConstructor: FC = () => {
-  const { constructorList: data } = useTypedSelector(state => state.constructorList);
+  const { constructorList: data } = useSelector(state => state.constructorList);
   const dispatch = useDispatch();
   const [, dropTarget] = useDrop(() => ({
     accept: 'ingredient',

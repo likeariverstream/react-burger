@@ -2,14 +2,14 @@ import React, { Fragment, ReactNode, FC } from "react";
 import { createPortal } from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './modal.module.css'
-import {ModalOverlay} from "../modal-overlay/modal-overlay";
+import { ModalOverlay } from "../modal-overlay/modal-overlay";
 import PropTypes from 'prop-types';
 
 type TModal = {
   onClick: () => void,
   onClose: () => void,
   children: ReactNode,
-  TIconTypes?: 'secondary' | 'primary' | 'error' | 'success' 
+  TIconTypes?: 'secondary' | 'primary' | 'error' | 'success'
 }
 
 export const Modal: FC<TModal> = ({ onClick, onClose, children }) => {
@@ -28,7 +28,7 @@ export const Modal: FC<TModal> = ({ onClick, onClose, children }) => {
       <div className={styles.modal}>
         {children}
         <div className={styles.icon}>
-          <CloseIcon type='primary' onClick={onClick} /> 
+          <CloseIcon type='primary' onClick={onClick} />
         </div>
       </div>
     </>,

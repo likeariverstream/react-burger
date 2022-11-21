@@ -1,11 +1,11 @@
 import React from "react";
 import styles from './order-details.module.css';
 import image from '../../images/done.png';
-import { useTypedSelector } from "../../utils/constants";
+import { useSelector } from "../../utils/hooks";
 
 export const OrderDetails = () => {
-  const { id: orderId } = useTypedSelector(state => state.orderDetails);
-  const { orderSuccess: success } = useTypedSelector(state => state.orderDetails)
+  const { id: orderId } = useSelector(state => state.orderDetails);
+  const { orderSuccess: success } = useSelector(state => state.orderDetails)
   return (
     success ? (<div className={styles.order}>
       <h2 className={`${styles.title} text text_type_digits-large`}>{orderId}</h2>

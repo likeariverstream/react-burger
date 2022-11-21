@@ -4,7 +4,7 @@ import { BurgerConstructor } from '../burger-constructor/burger-constructor';
 import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { PriceCount } from '../price-count/price-count';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useTypedSelector } from '../../utils/constants';
+import { useSelector } from '../../utils/hooks';
 import { Tingredient } from '../../utils/types'
 
 type TMain = {
@@ -16,7 +16,7 @@ export const Main: FC<TMain> = ({
   handleOpenIngredientDetails,
   handleButtonClick }) => {
 
-  const { constructorList: data } = useTypedSelector(state => state.constructorList);
+  const { constructorList: data } = useSelector(state => state.constructorList);
 
   return (
     <main className={styles.content}>

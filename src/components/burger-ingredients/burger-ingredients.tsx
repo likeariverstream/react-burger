@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Ingredient } from '../ingredient/ingredient';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useTypedSelector } from '../../utils/constants';
+import { useSelector } from '../../utils/hooks';
 import { Tingredient } from '../../utils/types';
 
 type TBurgerIngredients = {
@@ -11,7 +11,7 @@ type TBurgerIngredients = {
 
 export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredientDetails }) => {
 
-  const { ingredientsList: data } = useTypedSelector(state => state.ingredients);
+  const { ingredientsList: data } = useSelector(state => state.ingredients);
   const bunsRef = React.useRef<HTMLParagraphElement>(null);
   const mainsRef = React.useRef<HTMLParagraphElement>(null);
   const saucesRef = React.useRef<HTMLParagraphElement>(null);

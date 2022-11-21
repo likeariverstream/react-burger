@@ -22,18 +22,18 @@ import { NotFound404 } from '../../pages/not-found-page/not-found-page';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { deleteOrder } from '../../services/actions/order-details';
-import { useTypedSelector, useAppDispatch } from '../../utils/constants';
+import { useSelector, useDispatch } from '../../utils/hooks';
 import { Tingredient } from '../../utils/types';
 
 export const App: FC = () => {
-  const { login: loginUser } = useTypedSelector(state => state.login)
+  const { login: loginUser } = useSelector(state => state.login)
   const login = loginUser || JSON.parse(sessionStorage.getItem('login') as string);
   const location = useLocation();
-  const dispatch = useAppDispatch();
+  const dispatch = useDispatch();
   const history = useHistory();
-  const data = useTypedSelector(state => state.constructorList.constructorList);
-  const ingredients = useTypedSelector(state => state.ingredients.ingredientsList);
-  const { _id } = useTypedSelector(state => state.ingredientDetails.ingredientDetails);
+  const data = useSelector(state => state.constructorList.constructorList);
+  const ingredients = useSelector(state => state.ingredients.ingredientsList);
+  const { _id } = useSelector(state => state.ingredientDetails.ingredientDetails);
   const idList = React.useMemo(() => {
     return data.map(element => element._id)
   }, [data])

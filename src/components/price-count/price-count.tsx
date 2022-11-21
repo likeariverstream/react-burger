@@ -1,14 +1,12 @@
 import React from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './price-count.module.css';
-import { useSelector, TypedUseSelectorHook } from "react-redux";
-import { TrootState } from "../..";
+import { useSelector } from '../../utils/hooks';
 import { Tingredient } from "../../utils/types";
 
 
 export const PriceCount = () => {
-  const useTypedSelector: TypedUseSelectorHook<TrootState> = useSelector;
-  const {constructorList: data} = useTypedSelector(state => state.constructorList)
+  const {constructorList: data} = useSelector(state => state.constructorList)
 
     
   const bun: Tingredient[] = React.useMemo(() =>  {

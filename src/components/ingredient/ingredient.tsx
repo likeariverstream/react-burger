@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import styles from './ingredient.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
-import { useTypedSelector } from '../../utils/constants';
+import { useSelector } from '../../utils/hooks';
 import { Tingredient } from '../../utils/types';
 
 type TIngredient = {
@@ -11,7 +11,7 @@ type TIngredient = {
 }
 
 export const Ingredient: FC<TIngredient> = ({ element, handleOpenIngredientDetails} ) => {
-  const {constructorList: data} = useTypedSelector(state => state.constructorList);
+  const {constructorList: data} = useSelector(state => state.constructorList);
   const countValue = React.useMemo(() => {
     return data.filter((item) => item._id === element._id).length
   }, [data, element._id]);
