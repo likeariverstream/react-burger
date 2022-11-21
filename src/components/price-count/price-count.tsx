@@ -4,17 +4,15 @@ import styles from './price-count.module.css';
 import { useSelector } from '../../utils/hooks';
 import { TIngredient } from "../../utils/types";
 
-
 export const PriceCount = () => {
-  const {constructorList: data} = useSelector(state => state.constructorList)
+  const { constructorList: data } = useSelector(state => state.constructorList)
 
-    
-  const bun: TIngredient[] = React.useMemo(() =>  {
+  const bun: TIngredient[] = React.useMemo(() => {
     return data.filter((element) => element.type === 'bun');
-  }, [data]) 
+  }, [data])
 
   const totalPrice = React.useMemo(() => {
-    return [...data, ...bun].reduce((acc, item) => acc + item.price, 0); 
+    return [...data, ...bun].reduce((acc, item) => acc + item.price, 0);
   }, [data, bun])
 
   return (
@@ -24,5 +22,3 @@ export const PriceCount = () => {
     </div>
   )
 }
-
-

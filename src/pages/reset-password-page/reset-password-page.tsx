@@ -6,8 +6,7 @@ import { getResetPasswordSuccessThunk } from '../../services/actions/reset-passw
 import { useSelector } from '../../utils/hooks';
 
 export const ResetPasswordPage: FC = () => {
-
-  const login = JSON.parse(sessionStorage.getItem('login') as string);
+  
   const recovered = useSelector(state => state.recoverPassword.success)
   const resetPassword: FormEventHandler = (e) => {
     e.preventDefault();

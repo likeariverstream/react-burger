@@ -1,5 +1,6 @@
 import { GET_RESET_PASSWORD_SUCCESS } from '../actions/reset-password'
 import { TUnionAction } from '../actions/index'
+
 type TInitialState = {
   success: boolean
 }

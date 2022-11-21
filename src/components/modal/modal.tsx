@@ -3,7 +3,6 @@ import { createPortal } from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './modal.module.css'
 import { ModalOverlay } from "../modal-overlay/modal-overlay";
-import PropTypes from 'prop-types';
 
 type TModal = {
   onClick: () => void,
@@ -34,10 +33,4 @@ export const Modal: FC<TModal> = ({ onClick, onClose, children }) => {
     </>,
     document.getElementById('modals') as HTMLDivElement
   )
-}
-
-Modal.propTypes = {
-  onClick: PropTypes.func.isRequired,
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.element.isRequired
 }

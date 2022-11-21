@@ -12,11 +12,6 @@ type TIinitialState = {
   constructorList: Array<TIngredient>
 }
 
-type TPayload = {
-  dragIndex: number,
-  hoverIndex: number
-} & TIngredient
-
 const initialState: TIinitialState = {
   constructorList: []
 }

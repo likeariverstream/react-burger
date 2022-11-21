@@ -1,16 +1,15 @@
 import { getCookie, setCookie } from "./coockie"
 import { baseUrl } from "./constants"
 
-export type Trequest = {
+export type TRequest = {
   method?: string,
   headers: {
     'Content-Type': string
   },
   body?: string
-
 }
 
-export const request = async (url: string, options?: Trequest): Promise<any> => {
+export const request = async (url: string, options?: TRequest): Promise<any> => {
   const res = await fetch(url, options)
   return checkResponse(res)
 }

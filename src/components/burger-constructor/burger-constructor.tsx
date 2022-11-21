@@ -13,7 +13,7 @@ import { nanoid } from "nanoid";
 import { BurgerElement } from "../burger-element/burger-element";
 import { TIngredient } from "../../utils/types";
 
-type Titem = {
+type TItem = {
   id: string,
   element: TIngredient,
   type: string,
@@ -24,7 +24,7 @@ export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const [, dropTarget] = useDrop(() => ({
     accept: 'ingredient',
-    drop: (item: Titem) => addConstructorElement(item.element)
+    drop: (item: TItem) => addConstructorElement(item.element)
   }))
   const addConstructorElement = (element: TIngredient) => {
     element = { ...element, id: nanoid() }

@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import { store } from './utils/store'
 import { BrowserRouter as Router } from 'react-router-dom';
 
-
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLDivElement);
 
 root.render(

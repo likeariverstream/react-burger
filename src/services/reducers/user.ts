@@ -1,5 +1,6 @@
 import { GET_USER_INFO, PATCH_USER_INFO } from "../actions/user";
 import { TUnionAction } from "../actions";
+
 type TInitialState = {
   success: boolean,
   user: {
