@@ -10,7 +10,7 @@ export type Trequest = {
 
 }
 
-export const request = async ( url: string, options : Trequest): Promise<any> => {
+export const request = async ( url: string, options?: Trequest): Promise<any> => {
   const res = await fetch(url, options)
   return checkResponse(res)
 }

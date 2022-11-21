@@ -3,10 +3,10 @@ import styles from './burger-ingredients.module.css';
 import { Ingredient } from '../ingredient/ingredient';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from '../../utils/hooks';
-import { Tingredient } from '../../utils/types';
+import { TIngredient } from '../../utils/types';
 
 type TBurgerIngredients = {
-  handleOpenIngredientDetails: (element: Tingredient) => void
+  handleOpenIngredientDetails: (element: TIngredient) => void
 }
 
 export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredientDetails }) => {
@@ -85,7 +85,7 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
           Булки
         </p>
         <div className={styles.buns}>
-          {data.map((element: Tingredient) => {
+          {data.map((element: TIngredient) => {
             if (element.type === 'bun') {
               return (<Ingredient
                 key={element._id}
@@ -99,7 +99,7 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
           Соусы
         </p>
         <div className={styles.sauces}>
-          {data.map((element: Tingredient) => {
+          {data.map((element: TIngredient) => {
             if (element.type === 'sauce') {
               return (<Ingredient
                 key={element._id}
@@ -113,7 +113,7 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
           Начинки
         </p>
         <div className={styles.mains}>
-          {data.map((element: Tingredient) => {
+          {data.map((element: TIngredient) => {
             if (element.type === 'main') {
               return (<Ingredient
                 key={element._id}

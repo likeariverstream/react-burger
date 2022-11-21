@@ -23,7 +23,7 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { deleteOrder } from '../../services/actions/order-details';
 import { useSelector, useDispatch } from '../../utils/hooks';
-import { Tingredient } from '../../utils/types';
+import { TIngredient } from '../../utils/types';
 
 export const App: FC = () => {
   const { login: loginUser } = useSelector(state => state.login)
@@ -44,7 +44,7 @@ export const App: FC = () => {
     dispatch(getIngredients())
   }, [dispatch]);
 
-  const handleOpenIngredientDetails = React.useCallback((element: Tingredient): void => {
+  const handleOpenIngredientDetails = React.useCallback((element: TIngredient): void => {
     const { _id } = element;
     const url = `/ingredients/:${_id}`;
     window.history.pushState(null, '', url);

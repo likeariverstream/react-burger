@@ -11,11 +11,11 @@ import {
 } from '../../services/actions/constructor';
 import { nanoid } from "nanoid";
 import { BurgerElement } from "../burger-element/burger-element";
-import { Tingredient } from "../../utils/types";
+import { TIngredient } from "../../utils/types";
 
 type Titem = {
   id: string,
-  element: Tingredient,
+  element: TIngredient,
   type: string,
 }
 
@@ -26,12 +26,12 @@ export const BurgerConstructor: FC = () => {
     accept: 'ingredient',
     drop: (item: Titem) => addConstructorElement(item.element)
   }))
-  const addConstructorElement = (element: Tingredient) => {
+  const addConstructorElement = (element: TIngredient) => {
     element = { ...element, id: nanoid() }
     dispatch(getConstructorItem(element))
     dispatch(getBunItem(element))
   }
-  const deleteElement = (element: Tingredient) => {
+  const deleteElement = (element: TIngredient) => {
     dispatch(deleteConstructorItem(element))
   }
 

@@ -5,22 +5,22 @@ import {
   CLEAR_CONSTRUCTOR_LIST,
 } from '../actions/constructor';
 import update from 'immutability-helper';
-import { Tingredient } from '../../utils/types';
+import { TIngredient } from '../../utils/types';
 
-type TinitialState = {
-  constructorList: Array<Tingredient>
+type TIinitialState = {
+  constructorList: Array<TIngredient>
 }
 
-type Tpayload = {
+type TPayload = {
   dragIndex: number,
   hoverIndex: number
-} & Tingredient
+} & TIngredient
 
-const initialState: TinitialState = {
+const initialState: TIinitialState = {
   constructorList: []
 }
 
-export const constructorReducer = (state = initialState, action: { type: string, payload: Tpayload }): TinitialState => {
+export const constructorReducer = (state = initialState, action: { type: string, payload: TPayload }): TIinitialState => {
   switch (action.type) {
     case GET_CONSTRUCTOR_ITEM: {
       return {

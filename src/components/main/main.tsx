@@ -5,10 +5,10 @@ import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { PriceCount } from '../price-count/price-count';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from '../../utils/hooks';
-import { Tingredient } from '../../utils/types'
+import { TIngredient } from '../../utils/types'
 
 type TMain = {
-  handleOpenIngredientDetails: (element: Tingredient) => void,
+  handleOpenIngredientDetails: (element: TIngredient) => void,
   handleButtonClick: () => void
 }
 

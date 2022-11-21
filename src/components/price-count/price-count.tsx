@@ -2,14 +2,14 @@ import React from "react";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './price-count.module.css';
 import { useSelector } from '../../utils/hooks';
-import { Tingredient } from "../../utils/types";
+import { TIngredient } from "../../utils/types";
 
 
 export const PriceCount = () => {
   const {constructorList: data} = useSelector(state => state.constructorList)
 
     
-  const bun: Tingredient[] = React.useMemo(() =>  {
+  const bun: TIngredient[] = React.useMemo(() =>  {
     return data.filter((element) => element.type === 'bun');
   }, [data]) 
 

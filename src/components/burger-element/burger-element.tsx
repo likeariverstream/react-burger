@@ -6,13 +6,13 @@ import { useDispatch } from 'react-redux';
 import {
   moveConstructorItem
 } from '../../services/actions/constructor';
-import { Tingredient } from '../../utils/types';
+import { TIngredient } from '../../utils/types';
 
 type TBurgerElement = {
-  element: Tingredient,
+  element: TIngredient,
   id: string | undefined,
   index: number,
-  deleteElement: (element: Tingredient) => void,
+  deleteElement: (element: TIngredient) => void,
   handlerId?: string | null
 }
 

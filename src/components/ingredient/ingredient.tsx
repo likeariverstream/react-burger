@@ -3,14 +3,14 @@ import styles from './ingredient.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import { useSelector } from '../../utils/hooks';
-import { Tingredient } from '../../utils/types';
+import { TIngredient } from '../../utils/types';
 
-type TIngredient = {
-  element: Tingredient,
-  handleOpenIngredientDetails: (element: Tingredient) => void
+type TIngredientComponent = {
+  element: TIngredient,
+  handleOpenIngredientDetails: (element: TIngredient) => void
 }
 
-export const Ingredient: FC<TIngredient> = ({ element, handleOpenIngredientDetails} ) => {
+export const Ingredient: FC<TIngredientComponent> = ({ element, handleOpenIngredientDetails} ) => {
   const {constructorList: data} = useSelector(state => state.constructorList);
   const countValue = React.useMemo(() => {
     return data.filter((item) => item._id === element._id).length
