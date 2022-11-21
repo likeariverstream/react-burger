@@ -2,21 +2,13 @@ import { store } from './store';
 import { ThunkAction } from 'redux-thunk';
 import { TUnionAction } from '../services/actions/index'
 import {
-  Action,
   ActionCreator
 } from 'redux'
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export type AppThunk<ReturnType = void> = ActionCreator<
-  ThunkAction<ReturnType, Action, RootState, TUnionAction>
+  ThunkAction<ReturnType, RootState, never, TUnionAction>
 >;
-
-
-export type TsetCookie = {
-  name: string,
-  value: string,
-  props: { [key: string]: any }
-} & { expires?: string | number | Date }
 
 export type TIngredient = {
   _id: string,
@@ -33,4 +25,3 @@ export type TIngredient = {
   __v: number,
   id?: string
 }
-

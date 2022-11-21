@@ -12,7 +12,7 @@ export type TUser = {
 }
 export type TPayload = {
   success: boolean,
-  user: TUser | {}
+  user: TUser
 }
 
 export interface IGetUserInfo {

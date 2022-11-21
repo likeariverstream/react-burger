@@ -1,18 +1,17 @@
 import styles from './login-page.module.css';
-import React from 'react';
+import React, { FC, FormEventHandler } from 'react';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, Redirect, useHistory, useLocation } from 'react-router-dom';
-import { getLoginUser } from '../../services/actions/login.ts';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserInfoThunk } from '../../services/actions/user';
+import { Link, useHistory } from 'react-router-dom';
+import { getLoginUser } from '../../services/actions/login';
+import { useDispatch } from '../../utils/hooks';
 
-export function LoginPage() {
-  
+export const LoginPage: FC = () => {
+
   const dispatch = useDispatch();
   const history = useHistory();
-  const login = JSON.parse(sessionStorage.getItem('login'));
+  const login = JSON.parse(sessionStorage.getItem('login') as string);
 
-  const handleSubmit = (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const user = {
       email,
@@ -26,11 +25,11 @@ export function LoginPage() {
     }
   }, [login, history])
 
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const inputRef = React.useRef(null)
+  const [email, setEmail] = React.useState<string>('')
+  const [password, setPassword] = React.useState<string>('')
+  const inputRef = React.useRef<HTMLInputElement>(null)
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0)
+    setTimeout(() => inputRef.current?.focus(), 0)
     alert('Icon Click Callback')
   }
 
@@ -51,7 +50,7 @@ export function LoginPage() {
         <div className='mt-6 mb-6'>
           <PasswordInput
             onChange={e => setPassword(e.target.value)}
-            type='password' placeholder={'Пароль'}
+            placeholder={'Пароль'}
             value={password} />
         </div>
         <Button

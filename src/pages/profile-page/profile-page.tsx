@@ -1,16 +1,16 @@
 import styles from './profile-page.module.css';
-import React from 'react';
+import React, { FC, FormEventHandler } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { patchUserInfoThunk, getUserInfoThunk } from '../../services/actions/user';
-import { logoutUserThunk } from '../../services/actions/login.ts';
+import { logoutUserThunk } from '../../services/actions/login';
 
-export function ProfilePage() {
+export const ProfilePage: FC = () => {
   const dispatch = useDispatch();
   const currentName = useSelector(state => state.info.user.name);
   const currentEmail = useSelector(state => state.info.user.email);
-  const login = JSON.parse(sessionStorage.getItem('login'));
+  const login: boolean = JSON.parse(sessionStorage.getItem('login') as string);
 
   const [value, setValue] = React.useState({
     name: currentName,
@@ -28,13 +28,13 @@ export function ProfilePage() {
     })
   }, [currentEmail, currentName])
 
-  const inputRef = React.useRef(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0)
+    setTimeout(() => inputRef.current?.focus(), 0)
   }
 
-  const saveInfo = (e) => {
+  const saveInfo: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const { email, name, password } = value;
     dispatch(patchUserInfoThunk(email, name, password));
@@ -63,9 +63,7 @@ export function ProfilePage() {
     name: 'name',
     error: false,
     ref: inputRef,
-    onIconClick: (ref) => onIconClick(ref),
     errorText: 'Ошибка',
-    size: 'default',
     extraClass: 'ml-1'
   }
 
@@ -102,20 +100,29 @@ export function ProfilePage() {
       <section className={styles.section}>
         <form className={styles.section} onSubmit={saveInfo}>
           <div className='mt-6'>
-            <Input type='text' placeholder={'Имя'} icon={'EditIcon'}
+            <Input type='text'
+              placeholder={'Имя'}
+              icon={'EditIcon'}
+              onIconClick={() => onIconClick()}
               onChange={e => setValue({ ...value, name: e.target.value })}
               value={value.name}
               {...options}
             />
           </div>
           <div className='mt-6'>
-            <Input type='email' placeholder={'Логин'} icon={'EditIcon'}
+            <Input type='email'
+              placeholder={'Логин'}
+              icon={'EditIcon'}
+              onIconClick={() => onIconClick()}
               onChange={e => setValue({ ...value, email: e.target.value })}
               value={value.email}
               {...options} />
           </div>
           <div className='mt-6 mb-6'>
-            <Input type='password' placeholder={'Пароль'} icon={'EditIcon'}
+            <Input type='password'
+              placeholder={'Пароль'}
+              icon={'EditIcon'}
+              onIconClick={() => onIconClick()}
               onChange={e => setValue({ ...value, password: e.target.value })}
               value={value.password}
               {...options} />

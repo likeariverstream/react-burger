@@ -1,9 +1,11 @@
-import React from "react";
+import React, { FC } from "react";
 import styles from './ingredient-page.module.css';
+import { TIngredient } from "../../utils/types";
 
-export function IngredientPage() {
+export const IngredientPage: FC = () => {
 
-  const ingredient = JSON.parse(sessionStorage.getItem('ingredient'));
+  const ingredient: TIngredient = JSON.parse(sessionStorage.getItem('ingredient') as string);
+
   return (
     <div className={styles.ingredient}>
       <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>

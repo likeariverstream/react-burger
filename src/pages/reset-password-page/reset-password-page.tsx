@@ -1,36 +1,29 @@
 import styles from './reset-password-page.module.css';
-import React from 'react';
+import React, { FC, FormEventHandler } from 'react';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, Redirect } from 'react-router-dom';
 import { getResetPasswordSuccessThunk } from '../../services/actions/reset-password';
-import { useSelector } from 'react-redux';
-import { FunctionComponent } from 'react';
+import { useSelector } from '../../utils/hooks';
 
-export const ResetPasswordPage = ()  => {
+export const ResetPasswordPage: FC = () => {
 
-  const login = JSON.parse(sessionStorage.getItem('login'));
+  const login = JSON.parse(sessionStorage.getItem('login') as string);
   const recovered = useSelector(state => state.recoverPassword.success)
-  const resetPassword = (e) => {
+  const resetPassword: FormEventHandler = (e) => {
     e.preventDefault();
     getResetPasswordSuccessThunk()
   }
 
-  const [value, setValue] = React.useState('')
-  const inputRef = React.useRef(null)
+  const [value, setValue] = React.useState<string>('')
+  const inputRef = React.useRef<HTMLInputElement>(null)
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0)
+    setTimeout(() => inputRef.current?.focus(), 0)
     alert('Icon Click Callback')
   }
 
-  if (login) {
-    return (<Redirect to={'/profile'} />)
-  }
-
-  
   if (!recovered) {
     return (<Redirect to={'/forgot-password'} />)
   }
-
 
   return (
     <main className={styles.main}>
@@ -39,7 +32,6 @@ export const ResetPasswordPage = ()  => {
         <div className='mt-6'>
           <PasswordInput
             onChange={e => setValue(e.target.value)}
-            type='password'
             placeholder={'Введите новый пароль'}
             icon={'ShowIcon'} value='' />
         </div>

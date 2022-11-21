@@ -90,9 +90,9 @@ export const App: FC = () => {
           <Route path='/forgot-password' exact>
             <ForgotPasswordPage />
           </Route>
-          <Route path='/reset-password' exact>
+          <ProtectedRoute path='/reset-password' >
             <ResetPasswordPage />
-          </Route>
+          </ProtectedRoute>
           <ProtectedRoute path='/profile'>
             <ProfilePage />
           </ProtectedRoute>

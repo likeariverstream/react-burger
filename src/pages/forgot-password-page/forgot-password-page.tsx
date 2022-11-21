@@ -1,24 +1,24 @@
 import styles from './forgot-password-page.module.css';
-import React from 'react';
+import React, {FC, FormEventHandler} from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { getPasswordSuccessThunk } from '../../services/actions/forgot-password';
 import { Redirect } from 'react-router-dom';
 
-export function ForgotPasswordPage() {
+export const ForgotPasswordPage: FC = () => {
   const dispatch = useDispatch();
-  const success = useSelector(state => state.recoverPassword.success);
-  const login = JSON.parse(sessionStorage.getItem('login'));
+  const success: boolean = useSelector(state => state.recoverPassword.success);
+  const login: boolean = JSON.parse(sessionStorage.getItem('login') as string);
 
-  const [value, setValue] = React.useState('')
-  const inputRef = React.useRef(null)
+  const [value, setValue] = React.useState<string>('')
+  const inputRef = React.useRef<HTMLInputElement>(null)
 
   const onIconClick = () => {
-    setTimeout(() => inputRef.current.focus(), 0)
+    setTimeout(() => inputRef.current?.focus(), 0)
     alert('Icon Click Callback')
   }
-  const handleClick = React.useCallback((e) => {
+  const handleClick: FormEventHandler<HTMLFormElement> = React.useCallback((e) => {
     e.preventDefault();
     dispatch(getPasswordSuccessThunk());
   }, [dispatch])

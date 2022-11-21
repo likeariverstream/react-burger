@@ -1,5 +1,13 @@
 import { GET_USER_INFO, PATCH_USER_INFO } from "../actions/user";
-const initialState = {
+import { TUnionAction } from "../actions";
+type TInitialState = {
+  success: boolean,
+  user: {
+    email: string,
+    name: string
+  }
+}
+const initialState: TInitialState = {
   success: false,
   user: {
     email: '',
@@ -7,7 +15,7 @@ const initialState = {
   }
 };
 
-export const getUserInfoReducer = (state = initialState, action) => {
+export const getUserInfoReducer = (state = initialState, action: TUnionAction): TInitialState => {
   switch (action.type) {
     case GET_USER_INFO: {
       return {

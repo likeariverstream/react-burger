@@ -19,6 +19,6 @@ export const setIngredientDetails = (element: TIngredient): ISetIngredientDetail
   payload: element
 });
 
-export const deleteIngredientDetails = () => ({
+export const deleteIngredientDetails = (): IDeleteIngredientDetails => ({
   type: DELETE_INGREDIENT_DETAILS,
 });

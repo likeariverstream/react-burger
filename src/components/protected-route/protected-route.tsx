@@ -12,8 +12,8 @@ export const ProtectedRoute: FC<TProtectedRoute> = ({ children }) => {
     <Route>
       {login ? (
         children
-      ) : (<Redirect to='/login' />)}
+      ) : (<Redirect to={{ pathname: '/login', state: { from: '/profile' } }} />)
+      || (<Redirect to={{ pathname: '/profile', state: { from: '/reset-password' } }} />)}
     </Route>
   );
 }
-
