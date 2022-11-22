@@ -6,17 +6,17 @@ export const MOVE_CONSTRUCTOR_ITEM = 'CONSTRUCTOR_ITEM';
 
 export const getConstructorItem = (element) => ({
   type: GET_CONSTRUCTOR_ITEM,
-  element
+  payload: element
 });
 
 export const deleteConstructorItem = (element) => ({
   type: DELETE_CONSTRUCTOR_ITEM,
-  element
+  payload: element
 });
 
 export const getBunItem = (element) => ({
   type: GET_BUN_ITEM,
-  element
+  payload: element
 });
 
 export const clearConstructorList = () => ({
@@ -25,6 +25,8 @@ export const clearConstructorList = () => ({
 
 export const moveConstructorItem = (dragIndex, hoverIndex) => ({
   type: MOVE_CONSTRUCTOR_ITEM,
-  dragIndex,
-  hoverIndex
+  payload: {
+    dragIndex,
+    hoverIndex
+  }
 });

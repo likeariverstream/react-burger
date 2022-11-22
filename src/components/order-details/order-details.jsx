@@ -3,10 +3,11 @@ import styles from './order-details.module.css';
 import image from '../../images/done.png';
 import { useSelector } from "react-redux";
 
-export default function OrderDetails() {
+export function OrderDetails() {
   const orderId = useSelector(state => state.orderDetails.id);
+  const success = useSelector(state => state.orderDetails.orderSuccess)
   return (
-    <div className={styles.order}>
+    success ? (<div className={styles.order}>
       <h2 className={`${styles.title} text text_type_digits-large`}>{orderId}</h2>
       <h3 className={`${styles.subtitle} text text_type_main-medium`}>идентификатор заказа</h3>
       <img className={styles.image}
@@ -19,6 +20,8 @@ export default function OrderDetails() {
       <p className={`${styles.message} text text_type_main-small`} >
         Дождитесь готовности на орбитальной станции
       </p>
-    </div>
+    </div>) : (<div className={styles.order}>
+      <h3 className={`${styles.subtitle} text text_type_main-large`}>Ожидание...</h3>
+    </div>) 
   )
 }

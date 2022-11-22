@@ -4,8 +4,16 @@ import styles from './burger-element.module.css'
 import { useDrop, useDrag } from "react-dnd";
 import PropTypes from 'prop-types';
 import { ingredientType } from '../../utils/types';
+import { useDispatch } from 'react-redux';
+import {
+  moveConstructorItem
+} from '../../services/actions/constructor';
 
-export default function BurgerElement({ element, id, index, deleteElement, moveElement }) {
+export default function BurgerElement({ element, id, index, deleteElement }) {
+  const dispatch = useDispatch();
+  const moveElement = React.useCallback((dragIndex, hoverIndex) => {
+    dispatch(moveConstructorItem(dragIndex, hoverIndex))
+  }, [dispatch])
 
   const [{ handlerId }, drop] = useDrop({
     accept: 'item',
@@ -50,25 +58,29 @@ export default function BurgerElement({ element, id, index, deleteElement, moveE
 
   })
   const ref = React.useRef(null);
-
   drag(drop(ref));
+  const options = {
+    text: element.name,
+    price: element.price,
+    thumbnail: element.image,
+    
+    id: element.id,
+  }
 
   return (
     <div className={styles.box}
+      ref={ref}
       style={{
         opacity: isDragging ? 0.5 : 1
       }}
-      ref={ref}
-      id={element.id}
+      {...options}
       data-handler-id={handlerId}
     >
       <div className={styles.drag}><DragIcon type="primary" /></div>
       <div className={styles.element} >
         <ConstructorElement
-          text={element.name}
-          price={element.price}
-          thumbnail={element.image}
-          handleClose={() => deleteElement(element)}
+        handleClose={() => deleteElement(element)}
+          {...options}
         />
       </div>
     </div>
@@ -80,5 +92,4 @@ BurgerElement.propTypes = {
   id: PropTypes.string.isRequired,
   index: PropTypes.number.isRequired,
   deleteElement: PropTypes.func.isRequired,
-  moveElement: PropTypes.func.isRequired
 }

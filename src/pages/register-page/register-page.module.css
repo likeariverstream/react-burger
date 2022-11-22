@@ -1,0 +1,24 @@
+.title {
+  margin-top: 180px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  color: #8585AD;
+}
+
+.link {
+  text-decoration: none;
+  color: #4C4CFF;
+  transition: cubic-bezier(0.215, 0.610, 0.355, 1);
+}
+
+.link:hover {
+  opacity: .7;
+}

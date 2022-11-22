@@ -3,9 +3,9 @@ import styles from './ingredient-details.module.css';
 import { useSelector } from "react-redux";
 
 export default function IngredientDetails() {
-  const ingredient = useSelector(state => state.ingredtientDetails.ingredientDetails)
+  const ingredient = useSelector(state => state.ingredientDetails.ingredientDetails)
   return (
-    <div className={styles.ingredient}>
+    ingredient && <div className={styles.ingredient}>
       <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>
       <img className={styles.image}
         id={ingredient._id}

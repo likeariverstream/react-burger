@@ -6,45 +6,45 @@ import {
 } from '../actions/constructor';
 import update from 'immutability-helper';
 
-const constructorState = {
+const initialState = {
   constructorList: []
 }
 
-export const constructorReducer = (state = constructorState, action) => {
+export const constructorReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_CONSTRUCTOR_ITEM: {
       return {
         ...state,
-        constructorList: !state.constructorList.find(element => element.type === 'bun') || action.element.type !== 'bun'
-          ? [...state.constructorList, action.element]
+        constructorList: !state.constructorList.find(element => element.type === 'bun') || action.payload.type !== 'bun'
+          ? [...state.constructorList, action.payload]
           : [...state.constructorList]
       }
     }
     case DELETE_CONSTRUCTOR_ITEM: {
       return {
         ...state,
-        constructorList: action.element.type !== 'bun'
-          ? state.constructorList.filter((element) => element.id !== action.element.id)
+        constructorList: action.payload.type !== 'bun'
+          ? state.constructorList.filter((element) => element.id !== action.payload.id)
           : [...state.constructorList]
       }
     }
     case GET_BUN_ITEM: {
       return {
         ...state,
-        constructorList: action.element.type === 'bun'
-          ? [...state.constructorList.filter(element => element.type !== 'bun'), action.element]
+        constructorList: action.payload.type === 'bun'
+          ? [...state.constructorList.filter(element => element.type !== 'bun'), action.payload]
           : [...state.constructorList]
       }
     }
     case MOVE_CONSTRUCTOR_ITEM: {
       return {
-        ...state,
-        constructorList: [...update(state.constructorList, {
+        ...state, 
+        constructorList: update(state.constructorList, {
           $splice: [
-            [action.dragIndex, 1],
-            [action.hoverIndex, 0, state.constructorList[action.dragIndex]]
+            [action.payload.dragIndex, 1],
+            [action.payload.hoverIndex, 0, state.constructorList[action.payload.dragIndex]]
           ]
-        })]
+        })
       }
     }
     case CLEAR_CONSTRUCTOR_LIST: {

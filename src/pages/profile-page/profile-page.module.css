@@ -1,0 +1,65 @@
+.section {
+  margin-top: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  align-self: center;
+  justify-self: center;
+  height: 400px;
+  margin-bottom: 32px;
+}
+
+.box {
+  display: flex;
+  flex-direction: row;
+}
+
+.button {
+  width: 165px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.text {
+  color: #8585AD;
+}
+
+.nav {
+  align-self: start;
+  max-width: 320px;
+  margin-top: 121px;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 0 auto;
+  max-width: 1048.4px;
+}
+
+.tab {
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  color: #8585AD;
+  text-decoration: none;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+.tab:hover {
+  cursor: pointer;
+  opacity: .7;
+}
+
+.text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #8585AD;
+  opacity: 0.4;
+}
+
+.active {
+  color: #F2F2F3;
+}

@@ -7,7 +7,7 @@ export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 
 export const getIngredientsSuccess = (data) => ({
   type: GET_INGREDIENTS_SUCCESS,
-  data
+  payload: data,
 })
 
 export const getIngredients = () => {
