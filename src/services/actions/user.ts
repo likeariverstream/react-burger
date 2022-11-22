@@ -3,8 +3,8 @@ import { request, refreshToken } from "../../utils/utils";
 import { getCookie } from "../../utils/coockie";
 import { AppDispatch, AppThunk } from "../../utils/types";
 
-export const GET_USER_INFO = 'GET_USER_INFO';
-export const PATCH_USER_INFO = 'PATCH_USER_INFO';
+export const GET_USER_INFO: 'GET_USER_INFO' = 'GET_USER_INFO';
+export const PATCH_USER_INFO: 'PATCH_USER_INFO' = 'PATCH_USER_INFO';
 
 export type TUser = {
   email: string,
@@ -49,7 +49,7 @@ export const getUserInfoThunk: AppThunk = () => {
     }
   };
 
-  return (dispatch: AppDispatch) => {
+  return (dispatch) => {
     request(url, options)
       .then((data) => {
         const { success } = data;
@@ -82,7 +82,7 @@ export const patchUserInfoThunk: AppThunk = (email: string, name: string, passwo
     })
   };
 
-  return (dispatch: AppDispatch) => {
+  return (dispatch) => {
     request(url, options)
       .then((data) => {
         const { success } = data;

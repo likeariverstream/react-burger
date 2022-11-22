@@ -3,8 +3,8 @@ import { request } from "../../utils/utils";
 import { setCookie, getCookie, deleteCookie } from "../../utils/coockie";
 import { AppDispatch, AppThunk } from "../../utils/types";
 
-export const LOGIN_USER = 'LOGIN_USER';
-export const LOGOUT_USER = 'LOGOUT_USER';
+export const LOGIN_USER: 'LOGIN_USER' = 'LOGIN_USER';
+export const LOGOUT_USER: 'LOGOUT_USER' = 'LOGOUT_USER';
 
 export type TUser = {
   email: string
@@ -46,7 +46,7 @@ export const getLoginUser: AppThunk = (user: TUser) => {
     })
   };
 
-  return (dispatch: AppDispatch) => {
+  return (dispatch) => {
     request(url, options)
       .then((data) => {
         const { success, refreshToken, accessToken } = data;

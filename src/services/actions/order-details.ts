@@ -2,9 +2,10 @@ import { baseUrl } from '../../utils/constants';
 import { request } from '../../utils/utils';
 import { clearConstructorList } from './constructor';
 import { AppDispatch, AppThunk } from '../../utils/types';
-export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
-export const DELETE_ORDER = 'GET_ORDER_REQUEST';
-export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
+
+export const GET_ORDER_SUCCESS: 'GET_ORDER_SUCCESS' = 'GET_ORDER_SUCCESS';
+export const DELETE_ORDER: 'GET_ORDER_REQUEST' = 'GET_ORDER_REQUEST';
+export const GET_ORDER_FAILED: 'GET_ORDER_FAILED' = 'GET_ORDER_FAILED';
 
 export interface IGetOrderSucces {
   type: typeof GET_ORDER_SUCCESS,
@@ -41,7 +42,7 @@ export const getOrderDetails: AppThunk = (idList: string[]) => {
       ingredients: idList
     })
   };
-  return (dispatch: AppDispatch) => {
+  return (dispatch) => {
     console.log()
     request(url, options)
       .then(({ success, order: { number } }) => {
