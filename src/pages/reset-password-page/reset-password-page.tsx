@@ -4,16 +4,23 @@ import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { Link, Redirect } from 'react-router-dom';
 import { getResetPasswordSuccessThunk } from '../../services/actions/reset-password';
 import { useSelector } from '../../utils/hooks';
+import { useForm } from '../../utils/hooks';
 
 export const ResetPasswordPage: FC = () => {
-  
+
   const recovered = useSelector(state => state.recoverPassword.success)
   const resetPassword: FormEventHandler = (e) => {
     e.preventDefault();
     getResetPasswordSuccessThunk()
   }
 
-  const [value, setValue] = React.useState<string>('')
+  const { values, setValues } = useForm({
+    code: '',
+    password: ''
+  });
+
+  const { code, password } = values
+
   const inputRef = React.useRef<HTMLInputElement>(null)
   const onIconClick = () => {
     setTimeout(() => inputRef.current?.focus(), 0)
@@ -30,14 +37,15 @@ export const ResetPasswordPage: FC = () => {
         <h3 className={`${styles.title} text text_type_main-medium`}>Восстановление пароля</h3>
         <div className='mt-6'>
           <PasswordInput
-            onChange={e => setValue(e.target.value)}
+            value={password}
+            onChange={e => setValues({ ...values, password: e.target.value })}
             placeholder={'Введите новый пароль'}
-            icon={'ShowIcon'} value='' />
+            icon={'ShowIcon'} />
         </div>
         <div className='mt-6 mb-6'>
           <Input type='text' placeholder={'Введите код из письма'}
-            onChange={e => setValue(e.target.value)}
-            value={value}
+            onChange={e => setValues({ ...values, code: e.target.value })}
+            value={code}
             name={'name'}
             error={false}
             ref={inputRef}

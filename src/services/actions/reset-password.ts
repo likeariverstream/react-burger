@@ -1,6 +1,6 @@
 import { baseUrl } from "../../utils/constants";
 import { request } from '../../utils/utils';
-import { AppDispatch, AppThunk } from "../../utils/types";
+import { AppThunk } from "../../utils/types";
 
 
 export const GET_RESET_PASSWORD_SUCCESS: 'GET_RESET_PASSWORD_SUCCESS' = 'GET_RESET_PASSWORD_SUCCESS';

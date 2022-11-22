@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { patchUserInfoThunk, getUserInfoThunk } from '../../services/actions/user';
 import { logoutUserThunk } from '../../services/actions/login';
+import { useForm } from '../../utils/hooks';
 
 export const ProfilePage: FC = () => {
   const dispatch = useDispatch();
@@ -12,33 +13,31 @@ export const ProfilePage: FC = () => {
   const currentEmail = useSelector(state => state.info.user.email);
   const login: boolean = JSON.parse(sessionStorage.getItem('login') as string);
 
-  const [value, setValue] = React.useState({
+  const { values, setValues } = useForm({
     name: currentName,
     email: currentEmail,
-    password: '',
+    password: ''
   });
-
-  const render = value.name !== currentName || value.email !== currentEmail || value.password.length > 0
-
-  React.useEffect(() => {
-    setValue({
-      name: currentName,
-      email: currentEmail,
-      password: ''
-    })
-  }, [currentEmail, currentName])
+  
+  const {
+    name,
+    email,
+    password
+  } = values
+  
+  const render: boolean = name !== currentName || email !== currentEmail || password.length > 0
 
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const onIconClick = () => {
-    setTimeout(() => inputRef.current?.focus(), 0)
+    setTimeout(() => inputRef.current?.focus(), 0);
+    
   }
 
   const saveInfo: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const { email, name, password } = value;
     dispatch(patchUserInfoThunk(email, name, password));
-    setValue({
+    setValues({
       name: currentName,
       email: currentEmail,
       password: ''
@@ -46,7 +45,7 @@ export const ProfilePage: FC = () => {
   }
 
   const cancelChanges = () => {
-    setValue({
+    setValues({
       name: '',
       email: '',
       password: ''
@@ -104,8 +103,8 @@ export const ProfilePage: FC = () => {
               placeholder={'Имя'}
               icon={'EditIcon'}
               onIconClick={() => onIconClick()}
-              onChange={e => setValue({ ...value, name: e.target.value })}
-              value={value.name}
+              onChange={e => setValues({ ...values, name: e.target.value })}
+              value={name}
               {...options}
             />
           </div>
@@ -114,8 +113,8 @@ export const ProfilePage: FC = () => {
               placeholder={'Логин'}
               icon={'EditIcon'}
               onIconClick={() => onIconClick()}
-              onChange={e => setValue({ ...value, email: e.target.value })}
-              value={value.email}
+              onChange={e => setValues({ ...values, email: e.target.value })}
+              value={email}
               {...options} />
           </div>
           <div className='mt-6 mb-6'>
@@ -123,8 +122,8 @@ export const ProfilePage: FC = () => {
               placeholder={'Пароль'}
               icon={'EditIcon'}
               onIconClick={() => onIconClick()}
-              onChange={e => setValue({ ...value, password: e.target.value })}
-              value={value.password}
+              onChange={e => setValues({ ...values, password: e.target.value })}
+              value={password}
               {...options} />
           </div>
           {render ? <div className={styles.box}>

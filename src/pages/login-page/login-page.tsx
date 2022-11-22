@@ -4,19 +4,21 @@ import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { Link, useHistory } from 'react-router-dom';
 import { getLoginUser } from '../../services/actions/login';
 import { useDispatch } from '../../utils/hooks';
+import { useForm } from '../../utils/hooks';
+
 
 export const LoginPage: FC = () => {
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch(); 
   const history = useHistory();
   const login = JSON.parse(sessionStorage.getItem('login') as string);
-
+  
+  const {values, setValues} = useForm({email: '', password: ''});
+  const {email, password} = values
+  
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const user = {
-      email,
-      password
-    }
+    const user = values
     dispatch(getLoginUser(user))
   }
   React.useEffect(() => {
@@ -25,13 +27,7 @@ export const LoginPage: FC = () => {
     }
   }, [login, history])
 
-  const [email, setEmail] = React.useState<string>('')
-  const [password, setPassword] = React.useState<string>('')
   const inputRef = React.useRef<HTMLInputElement>(null)
-  const onIconClick = () => {
-    setTimeout(() => inputRef.current?.focus(), 0)
-    alert('Icon Click Callback')
-  }
 
   return (
     <main className={styles.main}>
@@ -39,17 +35,16 @@ export const LoginPage: FC = () => {
         <h3 className={`${styles.title} text text_type_main-medium`}>Вход</h3>
         <div className='mt-6'>
           <Input type='email' placeholder={'E-mail'}
-            onChange={e => setEmail(e.target.value)}
+            onChange={e => setValues({...values, email: e.target.value})}
             value={email}
             name={'name'}
             error={false}
             ref={inputRef}
-            onIconClick={onIconClick}
             errorText={'Ошибка'} />
         </div>
         <div className='mt-6 mb-6'>
           <PasswordInput
-            onChange={e => setPassword(e.target.value)}
+            onChange={e => setValues({...values, password: e.target.value})}
             placeholder={'Пароль'}
             value={password} />
         </div>
