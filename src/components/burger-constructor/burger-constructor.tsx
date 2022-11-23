@@ -66,9 +66,8 @@ export const BurgerConstructor: FC = () => {
         return element.type === 'bun' &&
           (<div key={element.id}>
             <ConstructorElement
-              type="bottom"
               isLocked={true}
-              text={`${element.name} (низ)`}
+              text={element.name}
               price={element.price}
               thumbnail={element.image}
             />

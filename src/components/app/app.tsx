@@ -25,6 +25,7 @@ import { deleteOrder } from '../../services/actions/order-details';
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { TIngredient } from '../../utils/types';
 import { getCookie } from '../../utils/coockie';
+import { FeedPage } from '../../pages/feed-page/feed-page';
 
 type TLocation = ReturnType<typeof useLocation>;
 export type TUseLocation = {
@@ -89,6 +90,12 @@ export const App: FC = () => {
       {ingredients && <div className="App">
         <AppHeader />
         <Switch location={background as TLocation || location}>
+          <Route path='/feed'>
+            <FeedPage />
+          </Route>
+          <Route path='/feed/:id'></Route>
+          <Route path='/profile/orders/'></Route>
+          <Route path='/profile/orders/:id'></Route>
           <Route path={`/ingredients/:${_id}`}>
             <IngredientPage />
           </Route>
@@ -124,8 +131,8 @@ export const App: FC = () => {
             )</Route>}
         {isOpen && <Modal onClick={closeModal} onClose={closeModal} >
           <OrderDetails />
-        </Modal> }
-    
+        </Modal>}
+
       </div>}
     </DndProvider>
   )

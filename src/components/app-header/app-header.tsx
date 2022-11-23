@@ -21,7 +21,7 @@ export const AppHeader: FC = () => {
               Конструктор
             </p>
           </NavLink>
-          <NavLink to='/'
+          <NavLink to='/feed'
             className={styles.order}
           >
             <div className={styles.icon}>
