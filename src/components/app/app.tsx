@@ -24,11 +24,20 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { deleteOrder } from '../../services/actions/order-details';
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { TIngredient } from '../../utils/types';
+import { getCookie } from '../../utils/coockie';
+
+type TLocation = ReturnType<typeof useLocation>;
+export type TUseLocation = {
+  [key: string]: string | null | TUseLocation | TLocation,
+};
+
 
 export const App: FC = () => {
-  const { login: loginUser } = useSelector(state => state.login)
-  const login = loginUser || JSON.parse(sessionStorage.getItem('login') as string);
-  const location = useLocation();
+  const { isLoggedIn } = useSelector(state => state.login)
+  const login = isLoggedIn || !!getCookie('access')
+  const location = useLocation<TUseLocation>();
+  console.log(location)
+  let background = location.state && location.state.background
   const dispatch = useDispatch();
   const history = useHistory();
   const data = useSelector(state => state.constructorList.constructorList);
@@ -38,7 +47,6 @@ export const App: FC = () => {
     return data.map(element => element._id)
   }, [data])
   const [isOpen, setOpen] = React.useState(false)
-  const [element, setElement] = React.useState(false);  
 
   React.useEffect(() => {
     dispatch(getIngredients())
@@ -47,24 +55,27 @@ export const App: FC = () => {
   const handleOpenIngredientDetails = React.useCallback((element: TIngredient): void => {
     const { _id } = element;
     const url = `/ingredients/:${_id}`;
-    window.history.pushState(null, '', url);
-    sessionStorage
+    history.push({
+      pathname: url,
+      state: {
+        background: location,
+        element: element
+      }
+    })
+    localStorage
       .setItem('ingredient', JSON.stringify(element));
     dispatch(setIngredientDetails(element))
-    setElement(true);
-    setOpen(!isOpen);
-  }, [dispatch, isOpen]);
+  }, [dispatch, history, location]);
 
   const closeModal = () => {
     setOpen(false);
     dispatch(deleteIngredientDetails());
     dispatch(deleteOrder());
-    history.replace('/');
+    history.goBack()
   }
 
   const handleButtonClick = React.useCallback(() => {
     if (login) {
-      setElement(false);
       dispatch(getOrderDetails(idList))
       setOpen(true);
     }
@@ -77,7 +88,7 @@ export const App: FC = () => {
     <DndProvider backend={HTML5Backend}>
       {ingredients && <div className="App">
         <AppHeader />
-        <Switch location={location}>
+        <Switch location={background as TLocation || location}>
           <Route path={`/ingredients/:${_id}`}>
             <IngredientPage />
           </Route>
@@ -104,15 +115,17 @@ export const App: FC = () => {
             <NotFound404 />
           </Route>
         </Switch>
-        {isOpen ?
-          (
+        {background &&
+          <Route path={`/ingredients/:${_id}`}>
+            (
             <Modal onClick={closeModal} onClose={closeModal} >
-              {element ?
-                <IngredientDetails />
-                : <OrderDetails />}
+              <IngredientDetails />
             </Modal>
-          )
-          : null}
+            )</Route>}
+        {isOpen && <Modal onClick={closeModal} onClose={closeModal} >
+          <OrderDetails />
+        </Modal> }
+    
       </div>}
     </DndProvider>
   )

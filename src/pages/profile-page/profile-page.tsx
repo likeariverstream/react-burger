@@ -6,12 +6,15 @@ import { useDispatch, useSelector } from '../../utils/hooks';
 import { patchUserInfoThunk, getUserInfoThunk } from '../../services/actions/user';
 import { logoutUserThunk } from '../../services/actions/login';
 import { useForm } from '../../utils/hooks';
+import { getCookie } from '../../utils/coockie';
+
 
 export const ProfilePage: FC = () => {
+ const login: boolean = !!getCookie('access')
+ console.log(login)
   const dispatch = useDispatch();
   const currentName = useSelector(state => state.info.user.name);
   const currentEmail = useSelector(state => state.info.user.email);
-  const login: boolean = JSON.parse(sessionStorage.getItem('login') as string);
 
   const { values, setValues } = useForm({
     name: currentName,
@@ -54,8 +57,7 @@ export const ProfilePage: FC = () => {
 
   const logoutUser = React.useCallback(() => {
     dispatch(logoutUserThunk());
-    sessionStorage
-      .setItem('login', JSON.stringify(false));
+
   }, [dispatch])
 
   const options = {

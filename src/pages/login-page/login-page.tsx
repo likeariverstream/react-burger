@@ -5,17 +5,16 @@ import { Link, useHistory } from 'react-router-dom';
 import { getLoginUser } from '../../services/actions/login';
 import { useDispatch } from '../../utils/hooks';
 import { useForm } from '../../utils/hooks';
-
+import { getCookie } from '../../utils/coockie';
 
 export const LoginPage: FC = () => {
-
+  const login: boolean = !!getCookie('access')
+  console.log(login)
   const dispatch = useDispatch(); 
   const history = useHistory();
-  const login = JSON.parse(sessionStorage.getItem('login') as string);
-  
   const {values, setValues} = useForm({email: '', password: ''});
   const {email, password} = values
-  
+  console.log(history)
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const user = values
@@ -25,7 +24,7 @@ export const LoginPage: FC = () => {
     if (login) {
       history.push('/')
     }
-  }, [login, history])
+  }, [history, login])
 
   const inputRef = React.useRef<HTMLInputElement>(null)
 

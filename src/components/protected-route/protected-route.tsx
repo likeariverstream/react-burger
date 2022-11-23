@@ -1,19 +1,18 @@
-import { Route, Redirect } from "react-router-dom";
-import React, { FC, ReactNode } from 'react';
+import { Route, Redirect, useLocation, RouteProps } from "react-router-dom";
+import React, { FC } from 'react';
+import { getCookie } from '../../utils/coockie'
 
-type TProtectedRoute = {
-  children: ReactNode,
-  path: string
-}
+type TProtectedRoute = RouteProps & { children?: React.ReactNode }
 
 export const ProtectedRoute: FC<TProtectedRoute> = ({ children }) => {
-  const login: boolean = JSON.parse(sessionStorage.getItem('login') as string);
+  const login: boolean = !!getCookie('access');
+  const location = useLocation();
   return (
     <Route>
       {login ? (
         children
-      ) : (<Redirect to={{ pathname: '/login', state: { from: '/profile' } }} />)
-      || (<Redirect to={{ pathname: '/profile', state: { from: '/reset-password' } }} />)}
+      ) : (<Redirect to={{ pathname: '/login', state: { from: location } }} />)
+      || (<Redirect to={{ pathname: '/profile', state: { from: location } }} />)}
     </Route>
   );
 }

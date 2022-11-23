@@ -51,8 +51,6 @@ export const getLoginUser: AppThunk = (user: TUser) => {
       .then((data) => {
         const { success, refreshToken, accessToken } = data;
         if (success) {
-          sessionStorage
-            .setItem('login', JSON.stringify(true));
           dispatch(loginUser(success));
           setCookie('access', accessToken.split('Bearer ')[1]);
           setCookie('refresh', refreshToken);

@@ -2,11 +2,11 @@ import React, { FC } from 'react';
 import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink } from 'react-router-dom';
+import { getCookie } from '../../utils/coockie';
 
 export const AppHeader: FC = () => {
 
-  const login: boolean = JSON.parse(sessionStorage.getItem('login') as string);
-
+  const login: boolean = !!getCookie('access')
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>

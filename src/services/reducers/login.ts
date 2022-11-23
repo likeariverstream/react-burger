@@ -2,13 +2,13 @@ import { LOGIN_USER, LOGOUT_USER } from "../actions/login";
 import { TUnionAction } from '../actions/index'
 
 type TInitialState = {
-  login: boolean,
-  logout: boolean,
+  isLoggedIn: boolean,
+  isLoggedOut: boolean,
 }
 
 const initialState = {
-  login: false,
-  logout: false,
+  isLoggedIn: false,
+  isLoggedOut: false,
 };
 
 export const loginUserReducer = (state = initialState, action: TUnionAction): TInitialState => {
@@ -16,15 +16,15 @@ export const loginUserReducer = (state = initialState, action: TUnionAction): TI
     case LOGOUT_USER: {
       return {
         ...state,
-        login: !action.payload,
-        logout: action.payload,
+        isLoggedIn: !action.payload,
+        isLoggedOut: action.payload,
       }
     }
     case LOGIN_USER: {
       return {
         ...state,
-        login: action.payload,
-        logout: !action.payload,
+        isLoggedIn: action.payload,
+        isLoggedOut: !action.payload,
       }
     }
     default: {

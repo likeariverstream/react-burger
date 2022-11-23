@@ -5,12 +5,12 @@ import { Link, Redirect } from 'react-router-dom';
 import { getRegisterUser } from '../../services/actions/register'
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { useForm } from '../../utils/hooks';
+import { getCookie } from '../../utils/coockie';
 
 export const RegisterPage: FC = () => {
   const success = useSelector(state => state.user.success);
-  const login: boolean = JSON.parse(sessionStorage.getItem('login') as string);
-
   const dispatch = useDispatch();
+  const login: boolean = !!getCookie('access')
   const { values, setValues } = useForm({
     name: '',
     email: '',

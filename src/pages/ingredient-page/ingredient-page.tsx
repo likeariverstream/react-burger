@@ -4,7 +4,7 @@ import { TIngredient } from "../../utils/types";
 
 export const IngredientPage: FC = () => {
 
-  const ingredient: TIngredient = JSON.parse(sessionStorage.getItem('ingredient') as string);
+  const ingredient: TIngredient = JSON.parse(localStorage.getItem('ingredient') as string);
 
   return (
     <div className={styles.ingredient}>

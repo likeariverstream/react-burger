@@ -83,7 +83,7 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
           Булки
         </p>
         <div className={styles.buns}>
-          {data.map((element: TIngredient) => {
+          {data.map((element) => {
             if (element.type === 'bun') {
               return (<Ingredient
                 key={element._id}
@@ -97,7 +97,7 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
           Соусы
         </p>
         <div className={styles.sauces}>
-          {data.map((element: TIngredient) => {
+          {data.map((element) => {
             if (element.type === 'sauce') {
               return (<Ingredient
                 key={element._id}
@@ -111,7 +111,7 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
           Начинки
         </p>
         <div className={styles.mains}>
-          {data.map((element: TIngredient) => {
+          {data.map((element) => {
             if (element.type === 'main') {
               return (<Ingredient
                 key={element._id}
