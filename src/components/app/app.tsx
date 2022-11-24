@@ -24,16 +24,22 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { deleteOrder } from '../../services/actions/order-details';
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { TIngredient } from '../../utils/types';
+import { getCookie } from '../../utils/coockie';
 import { FeedPage } from '../../pages/feed-page/feed-page';
+import { FeedDetails } from '../../pages/feed-details/feed-details';
+import { ProfileOrderInfo } from '../../pages/profile-order-info/profile-order-info'
 
 type TLocation = ReturnType<typeof useLocation>;
 export type TUseLocation = {
   [key: string]: string | null | TUseLocation | TLocation,
 };
 
+
 export const App: FC = () => {
   const { isLoggedIn } = useSelector(state => state.login)
+  const login = isLoggedIn || !!getCookie('access')
   const location = useLocation<TUseLocation>();
+  console.log(location)
   let background = location.state && location.state.background
   const dispatch = useDispatch();
   const history = useHistory();
@@ -68,32 +74,38 @@ export const App: FC = () => {
     setOpen(false);
     dispatch(deleteIngredientDetails());
     dispatch(deleteOrder());
-    history.goBack()
+    history.push('/')
   }
 
   const handleButtonClick = React.useCallback(() => {
-    if (isLoggedIn) {
+    if (login) {
       dispatch(getOrderDetails(idList))
       setOpen(true);
     }
-    if (!isLoggedIn) {
+    if (!login) {
       history.push('/login');
     }
-  }, [dispatch, history, isLoggedIn, idList])
+  }, [dispatch, history, login, idList])
+
+  // const feedId = useSelector(state => state.orderDetails.id)
+  const feedId = `3455`
+  const orderId = `2222`
 
   return (
     <DndProvider backend={HTML5Backend}>
       {ingredients && <div className="App">
         <AppHeader />
         <Switch location={background as TLocation || location}>
-          <Route path='/feed'>
+          <Route path='/feed' exact>
             <FeedPage />
           </Route>
-          <Route path='/feed/:id'></Route>
-          <Route path='/profile/orders/'></Route>
-          <Route path='/profile/orders/:id'></Route>
-          <Route></Route>
-          <Route></Route>
+          <Route path={`/feed/:${feedId}`}>
+            <FeedDetails />
+          </Route>
+
+          <Route path={`/profile/orders/:${orderId}`}>
+            <ProfileOrderInfo />
+          </Route>
           <Route path={`/ingredients/:${_id}`}>
             <IngredientPage />
           </Route>

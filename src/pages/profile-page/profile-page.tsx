@@ -1,17 +1,17 @@
 import styles from './profile-page.module.css';
 import React, { FC, FormEventHandler } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { patchUserInfoThunk, getUserInfoThunk } from '../../services/actions/user';
 import { logoutUserThunk } from '../../services/actions/login';
 import { useForm } from '../../utils/hooks';
 import { getCookie } from '../../utils/coockie';
-
+import { ProfileOrders } from '../profile-orders/profile-orders';
 
 export const ProfilePage: FC = () => {
- const login: boolean = !!getCookie('access')
- console.log(login)
+  const login: boolean = !!getCookie('access')
+  console.log(login)
   const dispatch = useDispatch();
   const currentName = useSelector(state => state.info.user.name);
   const currentEmail = useSelector(state => state.info.user.email);
@@ -21,20 +21,20 @@ export const ProfilePage: FC = () => {
     email: currentEmail,
     password: ''
   });
-  
+
   const {
     name,
     email,
     password
   } = values
-  
+
   const render: boolean = name !== currentName || email !== currentEmail || password.length > 0
 
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const onIconClick = () => {
     setTimeout(() => inputRef.current?.focus(), 0);
-    
+
   }
 
   const saveInfo: FormEventHandler<HTMLFormElement> = (e) => {
@@ -76,6 +76,7 @@ export const ProfilePage: FC = () => {
 
   return (
     <main className={styles.main}>
+
       <nav className={`${styles.nav} mr-15`}>
         <NavLink
           to={{ pathname: '/profile' }} exact={true}
@@ -98,6 +99,10 @@ export const ProfilePage: FC = () => {
         <p className={`${styles.text} mt-20`}>В этом разделе вы можете
           изменять свои персональные данные</p>
       </nav>
+      <Route path='/profile/orders/'>
+        <ProfileOrders />
+      </Route>
+      <Route path='/profile' exact>
       <section className={styles.section}>
         <form className={styles.section} onSubmit={saveInfo}>
           <div className='mt-6'>
@@ -145,6 +150,7 @@ export const ProfilePage: FC = () => {
           </div> : null}
         </form>
       </section >
+      </Route>
     </main>
   )
 }
