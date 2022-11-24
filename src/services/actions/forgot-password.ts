@@ -20,7 +20,7 @@ const getPasswordSuccess = (payload: boolean): IGetPasswordSuccess => ({
 export const getPasswordSuccessThunk: AppThunk = () => {
   const url = `${baseUrl}/password-reset`;
   const options = {
-    method: 'POST' | 'GET',
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       email: ''

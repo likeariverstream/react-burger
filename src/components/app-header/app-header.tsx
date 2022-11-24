@@ -2,11 +2,11 @@ import React, { FC } from 'react';
 import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { NavLink } from 'react-router-dom';
-import { getCookie } from '../../utils/coockie';
+import { useSelector } from '../../utils/hooks';
 
 export const AppHeader: FC = () => {
+  const { isLoggedIn } = useSelector(state => state.login)
 
-  const login: boolean = !!getCookie('access')
   return (
     <header className={styles.header}>
       <nav className={styles.nav}>
@@ -33,7 +33,7 @@ export const AppHeader: FC = () => {
           </NavLink>
         </div>
         <div className={styles.logo}><Logo /></div>
-        <NavLink to={login ? { pathname: '/profile' } : { pathname: '/login' }}
+        <NavLink to={isLoggedIn ? { pathname: '/profile' } : { pathname: '/login' }}
           className={styles.personal}
         >
           <div className={styles.icon}>

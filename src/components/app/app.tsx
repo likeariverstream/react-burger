@@ -24,7 +24,6 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { deleteOrder } from '../../services/actions/order-details';
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { TIngredient } from '../../utils/types';
-import { getCookie } from '../../utils/coockie';
 import { FeedPage } from '../../pages/feed-page/feed-page';
 
 type TLocation = ReturnType<typeof useLocation>;
@@ -32,12 +31,9 @@ export type TUseLocation = {
   [key: string]: string | null | TUseLocation | TLocation,
 };
 
-
 export const App: FC = () => {
   const { isLoggedIn } = useSelector(state => state.login)
-  const login = isLoggedIn || !!getCookie('access')
   const location = useLocation<TUseLocation>();
-  console.log(location)
   let background = location.state && location.state.background
   const dispatch = useDispatch();
   const history = useHistory();
@@ -76,14 +72,14 @@ export const App: FC = () => {
   }
 
   const handleButtonClick = React.useCallback(() => {
-    if (login) {
+    if (isLoggedIn) {
       dispatch(getOrderDetails(idList))
       setOpen(true);
     }
-    if (!login) {
+    if (!isLoggedIn) {
       history.push('/login');
     }
-  }, [dispatch, history, login, idList])
+  }, [dispatch, history, isLoggedIn, idList])
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -96,6 +92,8 @@ export const App: FC = () => {
           <Route path='/feed/:id'></Route>
           <Route path='/profile/orders/'></Route>
           <Route path='/profile/orders/:id'></Route>
+          <Route></Route>
+          <Route></Route>
           <Route path={`/ingredients/:${_id}`}>
             <IngredientPage />
           </Route>

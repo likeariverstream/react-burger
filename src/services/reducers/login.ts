@@ -1,5 +1,6 @@
 import { LOGIN_USER, LOGOUT_USER } from "../actions/login";
-import { TUnionAction } from '../actions/index'
+import { TUnionAction } from '../actions/index';
+import { getCookie } from '../../utils/coockie'
 
 type TInitialState = {
   isLoggedIn: boolean,
@@ -7,8 +8,8 @@ type TInitialState = {
 }
 
 const initialState = {
-  isLoggedIn: false,
-  isLoggedOut: false,
+  isLoggedIn: !!getCookie('access') ? true : false,
+  isLoggedOut: false
 };
 
 export const loginUserReducer = (state = initialState, action: TUnionAction): TInitialState => {
