@@ -8,12 +8,11 @@ import { useSelector } from '../../utils/hooks';
 import { TIngredient } from '../../utils/types'
 
 type TMain = {
-  handleOpenIngredientDetails: (element: TIngredient) => void,
   handleButtonClick: () => void
 }
 
 export const Main: FC<TMain> = ({
-  handleOpenIngredientDetails,
+ 
   handleButtonClick }) => {
 
   const { constructorList: data } = useSelector(state => state.constructorList);
@@ -24,8 +23,7 @@ export const Main: FC<TMain> = ({
         <p className={`${styles.title} text text_type_main-large mt-10 mb-5`} >
           Соберите бургер
         </p>
-        <BurgerIngredients
-          handleOpenIngredientDetails={handleOpenIngredientDetails} />
+        <BurgerIngredients />
       </section>
       <section className={styles.order} >
         <BurgerConstructor />

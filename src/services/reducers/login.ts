@@ -8,7 +8,7 @@ type TInitialState = {
 }
 
 const initialState = {
-  isLoggedIn: !!getCookie ? true: false,
+  isLoggedIn: !!getCookie('access') ? true: false,
   isLoggedOut: false,
 };
 
@@ -17,7 +17,7 @@ export const loginUserReducer = (state = initialState, action: TUnionAction): TI
     case LOGOUT_USER: {
       return {
         ...state,
-        isLoggedIn: !action.payload,
+        isLoggedIn: false,
         isLoggedOut: action.payload,
       }
     }

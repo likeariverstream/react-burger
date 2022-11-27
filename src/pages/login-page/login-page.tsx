@@ -9,12 +9,10 @@ import { getCookie } from '../../utils/coockie';
 
 export const LoginPage: FC = () => {
   const login: boolean = !!getCookie('access')
-  console.log(login)
   const dispatch = useDispatch(); 
   const history = useHistory();
   const {values, setValues} = useForm({email: '', password: ''});
   const {email, password} = values
-  console.log(history)
   const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
     const user = values

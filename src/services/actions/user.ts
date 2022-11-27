@@ -58,12 +58,11 @@ export const getUserInfoThunk: AppThunk = () => {
         }
       })
       .catch((err) => {
-        if (err === 'jwt expired') {
-          refreshToken();
-        }
+        console.warn(err)
+        refreshToken();
         getUserInfoThunk();
       })
-      
+
   }
 }
 

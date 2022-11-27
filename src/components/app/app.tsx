@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 import { AppHeader } from '../app-header/app-header';
 import { Modal } from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -24,10 +24,10 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { deleteOrder } from '../../services/actions/order-details';
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { TIngredient } from '../../utils/types';
-import { getCookie } from '../../utils/coockie';
 import { FeedPage } from '../../pages/feed-page/feed-page';
 import { FeedDetails } from '../../pages/feed-details/feed-details';
-import { ProfileOrderInfo } from '../../pages/profile-order-info/profile-order-info'
+import { ProfileOrderInfo } from '../../pages/profile-order-info/profile-order-info';
+import { ProfileOrders } from '../../pages/profile-orders/profile-orders'
 
 type TLocation = ReturnType<typeof useLocation>;
 export type TUseLocation = {
@@ -37,9 +37,8 @@ export type TUseLocation = {
 
 export const App: FC = () => {
   const { isLoggedIn } = useSelector(state => state.login)
-  const login = isLoggedIn || !!getCookie('access')
+  const login = isLoggedIn
   const location = useLocation<TUseLocation>();
-  console.log(location)
   let background = location.state && location.state.background
   const dispatch = useDispatch();
   const history = useHistory();
@@ -55,20 +54,7 @@ export const App: FC = () => {
     dispatch(getIngredients())
   }, [dispatch]);
 
-  const handleOpenIngredientDetails = React.useCallback((element: TIngredient): void => {
-    const { _id } = element;
-    const url = `/ingredients/:${_id}`;
-    history.push({
-      pathname: url,
-      state: {
-        background: location,
-        element: element
-      }
-    })
-    localStorage
-      .setItem('ingredient', JSON.stringify(element));
-    dispatch(setIngredientDetails(element))
-  }, [dispatch, history, location]);
+
 
   const closeModal = () => {
     setOpen(false);
@@ -86,11 +72,7 @@ export const App: FC = () => {
       history.push('/login');
     }
   }, [dispatch, history, login, idList])
-
-  // const feedId = useSelector(state => state.orderDetails.id)
-  const feedId = `3455`
-  const orderId = `2222`
-
+  const orderId = '344343'
   return (
     <DndProvider backend={HTML5Backend}>
       {ingredients && <div className="App">
@@ -99,14 +81,16 @@ export const App: FC = () => {
           <Route path='/feed' exact>
             <FeedPage />
           </Route>
-          <Route path={`/feed/:${feedId}`}>
+          <Route path={`/feed/:id`}>
             <FeedDetails />
           </Route>
-
           <Route path={`/profile/orders/:${orderId}`}>
             <ProfileOrderInfo />
+          </Route >
+          <Route path='/profile/orders/'>
+            <ProfileOrders />
           </Route>
-          <Route path={`/ingredients/:${_id}`}>
+          <Route path={`/ingredients/:id`}>
             <IngredientPage />
           </Route>
           <Route path='/login' exact>
@@ -125,7 +109,7 @@ export const App: FC = () => {
             <ProfilePage />
           </ProtectedRoute>
           <Route path='/' exact>
-            <Main handleOpenIngredientDetails={handleOpenIngredientDetails}
+            <Main 
               handleButtonClick={handleButtonClick} />
           </Route>
           <Route path='*'>
@@ -133,7 +117,7 @@ export const App: FC = () => {
           </Route>
         </Switch>
         {background &&
-          <Route path={`/ingredients/:${_id}`}>
+          <Route path={`/ingredients/:id`}>
             (
             <Modal onClick={closeModal} onClose={closeModal} >
               <IngredientDetails />

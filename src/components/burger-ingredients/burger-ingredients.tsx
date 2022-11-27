@@ -5,11 +5,8 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from '../../utils/hooks';
 import { TIngredient } from '../../utils/types';
 
-type TBurgerIngredients = {
-  handleOpenIngredientDetails: (element: TIngredient) => void
-}
 
-export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredientDetails }) => {
+export const BurgerIngredients: FC = () => {
 
   const { ingredientsList: data } = useSelector(state => state.ingredients);
   const bunsRef = React.useRef<HTMLParagraphElement>(null);
@@ -40,7 +37,7 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
     }
 
     const callback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry: IntersectionObserverEntry) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           if (entry.target === bunsRef.current) {
             setCurrent('one')
@@ -88,7 +85,7 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
               return (<Ingredient
                 key={element._id}
                 element={element}
-                handleOpenIngredientDetails={handleOpenIngredientDetails} />);
+              />);
             }
           })
           }
@@ -102,7 +99,7 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
               return (<Ingredient
                 key={element._id}
                 element={element}
-                handleOpenIngredientDetails={handleOpenIngredientDetails} />);
+              />);
             }
           })
           }
@@ -116,7 +113,7 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
               return (<Ingredient
                 key={element._id}
                 element={element}
-                handleOpenIngredientDetails={handleOpenIngredientDetails} />);
+              />);
             }
           })
           }

@@ -16,7 +16,6 @@ export const ForgotPasswordPage: FC = () => {
   const { email } = values;
   const inputRef = React.useRef<HTMLInputElement>(null);
 
-
   const onIconClick = () => {
     setTimeout(() => inputRef.current?.focus(), 0)
   }

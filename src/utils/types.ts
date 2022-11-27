@@ -25,3 +25,13 @@ export type TIngredient = {
   __v: number,
   id?: string
 }
+
+export type TOrder = {
+  _id: string,
+  ingredients: Array<string>,
+  status: string,
+  name: string,
+  createdAt: string,
+  updatedAt: string,
+  number: number
+}

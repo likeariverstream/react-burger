@@ -1,10 +1,9 @@
 import React from "react";
 import styles from './ingredient-details.module.css';
-import { TIngredient } from "../../utils/types";
+import { useSelector } from "../../utils/hooks";
 
 export default function IngredientDetails() {
-  const ingredient: TIngredient = JSON.parse(localStorage
-    .getItem('ingredient') as string);
+  const { ingredientDetails: ingredient } = useSelector(state => state.ingredientDetails)
   return (
     ingredient && <div className={styles.ingredient}>
       <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>

@@ -1,6 +1,5 @@
 import { TIngredient } from "../../utils/types";
 
-
 export const GET_CONSTRUCTOR_ITEM: 'GET_CONSTRUCTOR_ITEM' = 'GET_CONSTRUCTOR_ITEM';
 export const DELETE_CONSTRUCTOR_ITEM: 'DELETE_CONSTRUCTOR_ITEM' = 'DELETE_CONSTRUCTOR_ITEM';
 export const GET_BUN_ITEM: 'GET_BUN_ITEM' = 'GET_BUN_ITEM';

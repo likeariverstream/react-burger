@@ -1,3 +1,8 @@
+.main {
+  display: flex;
+  justify-content: center;
+}
+
 .status {
   color: #00CCCC;
 }
@@ -88,4 +93,16 @@
 
 .price {
 
+}
+.link {
+  text-decoration: none;
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+  opacity: 1;
+  color: white;
+}
+
+.link:hover {
+  text-decoration: none;
+  cursor: pointer;
+  opacity: .7;
 }
