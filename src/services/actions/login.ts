@@ -77,10 +77,10 @@ export const logoutUserThunk: AppThunk = () => {
     request(url, options)
       .then((data) => {
         const { success } = data;
+        deleteCookie('access');
+        deleteCookie('refresh');
         if (success) {
           dispatch(logoutUser(success));
-          deleteCookie('access');
-          deleteCookie('refresh');
         }
       })
       .catch(console.warn)

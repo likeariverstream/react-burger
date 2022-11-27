@@ -9,7 +9,7 @@ export const WS_GET_ORDERS = 'WS_GET_ORDERS';
 export const WS_SEND_MESSAGE = 'WS_SEND_MESSAGE';
 export const WS_USER_NAME_UPDATE = 'WS_USER_NAME_UPDATE';
 
-export const wsActions = {
+export const wsActions: IConstWsActions = {
   wsInit: WS_CONNECTION_START,
   wsSendMessage: WS_SEND_MESSAGE,
   onOpen: WS_CONNECTION_SUCCESS,
@@ -17,6 +17,15 @@ export const wsActions = {
   onError: WS_CONNECTION_ERROR,
   onOrders: WS_GET_ORDERS
 };
+
+export interface IConstWsActions {
+  readonly wsInit: typeof WS_CONNECTION_START,
+  readonly wsSendMessage: typeof WS_SEND_MESSAGE,
+  readonly onOpen: typeof WS_CONNECTION_SUCCESS,
+  readonly onClose: typeof WS_CONNECTION_CLOSED,
+  readonly onError: typeof WS_CONNECTION_ERROR,
+  readonly onOrders: typeof WS_GET_ORDERS
+}
 
 export interface IWsConnectionStart {
   readonly type: typeof WS_CONNECTION_START

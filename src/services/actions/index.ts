@@ -7,8 +7,8 @@ import { TRegisterUserAction } from './register';
 import { TResetPasswordAction } from './reset-password';
 import { TOrderAction } from './order-details';
 import { TUserAction } from './user';
-import { TWsActions } from './socket'
-import { TUserWsActions } from './user-orders-socket'
+import { TWsActions, IConstWsActions } from './socket'
+import { TUserWsActions, IUserConstWsActions } from './user-orders-socket'
 
 export type TUnionAction =
   | TUserWsActions
@@ -22,3 +22,7 @@ export type TUnionAction =
   | TResetPasswordAction
   | TOrderAction
   | TUserAction
+
+export type TConstMiddlewareActions =
+  | IConstWsActions
+  | IUserConstWsActions

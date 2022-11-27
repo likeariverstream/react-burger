@@ -9,13 +9,15 @@ export const IngredientPage: FC = () => {
   const { id } = useParams<{ id: string }>();
   const findId = id.split(':')[1];
   const dispatch = useDispatch();
-  React.useEffect(() => {
-    dispatch(getIngredients())
-  }, [dispatch]);/*  */
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients)
   const ingredient: TIngredient | undefined = React.useMemo(() => {
     return ingredients.find(item => item._id === findId)
   }, [ingredients, findId])
+
+  React.useEffect(() => {
+    dispatch(getIngredients())
+  }, [dispatch]);
+
   return (
     <>{ingredient && <div className={styles.ingredient}>
       <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>

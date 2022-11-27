@@ -4,7 +4,7 @@ import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-c
 import { useDrag } from "react-dnd";
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { TIngredient } from '../../utils/types';
-import { useLocation, useHistory } from 'react-router-dom';
+import { useLocation, useHistory, Link } from 'react-router-dom';
 import { setIngredientDetails } from '../../services/actions/ingredient-details'
 
 type TIngredientComponent = {
@@ -58,17 +58,22 @@ export const Ingredient: FC<TIngredientComponent> = ({ element }) => {
   }
 
   return (
+
     <div className={styles.ingredient}>
       {count > 0 &&
         <div className={styles.counter}>
           <Counter count={count} size="default" />
         </div>}
-
-      <img className={styles.image}
-        style={{ cursor: didDrop ? 'grab' : 'default' }}
-        {...options}
-        alt={element.name}
-      />
+      {/* <Link to={{
+        pathname: `/ingredients/:${element._id}`,
+        state: { background: location }
+      }}> */}
+        <img className={styles.image}
+          style={{ cursor: didDrop ? 'grab' : 'default' }}
+          {...options}
+          alt={element.name}
+        />
+      {/* </Link> */}
       <div className={styles.price}>
         <p className="text text_type_digits-default mr-2" >
           {element.price}

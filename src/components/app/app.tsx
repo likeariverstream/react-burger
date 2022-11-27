@@ -1,12 +1,11 @@
 import React, { FC, MouseEventHandler } from 'react';
 import { AppHeader } from '../app-header/app-header';
 import { Modal } from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { OrderDetails } from '../order-details/order-details';
 import { getIngredients } from '../../services/actions/ingredients';
 import { Main } from '../main/main';
 import {
-  setIngredientDetails,
   deleteIngredientDetails
 } from '../../services/actions/ingredient-details';
 import { getOrderDetails } from '../../services/actions/order-details';
@@ -36,8 +35,8 @@ export type TUseLocation = {
 
 
 export const App: FC = () => {
-  const { isLoggedIn } = useSelector(state => state.login)
-  const login = isLoggedIn
+  const { isLoggedIn: login } = useSelector(state => state.login)
+  const { ingredientDetails: ingredient } = useSelector(state => state.ingredientDetails)
   const location = useLocation<TUseLocation>();
   let background = location.state && location.state.background
   const dispatch = useDispatch();
@@ -53,8 +52,6 @@ export const App: FC = () => {
   React.useEffect(() => {
     dispatch(getIngredients())
   }, [dispatch]);
-
-
 
   const closeModal = () => {
     setOpen(false);
@@ -109,7 +106,7 @@ export const App: FC = () => {
             <ProfilePage />
           </ProtectedRoute>
           <Route path='/' exact>
-            <Main 
+            <Main
               handleButtonClick={handleButtonClick} />
           </Route>
           <Route path='*'>
@@ -126,7 +123,6 @@ export const App: FC = () => {
         {isOpen && <Modal onClick={closeModal} onClose={closeModal} >
           <OrderDetails />
         </Modal>}
-
       </div>}
     </DndProvider>
   )

@@ -1,16 +1,28 @@
 import React, { FC } from 'react';
 import styles from './feed-details.module.css';
-import { useSelector } from '../../utils/hooks';
+import { useSelector, useDispatch } from '../../utils/hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
 import { includesIngregients, filterIngredients, getOrderDate, calculatePrice } from '../../utils/utils';
+import { wsConnectionStart } from '../../services/actions/socket';
+import { getIngredients } from '../../services/actions/ingredients';
 
 export const FeedDetails: FC = () => {
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(getIngredients())
+  }, [dispatch]);
+  React.useEffect(() => { 
+    dispatch(wsConnectionStart())
+  },[dispatch])
+
   const { orders: data } = useSelector(state => state.socket);
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients);
   const params: { id: string } = useParams();
   const orderNumber = Number(params.id.split(':')[1]);
   const order = data.find(item => item.number === orderNumber)
+
   return (
     <main className={styles.card}>
       <div className={styles.header}>

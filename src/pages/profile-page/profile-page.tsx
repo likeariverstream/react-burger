@@ -6,12 +6,10 @@ import { useDispatch, useSelector } from '../../utils/hooks';
 import { patchUserInfoThunk, getUserInfoThunk } from '../../services/actions/user';
 import { logoutUserThunk } from '../../services/actions/login';
 import { useForm } from '../../utils/hooks';
-import { getCookie } from '../../utils/coockie';
 import { ProfileOrders } from '../profile-orders/profile-orders';
 
 export const ProfilePage: FC = () => {
-  const login: boolean = !!getCookie('access')
-  console.log(login)
+  const { isLoggedIn: login } = useSelector(state => state.login)
   const dispatch = useDispatch();
   const currentName = useSelector(state => state.info.user.name);
   const currentEmail = useSelector(state => state.info.user.email);
@@ -34,7 +32,6 @@ export const ProfilePage: FC = () => {
 
   const onIconClick = () => {
     setTimeout(() => inputRef.current?.focus(), 0);
-
   }
 
   const saveInfo: FormEventHandler<HTMLFormElement> = (e) => {
@@ -76,7 +73,6 @@ export const ProfilePage: FC = () => {
 
   return (
     <main className={styles.main}>
-
       <nav className={`${styles.nav} mr-15`}>
         <NavLink
           to={{ pathname: '/profile' }} exact={true}
@@ -103,53 +99,53 @@ export const ProfilePage: FC = () => {
         <ProfileOrders />
       </Route>
       <Route path='/profile' exact>
-      <section className={styles.section}>
-        <form className={styles.section} onSubmit={saveInfo}>
-          <div className='mt-6'>
-            <Input type='text'
-              placeholder={'Имя'}
-              icon={'EditIcon'}
-              onIconClick={() => onIconClick()}
-              onChange={e => setValues({ ...values, name: e.target.value })}
-              value={name}
-              {...options}
-            />
-          </div>
-          <div className='mt-6'>
-            <Input type='email'
-              placeholder={'Логин'}
-              icon={'EditIcon'}
-              onIconClick={() => onIconClick()}
-              onChange={e => setValues({ ...values, email: e.target.value })}
-              value={email}
-              {...options} />
-          </div>
-          <div className='mt-6 mb-6'>
-            <Input type='password'
-              placeholder={'Пароль'}
-              icon={'EditIcon'}
-              onIconClick={() => onIconClick()}
-              onChange={e => setValues({ ...values, password: e.target.value })}
-              value={password}
-              {...options} />
-          </div>
-          {render ? <div className={styles.box}>
-            <div className={`${styles.button} pl-6 pr-2`}><Button
-              onClick={cancelChanges}
-              htmlType='button'
-              type='primary'
-              size='medium'>Отменить
-            </Button>
+        <section className={styles.section}>
+          <form className={styles.section} onSubmit={saveInfo}>
+            <div className='mt-6'>
+              <Input type='text'
+                placeholder={'Имя'}
+                icon={'EditIcon'}
+                onIconClick={() => onIconClick()}
+                onChange={e => setValues({ ...values, name: e.target.value })}
+                value={name}
+                {...options}
+              />
             </div>
-            <div className={styles.button}><Button
-              htmlType='submit'
-              type='primary'
-              size='medium'>Сохранить
-            </Button>
+            <div className='mt-6'>
+              <Input type='email'
+                placeholder={'Логин'}
+                icon={'EditIcon'}
+                onIconClick={() => onIconClick()}
+                onChange={e => setValues({ ...values, email: e.target.value })}
+                value={email}
+                {...options} />
             </div>
-          </div> : null}
-        </form>
-      </section >
+            <div className='mt-6 mb-6'>
+              <Input type='password'
+                placeholder={'Пароль'}
+                icon={'EditIcon'}
+                onIconClick={() => onIconClick()}
+                onChange={e => setValues({ ...values, password: e.target.value })}
+                value={password}
+                {...options} />
+            </div>
+            {render ? <div className={styles.box}>
+              <div className={`${styles.button} pl-6 pr-2`}><Button
+                onClick={cancelChanges}
+                htmlType='button'
+                type='primary'
+                size='medium'>Отменить
+              </Button>
+              </div>
+              <div className={styles.button}><Button
+                htmlType='submit'
+                type='primary'
+                size='medium'>Сохранить
+              </Button>
+              </div>
+            </div> : null}
+          </form>
+        </section >
       </Route>
     </main>
   )
