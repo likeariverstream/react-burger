@@ -13,6 +13,12 @@ export const socketMidlleware = (url: string, actions: TConstMiddlewareActions):
         if (type === wsInit) {
           socket = new WebSocket(url)
         }
+        if (socket && type === onClose) {
+          socket.close(1000)
+          socket.onclose = (event) => {
+            dispatch({ type: onClose })
+          }
+        }
         if (socket) {
           socket.onopen = (event) => {
             dispatch({ type: onOpen })
@@ -27,9 +33,6 @@ export const socketMidlleware = (url: string, actions: TConstMiddlewareActions):
             success && dispatch({ type: onOrders, payload: parsedData });
 
           };
-          socket.onclose = (event) => {
-            dispatch({ type: onClose })
-          }
           if (type === wsSendMessage) {
             const message = { ...payload }
             socket.send(JSON.stringify(message));

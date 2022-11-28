@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styles from './order-card.module.css'
-import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   getOrderDate,
   filterIngredients,
@@ -19,6 +19,7 @@ export const OrderCard: FC<TOrderCard> = ({ element }) => {
   const location = useLocation();
   const history = useHistory();
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients);
+  const filter = filterIngredients(element.ingredients, ingredients);
   const handleOrderCard = () => {
     const { number } = element;
     const url = `/feed/:${number}`;
@@ -41,15 +42,28 @@ export const OrderCard: FC<TOrderCard> = ({ element }) => {
       </div>
       <p className={`${styles.name} text text_type_main-medium`}>{element.name}</p>
       <div className={styles.ingredients}>
-        {filterIngredients(element.ingredients, ingredients).map((item, index) => {
-          return <div className={styles.icon} key={nanoid()}>
-            <img className={styles.image} src={item.image_mobile} alt={item.name}
-              style={{
+        <div className={styles.images}>
+          {filter.map((item, index) => {
+            if (index < 5)
+              return <div className={styles.icon} key={nanoid()} style={{
                 zIndex: index,
                 transform: `translateX(${- index * 18}px)`
-              }} />
-          </div>
-        })}
+              }}>
+                <img className={styles.image} src={item.image_mobile} alt={item.name}
+                />
+              </div>
+            if (index >= 5)
+              return <div className={styles.box} key={nanoid()} style={{
+                zIndex: 2,
+                transform: `translateX(${- (index - 5) * 64}px)`,
+              }}>
+                <img className={styles.image} src={item.image_mobile} alt={item.name}
+                />
+              </div>
+
+          })}
+          {filter.length > 5 ? <p className={`${styles.count} text text_type_digits-small`} style={{zIndex: filter.length -1}}>+{filter.length - 5}</p> : null}
+        </div>
         <div className={styles.container}>
           <p className={`${styles.price} text text_type_digits-default`}>
             {calculatePrice(element.ingredients, ingredients)}</p>

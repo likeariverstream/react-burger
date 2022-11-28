@@ -4,17 +4,15 @@ import { useSelector } from '../../utils/hooks';
 import { useDispatch } from '../../utils/hooks';
 import { wsConnectionStart } from '../../services/actions/socket';
 import { OrderCard } from '../../components/order-card/order-card';
+import { useLocation } from 'react-router-dom';
 
 export const FeedPage: FC = () => {
+  const location = useLocation();
   const dispatch = useDispatch();
   const { orders: data } = useSelector(state => state.socket);
   const { total } = useSelector(state => state.socket);
   const { totalToday } = useSelector(state => state.socket);
 
-  React.useEffect(() => {
-    dispatch(wsConnectionStart());
-  }, [dispatch])
-  
   return (
     data && <main className={styles.main}>
       <section className={`${styles.feed} mt-10`}>
@@ -27,14 +25,26 @@ export const FeedPage: FC = () => {
       </section>
       <section className={`${styles.board} mt-15`}>
         <div className={styles.orders}>
-          <ul className={styles.done}>
+          <div className={styles.box}>
             <p className='text text_type_main-medium mb-6'>Готовы:</p>
-            {data.map((item, index) => {
-              if (item.status === 'done' && index < 10)
-                return (<li key={item._id} className={`${styles.doneId} text text_type_digits-default`}>{item.number}</li>)
-            })
-            }
-          </ul>
+            <div className={styles.container}>
+              <ul className={styles.done}>
+                {data.map((item, index) => {
+                  if (item.status === 'done' && index < 10)
+                    return (<li key={item._id} className={`${styles.doneId} text text_type_digits-default`}>{item.number}</li>)
+                })
+                }
+              </ul>
+              <ul className={styles.done}>
+                {data.map((item, index) => {
+                  if (item.status === 'done' && index < 20 && index >= 10)
+                    return (<li key={item._id} className={`${styles.doneId} text text_type_digits-default ml-2`}>{item.number}</li>)
+                })
+                }
+              </ul>
+
+            </div>
+          </div>
           <div className={styles.work}>
             <p className='text text_type_main-medium mb-6'>В работе:</p>
             {data.map((item, index) => {

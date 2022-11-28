@@ -36,7 +36,7 @@
   min-width: 531px;
   height: 64px;
   display: flex;
-  justify-content: space-between;
+  justify-content: start;
   align-items: center;
   margin: 0;
   margin: 0;
@@ -44,6 +44,18 @@
   width: 436px;
 }
 
+.images {
+  flex-wrap: row wrap;
+  height: 64px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin: 0;
+  margin: 0;
+  width: 137px;
+  width: 436px;
+  position: relative;
+}
 
 .container {
   display: flex;
@@ -70,4 +82,14 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
+}
+
+.box {
+  position: relative;
+  left: -96px
+}
+
+.count {
+  position: absolute;
+  left: 246px;
 }

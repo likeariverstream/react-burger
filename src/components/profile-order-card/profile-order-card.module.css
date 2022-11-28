@@ -12,6 +12,19 @@
   object-fit: cover
 }
 
+.images {
+  flex-wrap: row wrap;
+  height: 64px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin: 0;
+  margin: 0;
+  width: 137px;
+  width: 436px;
+  position: relative;
+}
+
 .card {
   display: flex;
   flex-direction: column;
@@ -80,4 +93,14 @@
 
 .caption {
   text-align: start;
+}
+
+.box {
+  position: relative;
+  left: -96px
+}
+
+.count {
+  position: absolute;
+  left: 246px;
 }

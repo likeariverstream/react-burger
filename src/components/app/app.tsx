@@ -6,6 +6,10 @@ import { OrderDetails } from '../order-details/order-details';
 import { getIngredients } from '../../services/actions/ingredients';
 import { Main } from '../main/main';
 import {
+  feedUrl,
+  profileOrdersUrl
+} from '../../utils/constants'
+import {
   deleteIngredientDetails
 } from '../../services/actions/ingredient-details';
 import { getOrderDetails } from '../../services/actions/order-details';
@@ -26,14 +30,18 @@ import { FeedPage } from '../../pages/feed-page/feed-page';
 import { FeedDetails } from '../../pages/feed-details/feed-details';
 import { ProfileOrderInfo } from '../../pages/profile-order-info/profile-order-info';
 import { ProfileOrders } from '../../pages/profile-orders/profile-orders';
+import { wsConnectionStart, wsConnectionClosed } from '../../services/actions/socket';
+import { userWsConnectionStart, userWsConnectionClosed } from '../../services/actions/user-orders-socket';
+import { getUserInfoThunk } from '../../services/actions/user';
 
 type TLocation = ReturnType<typeof useLocation>;
+
 export type TUseLocation = {
   [key: string]: string | null | TUseLocation | TLocation,
 };
 
-
 export const App: FC = () => {
+
   const { isLoggedIn: login } = useSelector(state => state.login)
   const location = useLocation<TUseLocation>();
   let background = location.state && location.state.background
@@ -47,8 +55,24 @@ export const App: FC = () => {
   const [isOpen, setOpen] = React.useState(false)
 
   React.useEffect(() => {
-    dispatch(getIngredients())
-  }, [dispatch]);
+    dispatch(getIngredients());
+    if (login) {
+      dispatch(getUserInfoThunk());
+    }
+    if (location.pathname === feedUrl) {
+      dispatch(wsConnectionStart());
+    }
+    if (location.pathname !== feedUrl) {
+      dispatch(wsConnectionClosed())
+    }
+    if (location.pathname === profileOrdersUrl) {
+      dispatch(userWsConnectionStart());
+    }
+    if (location.pathname !== profileOrdersUrl) {
+      dispatch(userWsConnectionClosed());
+    }
+
+  }, [dispatch, location, login]);
 
   const closeModal = () => {
     setOpen(false);
@@ -66,6 +90,7 @@ export const App: FC = () => {
       history.push('/login');
     }
   }, [dispatch, history, login, idList])
+
 
   return (
     <DndProvider backend={HTML5Backend}>
