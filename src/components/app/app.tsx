@@ -56,19 +56,17 @@ export const App: FC = () => {
 
   React.useEffect(() => {
     dispatch(getIngredients());
-    if (login) {
-      dispatch(getUserInfoThunk());
-    }
-    if (location.pathname === feedUrl) {
+  
+    if (location.pathname.includes(feedUrl)) {
       dispatch(wsConnectionStart());
     }
-    if (location.pathname !== feedUrl) {
+    if (!location.pathname.includes(feedUrl)) {
       dispatch(wsConnectionClosed())
     }
-    if (location.pathname === profileOrdersUrl) {
+    if (!location.pathname.includes(profileOrdersUrl)) {
       dispatch(userWsConnectionStart());
     }
-    if (location.pathname !== profileOrdersUrl) {
+    if (!location.pathname.includes(profileOrdersUrl)) {
       dispatch(userWsConnectionClosed());
     }
 

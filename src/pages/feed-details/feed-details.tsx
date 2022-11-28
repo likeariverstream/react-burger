@@ -2,20 +2,17 @@ import React, { FC } from 'react';
 import styles from './feed-details.module.css';
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { includesIngregients, filterIngredients, getOrderDate, calculatePrice } from '../../utils/utils';
 import { wsConnectionStart } from '../../services/actions/socket';
 import { getIngredients } from '../../services/actions/ingredients';
 
 export const FeedDetails: FC = () => {
   const dispatch = useDispatch();
-
+  const location = useLocation();
   React.useEffect(() => {
     dispatch(getIngredients())
   }, [dispatch]);
-  React.useEffect(() => { 
-    dispatch(wsConnectionStart())
-  },[dispatch])
 
   const { orders: data } = useSelector(state => state.socket);
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients);

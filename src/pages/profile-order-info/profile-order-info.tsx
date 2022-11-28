@@ -16,7 +16,6 @@ export const ProfileOrderInfo: FC = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(getIngredients())
-    dispatch(userWsConnectionStart())
   }, [dispatch]);
 
   const { orders: data } = useSelector(state => state.userOrders);
