@@ -18,7 +18,7 @@ export const ProfileOrders: FC = () => {
   React.useEffect(() => {
     const token = getCookie('access');
     dispatch(userWsConnectionStart(token));
-  })
+  }, [])
   React.useEffect(() => {
     if (location.pathname !== profileOrdersUrl)
       dispatch(userWsConnectionClosed())
