@@ -40,7 +40,7 @@ export const userOrdersSocketReduser = (state = initialState, action: TUnionActi
     case USER_WS_CONNECTION_CLOSED: {
       return {
         ...state,
-
+        wsConnected: false
       };
     }
     case USER_WS_GET_ORDERS: {
@@ -49,8 +49,8 @@ export const userOrdersSocketReduser = (state = initialState, action: TUnionActi
         orders: state.orders.length < 10
           ? [...state.orders, ...action.payload.orders]
           : [...state.orders],
-          total: action.payload.total,
-          totalToday: action.payload.totalToday,
+        total: action.payload.total,
+        totalToday: action.payload.totalToday,
 
       };
     }

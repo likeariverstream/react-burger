@@ -1,6 +1,14 @@
 .main {
   display: flex;
-  justify-content: center;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin: 0 auto;
+  max-width: 1048.4px;
+  overflow: visible
+}
+
+.section {
+  display: flex;
+  min-width: 870px;
 }
 
 .status {
@@ -23,7 +31,7 @@
 }
 
 .scroll {
-  width: 608px;
+  width: 860px;
   height: 852px;
   display: grid;
   overflow-y: auto;

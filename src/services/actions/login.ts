@@ -53,7 +53,6 @@ export const getLoginUser: AppThunk = (user: TUser) => {
         if (success) {
           dispatch(loginUser(success));
           setCookie('access', accessToken.split('Bearer ')[1]);
-          console.log(accessToken)
           setCookie('refresh', refreshToken);
         }
       })
@@ -77,10 +76,10 @@ export const logoutUserThunk: AppThunk = () => {
     request(url, options)
       .then((data) => {
         const { success } = data;
-        deleteCookie('access');
-        deleteCookie('refresh');
         if (success) {
           dispatch(logoutUser(success));
+          deleteCookie('access');
+          deleteCookie('refresh');
         }
       })
       .catch(console.warn)

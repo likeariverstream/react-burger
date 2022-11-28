@@ -17,7 +17,7 @@
   flex-direction: column;
   padding: 24px;
   gap: 24px;
-  width: 531px;
+  width: 796px;
   min-height: 171px;
   background: #1C1C21;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
@@ -33,7 +33,7 @@
 
 .ingredients {
   flex-wrap: row wrap;
-  min-width: 531px;
+  min-width: 796px;
   height: 64px;
   display: flex;
   justify-content: space-between;
@@ -43,7 +43,6 @@
   width: 137px;
   width: 436px;
 }
-
 
 .container {
   display: flex;
@@ -69,5 +68,16 @@
 .name {
   text-overflow: ellipsis;
   white-space: nowrap;
-  overflow: hidden;
+}
+
+.status {
+  margin: 0;
+}
+
+.done {
+  color:  #00CCCC;
+}
+
+.caption {
+  text-align: start;
 }

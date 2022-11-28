@@ -3,12 +3,11 @@ import React, { FC, FormEventHandler } from 'react';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Link, useHistory } from 'react-router-dom';
 import { getLoginUser } from '../../services/actions/login';
-import { useDispatch } from '../../utils/hooks';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { useForm } from '../../utils/hooks';
-import { getCookie } from '../../utils/coockie';
 
 export const LoginPage: FC = () => {
-  const login: boolean = !!getCookie('access')
+  const { isLoggedIn: login } = useSelector(state => state.login)
   const dispatch = useDispatch(); 
   const history = useHistory();
   const {values, setValues} = useForm({email: '', password: ''});

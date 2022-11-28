@@ -44,7 +44,7 @@ export const Ingredient: FC<TIngredientComponent> = ({ element }) => {
         background: location,
         element: element
       }
-    })
+    }, [])
 
     dispatch(setIngredientDetails(element))
   }, [dispatch, history, location]);

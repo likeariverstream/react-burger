@@ -40,7 +40,7 @@ export const socketReduser = (state = initialState, action: TUnionAction): TInit
     case WS_CONNECTION_CLOSED: {
       return {
         ...state,
-
+        wsConnected: false
       };
     }
     case WS_GET_ORDERS: {

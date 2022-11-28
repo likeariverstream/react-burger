@@ -1,8 +1,6 @@
 import { Middleware } from 'redux';
-import { getCookie } from './coockie';
-import { TConstMiddlewareActions} from '../services/actions/index';
+import { TConstMiddlewareActions } from '../services/actions/index';
 
-const token = getCookie('access');
 export const socketMidlleware = (url: string, actions: TConstMiddlewareActions): Middleware => {
   return (store) => {
     let socket: WebSocket | null = null;
@@ -27,6 +25,7 @@ export const socketMidlleware = (url: string, actions: TConstMiddlewareActions):
             const parsedData = JSON.parse(data);
             const { success } = parsedData;
             success && dispatch({ type: onOrders, payload: parsedData });
+
           };
           socket.onclose = (event) => {
             dispatch({ type: onClose })

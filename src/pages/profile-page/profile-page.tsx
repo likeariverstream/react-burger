@@ -1,12 +1,12 @@
 import styles from './profile-page.module.css';
 import React, { FC, FormEventHandler } from 'react';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { patchUserInfoThunk, getUserInfoThunk } from '../../services/actions/user';
-import { logoutUserThunk } from '../../services/actions/login';
 import { useForm } from '../../utils/hooks';
 import { ProfileOrders } from '../profile-orders/profile-orders';
+import { ProfileNav } from '../../components/profile-nav/profile-nav';
 
 export const ProfilePage: FC = () => {
   const { isLoggedIn: login } = useSelector(state => state.login)
@@ -52,11 +52,6 @@ export const ProfilePage: FC = () => {
     })
   }
 
-  const logoutUser = React.useCallback(() => {
-    dispatch(logoutUserThunk());
-
-  }, [dispatch])
-
   const options = {
     name: 'name',
     error: false,
@@ -68,39 +63,23 @@ export const ProfilePage: FC = () => {
   React.useEffect(() => {
     if (login) {
       dispatch(getUserInfoThunk());
+      setValues({
+        name: currentName,
+        email: currentEmail,
+        password: ''
+      })
     }
-  }, [dispatch, login])
+  }, [dispatch, login, currentEmail, currentName, setValues])
 
   return (
     <main className={styles.main}>
-      <nav className={`${styles.nav} mr-15`}>
-        <NavLink
-          to={{ pathname: '/profile' }} exact={true}
-          className={styles.tab}
-          activeClassName={styles.active}>
-          <h3 className='text text_type_main-medium mt-4 mb-8'>Профиль</h3>
-        </NavLink>
-        <NavLink
-          to={{ pathname: '/profile/orders' }}
-          className={styles.tab}
-          activeClassName={styles.active}>
-          <h3 className='text text_type_main-medium mb-8'>История заказов</h3>
-        </NavLink>
-        <NavLink
-          to={{ pathname: '/login' }}
-          className={styles.tab}
-          activeClassName={styles.active}>
-          <h3 onClick={logoutUser} className='text text_type_main-medium mb-4'>Выход</h3>
-        </NavLink>
-        <p className={`${styles.text} mt-20`}>В этом разделе вы можете
-          изменять свои персональные данные</p>
-      </nav>
-      <Route path='/profile/orders/'>
+      <ProfileNav />
+      <Route path='/orders/'>
         <ProfileOrders />
       </Route>
       <Route path='/profile' exact>
         <section className={styles.section}>
-          <form className={styles.section} onSubmit={saveInfo}>
+          <form className={styles.form} onSubmit={saveInfo}>
             <div className='mt-6'>
               <Input type='text'
                 placeholder={'Имя'}
@@ -150,5 +129,3 @@ export const ProfilePage: FC = () => {
     </main>
   )
 }
-
-

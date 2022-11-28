@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import styles from './order-card.module.css'
-import { Link } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import {
   getOrderDate,
   filterIngredients,
@@ -16,32 +16,48 @@ type TOrderCard = {
 }
 
 export const OrderCard: FC<TOrderCard> = ({ element }) => {
+  const location = useLocation();
+  const history = useHistory();
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients);
+  const handleOrderCard = () => {
+    const { number } = element;
+    const url = `/feed/:${number}`;
+    history.push({
+      pathname: url,
+      state: {
+        background: location,
+        element: element
+      }
+    })
+  }
 
   return (
-    <li className={styles.card}>
+    <li className={`${styles.card} ${styles.link}`} onClick={handleOrderCard}>
       <div className={styles.header}>
-        <Link to={`/feed/:${element.number}`} className={styles.link}>
-          <p className={`${styles.id} text text_type_digits-default`}>#{element.number}</p>
-        </Link>
+        <p className={`${styles.id} text text_type_digits-default`}>#{element.number}</p>
+
         <p className={`${styles.timestamp} text text_type_main-default text_color_inactive`}>
           {getOrderDate(element.createdAt)}</p>
       </div>
       <p className={`${styles.name} text text_type_main-medium`}>{element.name}</p>
-      <div className={styles.count}>
-        <div className={styles.ingredients}>
-          {filterIngredients(element.ingredients, ingredients).map((item) => {
-            return <div className={styles.icon} key={nanoid()}>
-              <img className={styles.image} src={item.image_mobile} alt={item.name} />
-            </div>
-          })}
-          <div className={styles.container}>
-            <p className={`${styles.price} text text_type_digits-default`}>
-              {calculatePrice(element.ingredients, ingredients)}</p>
-            <CurrencyIcon type='primary' />
+      <div className={styles.ingredients}>
+        {filterIngredients(element.ingredients, ingredients).map((item, index) => {
+          return <div className={styles.icon} key={nanoid()}>
+            <img className={styles.image} src={item.image_mobile} alt={item.name}
+              style={{
+                zIndex: index,
+                transform: `translateX(${- index * 18}px)`
+              }} />
           </div>
+        })}
+        <div className={styles.container}>
+          <p className={`${styles.price} text text_type_digits-default`}>
+            {calculatePrice(element.ingredients, ingredients)}</p>
+          <CurrencyIcon type='primary' />
         </div>
       </div>
     </li>
+
   )
 }
+

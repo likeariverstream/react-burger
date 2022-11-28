@@ -7,7 +7,7 @@
 
 .title {
   display: block;
-  margin-bottom: 0px;
+ 
 }
 
 .feed {
@@ -26,7 +26,9 @@
   height: 852px;
   display: grid;
   overflow-y: auto;
-  gap: 24px;
+  overflow-x: hidden;
+  gap: 10px;
+  column-gap: 24px;
   padding-left: 8px;
 }
 
@@ -34,11 +36,7 @@
   width: 12px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  margin: 0;
-}
+
 
 .board {
   display: flex;
@@ -51,6 +49,8 @@
 .orders {
   display: flex;
   justify-content: space-between;
+  padding-left: 52px;
+  padding-right: 89px;
 }
 
 .done {
@@ -59,6 +59,7 @@
   flex-direction: column;
   list-style: none;
   margin: 0;
+  padding: 0;
 }
 
 .doneId {
@@ -79,5 +80,6 @@
 
 .completed {
   list-style: none;
+  padding-left: 52px;
 }
 

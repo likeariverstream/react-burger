@@ -10,18 +10,18 @@ export const FeedPage: FC = () => {
   const { orders: data } = useSelector(state => state.socket);
   const { total } = useSelector(state => state.socket);
   const { totalToday } = useSelector(state => state.socket);
-  
+
   React.useEffect(() => {
     dispatch(wsConnectionStart());
   }, [dispatch])
-
+  
   return (
-    <main className={styles.main}>
-      <section className={`${styles.feed} mt-15`}>
-        <p className={`text text_type_main-large mt-10 ${styles.title}`} >Лента заказов</p>
+    data && <main className={styles.main}>
+      <section className={`${styles.feed} mt-10`}>
+        <p className={`text text_type_main-large  ${styles.title} mb-6 ml-2`} >Лента заказов</p>
         <div className={styles.scroll}>
           {data.map((element) => {
-            return <OrderCard element={element} key={element._id} />
+            return (<OrderCard element={element} key={element._id} />)
           })}
         </div>
       </section>
@@ -31,7 +31,7 @@ export const FeedPage: FC = () => {
             <p className='text text_type_main-medium mb-6'>Готовы:</p>
             {data.map((item, index) => {
               if (item.status === 'done' && index < 10)
-                return <li key={item._id} className={`${styles.doneId} text text_type_digits-default`}>{item.number}</li>
+                return (<li key={item._id} className={`${styles.doneId} text text_type_digits-default`}>{item.number}</li>)
             })
             }
           </ul>
@@ -39,7 +39,7 @@ export const FeedPage: FC = () => {
             <p className='text text_type_main-medium mb-6'>В работе:</p>
             {data.map((item, index) => {
               if (item.status !== 'done' && index < 10)
-                return <li key={item._id} className={`${styles.workId} text text_type_digits-default`}>{item.number}</li>
+                return (<li key={item._id} className={`${styles.workId} text text_type_digits-default`}>{item.number}</li>)
             })
             }
           </div>

@@ -1,7 +1,8 @@
 import { baseUrl } from "../../utils/constants";
 import { request, refreshToken } from "../../utils/utils";
 import { getCookie } from "../../utils/coockie";
-import { AppDispatch, AppThunk } from "../../utils/types";
+import { AppThunk } from "../../utils/types";
+import { deleteCookie } from "../../utils/coockie";
 
 export const GET_USER_INFO: 'GET_USER_INFO' = 'GET_USER_INFO';
 export const PATCH_USER_INFO: 'PATCH_USER_INFO' = 'PATCH_USER_INFO';
@@ -58,9 +59,12 @@ export const getUserInfoThunk: AppThunk = () => {
         }
       })
       .catch((err) => {
-        console.warn(err)
-        refreshToken();
-        getUserInfoThunk();
+        if (err) {
+          console.warn(err)
+          deleteCookie('access')
+          refreshToken();
+          getUserInfoThunk();
+        }
       })
 
   }
@@ -91,6 +95,7 @@ export const patchUserInfoThunk: AppThunk = (email: string, name: string, passwo
       })
       .catch((err) => {
         if (err) {
+          deleteCookie('access')
           refreshToken()
         }
       })

@@ -6,10 +6,9 @@
 .scroll {
   width: 620px;
   height: 312px;
-  display: grid;
   overflow-y: auto;
-  gap: 24px;
-  padding-left: 8px;
+  padding-left: 0px;
+  margin: 24px 0 0 0;
 }
 
 .scroll::-webkit-scrollbar {
@@ -33,9 +32,8 @@
 .card {
   display: flex;
   flex-direction: column;
-  padding: 24px;
-  gap: 24px;
-  margin: 0 auto;
+
+  margin: 0px auto 0;
   width: 620px;
 }
 
@@ -56,7 +54,7 @@
 
 .count {
   display: flex;
-  gap: 24px;
+  /* gap: 24px; */
   width: 536px;
   height: 64px;
   flex-direction: row;
@@ -65,11 +63,10 @@
 }
 
 .ingredient {
-  width: 536px;
   display: flex;
   align-items: center;
   margin: 0;
-  margin: 0;
+  margin-bottom: 24px;
   width: 608px;
   height: 64px;
 }
@@ -77,9 +74,15 @@
 .container {
   display: flex;
   align-items: center;
+  width: 620px;
+  padding-left: 0px;
 }
 
-.price {}
+.price {
+  margin-left: auto;
+  margin-right: 8px;
+  vertical-align: top;
+}
 
 .image {
   width: 64px;
@@ -98,4 +101,5 @@
 
 .total {
   margin-left: auto;
+  vertical-align:middle
 }
