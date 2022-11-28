@@ -2,17 +2,23 @@ import React, { FC } from 'react';
 import styles from './feed-details.module.css';
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { includesIngregients, filterIngredients, getOrderDate, calculatePrice } from '../../utils/utils';
-import { wsConnectionStart } from '../../services/actions/socket';
+import { wsConnectionStart, wsConnectionClosed } from '../../services/actions/socket';
 import { getIngredients } from '../../services/actions/ingredients';
 
 export const FeedDetails: FC = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
   React.useEffect(() => {
-    dispatch(getIngredients())
-  }, [dispatch]);
+    dispatch(getIngredients());
+    dispatch(wsConnectionStart());
+  }, []);
+
+  React.useEffect(() => {
+    return () => {
+      dispatch(wsConnectionClosed())
+    };
+  }, [])
 
   const { orders: data } = useSelector(state => state.socket);
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients);
@@ -40,14 +46,16 @@ export const FeedDetails: FC = () => {
               {filterIngredients(order.ingredients, ingredients)
                 .filter(i => i._id === element._id)
                 .length}x{element.price} <CurrencyIcon type='primary' /></p>
-            
+
           </li>)
         })
         }
       </ul>
       <div className={`${styles.container} mb-6`}>
-        {order && <p className={`${styles.timestamp} text text_type_main-default text_color_inactive`}>{getOrderDate(order.createdAt)}</p>}
-        {order && <p className={`${styles.total} text text_type_digits-default ml-2`} >{calculatePrice(order.ingredients, ingredients)}<CurrencyIcon type='primary' /></p>}
+        {order && <p className={`${styles.timestamp} text text_type_main-default text_color_inactive`}>
+          {getOrderDate(order.createdAt)}</p>}
+        {order && <p className={`${styles.total} text text_type_digits-default ml-2`} >
+          {calculatePrice(order.ingredients, ingredients)}<CurrencyIcon type='primary' /></p>}
       </div>
     </main>
   )

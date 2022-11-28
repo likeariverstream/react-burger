@@ -28,6 +28,7 @@ export interface IUserConstWsActions {
 
 export interface IUserWsConnectionStart {
   readonly type: typeof USER_WS_CONNECTION_START
+  readonly payload: string | undefined
 }
 
 export interface IUserWsConnectionSuccess {
@@ -67,9 +68,10 @@ type TOrderPayload = {
   total: number,
   totalToday: number
 }
-export const userWsConnectionStart = (): IUserWsConnectionStart => {
+export const userWsConnectionStart = (payload: string | undefined): IUserWsConnectionStart => {
   return {
-    type: USER_WS_CONNECTION_START
+    type: USER_WS_CONNECTION_START,
+    payload
   };
 };
 

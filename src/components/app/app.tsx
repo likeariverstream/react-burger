@@ -30,9 +30,6 @@ import { FeedPage } from '../../pages/feed-page/feed-page';
 import { FeedDetails } from '../../pages/feed-details/feed-details';
 import { ProfileOrderInfo } from '../../pages/profile-order-info/profile-order-info';
 import { ProfileOrders } from '../../pages/profile-orders/profile-orders';
-import { wsConnectionStart, wsConnectionClosed } from '../../services/actions/socket';
-import { userWsConnectionStart, userWsConnectionClosed } from '../../services/actions/user-orders-socket';
-import { getUserInfoThunk } from '../../services/actions/user';
 
 type TLocation = ReturnType<typeof useLocation>;
 
@@ -56,27 +53,16 @@ export const App: FC = () => {
 
   React.useEffect(() => {
     dispatch(getIngredients());
-  
-    if (location.pathname.includes(feedUrl)) {
-      dispatch(wsConnectionStart());
-    }
-    if (!location.pathname.includes(feedUrl)) {
-      dispatch(wsConnectionClosed())
-    }
-    if (!location.pathname.includes(profileOrdersUrl)) {
-      dispatch(userWsConnectionStart());
-    }
-    if (!location.pathname.includes(profileOrdersUrl)) {
-      dispatch(userWsConnectionClosed());
-    }
-
-  }, [dispatch, location, login]);
+  }, [dispatch]);
 
   const closeModal = () => {
     setOpen(false);
     dispatch(deleteIngredientDetails());
     dispatch(deleteOrder());
-    history.goBack();
+    history.push({
+      ...location.state.background as TLocation | TUseLocation,
+      state: { background: null },
+    });
   }
 
   const handleButtonClick = React.useCallback(() => {
@@ -136,28 +122,26 @@ export const App: FC = () => {
         </Switch>
         {background &&
           <Route path={`/ingredients/:id`}>
-            (
+
             <Modal onClick={closeModal} onClose={closeModal} >
               <IngredientDetails />
             </Modal>
-            )</Route>}
-        {
-          background &&
+          </Route>}
+        {background &&
           <Route path={`/feed/:id`}>
-            (
+
             <Modal onClick={closeModal} onClose={closeModal} >
               <FeedDetails />
             </Modal>
-            )</Route>
+          </Route>
         }
-        {
-          background &&
+        {background &&
           <Route path={'/profile/orders/:id'}>
-            (
+
             <Modal onClick={closeModal} onClose={closeModal} >
               <ProfileOrderInfo />
             </Modal>
-            )</Route>
+          </Route>
         }
         {isOpen && <Modal onClick={closeModal} onClose={closeModal} >
           <OrderDetails />

@@ -2,9 +2,10 @@ import React, { FC } from 'react';
 import styles from './feed-page.module.css';
 import { useSelector } from '../../utils/hooks';
 import { useDispatch } from '../../utils/hooks';
-import { wsConnectionStart } from '../../services/actions/socket';
+import { wsConnectionStart, wsConnectionClosed } from '../../services/actions/socket';
 import { OrderCard } from '../../components/order-card/order-card';
 import { useLocation } from 'react-router-dom';
+import { feedUrl } from '../../utils/constants';
 
 export const FeedPage: FC = () => {
   const location = useLocation();
@@ -12,6 +13,13 @@ export const FeedPage: FC = () => {
   const { orders: data } = useSelector(state => state.socket);
   const { total } = useSelector(state => state.socket);
   const { totalToday } = useSelector(state => state.socket);
+  React.useEffect(() => {
+    dispatch(wsConnectionStart());
+  })
+  React.useEffect(() => {
+    if (location.pathname !== feedUrl)
+      dispatch(wsConnectionClosed())
+  }, [location, dispatch])
 
   return (
     data && <main className={styles.main}>

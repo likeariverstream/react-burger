@@ -1,4 +1,4 @@
-import React, { Fragment, ReactNode, FC } from "react";
+import React, { ReactNode, FC } from "react";
 import { createPortal } from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './modal.module.css'

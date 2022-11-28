@@ -2,27 +2,37 @@ import React, { FC } from 'react';
 import styles from './profile-order-info.module.css';
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useParams, useLocation, useRouteMatch } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { getIngredients } from '../../services/actions/ingredients';
-import { userWsConnectionStart } from '../../services/actions/user-orders-socket';
+import { userWsConnectionStart, userWsConnectionClosed } from '../../services/actions/user-orders-socket';
 import {
   includesIngregients, filterIngredients,
   getOrderDate,
   calculatePrice
 } from '../../utils/utils';
+import { getCookie } from '../../utils/coockie';
 
 export const ProfileOrderInfo: FC = () => {
   const location = useLocation();
   const dispatch = useDispatch();
+
   React.useEffect(() => {
-    dispatch(getIngredients())
-  }, [dispatch]);
+    const token = getCookie('access');
+    dispatch(getIngredients());
+    dispatch(userWsConnectionStart(token));
+  }, []);
+
+  React.useEffect(() => {
+    return () => {
+      dispatch(userWsConnectionClosed)
+    }
+  }, [])
 
   const { orders: data } = useSelector(state => state.userOrders);
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients);
   const orderNumber = Number(location.pathname.split(':')[1]);
   const order = data.find(item => item.number === orderNumber);
-  
+
   return (
     <main className={styles.card}>
       <div className={styles.header}>

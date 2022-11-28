@@ -11,10 +11,10 @@ export const socketMidlleware = (url: string, actions: TConstMiddlewareActions):
         const { wsInit, wsSendMessage, onOpen, onClose, onError, onOrders } = actions;
         const { isLoggedIn } = getState().login;
         if (type === wsInit) {
-          socket = new WebSocket(url)
+          socket = new WebSocket(`${url}${type === wsInit && payload ? `?token=${payload}` : '' }`);
         }
         if (socket && type === onClose) {
-          socket.close(1000)
+          socket.close(1000);
           socket.onclose = (event) => {
             dispatch({ type: onClose })
           }
