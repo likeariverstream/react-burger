@@ -1,4 +1,4 @@
-import { getCookie, setCookie } from "./coockie";
+import { deleteCookie, getCookie, setCookie } from "./coockie";
 import { baseUrl } from "./constants";
 import { TIngredient } from "./types";
 import { nanoid } from "nanoid";
@@ -43,9 +43,16 @@ export const refreshToken = () => {
     })
   };
   request(url, options)
-    .then(({ accessToken }) => setCookie('access', accessToken))
+    .then(({ success, accessToken }) => {
+
+      if (success) {
+        deleteCookie('access');
+        setCookie('access', accessToken);
+      }
+    })
     .catch(console.warn)
 }
+
 
 export const generateKey = (element: TIngredient, index: number) => {
   return `${element._id}${index}`
@@ -55,7 +62,7 @@ export const filterIngredients = (arr: string[], data: TIngredient[]) => arr.map
   return data.filter(i => i._id === item);
 }).reduce((acc, item) => {
   return acc.concat(item)
-}).map((item, index) => ({...item, key: generateKey(item, index)}))
+}).map((item, index) => ({ ...item, key: generateKey(item, index) }))
 
 export const calculatePrice = (arr: string[], data: TIngredient[]) => {
   return filterIngredients(arr, data).reduce((acc, item) => acc + item.price, 0)
@@ -74,6 +81,6 @@ export const getOrderDate = (date: string) => {
     minute: 'numeric',
     timeZoneName: "short",
   };
-  
+
   return new Date(Date.parse(date)).toLocaleString("ru", options)
 }

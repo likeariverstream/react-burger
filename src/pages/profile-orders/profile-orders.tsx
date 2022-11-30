@@ -18,12 +18,14 @@ export const ProfileOrders: FC = () => {
     const token = getCookie('access');
     dispatch(userWsConnectionStart(token));
   }, [])
+
   React.useEffect(() => {
     if (location.pathname !== profileOrdersUrl)
     dispatch(userWsConnectionClosed())
   }, [location, dispatch])
+
   const { orders: data } = useSelector(state => state.userOrders);
-  console.log(data)
+  
   return (
     data && <main className={styles.main}>
       <ProfileNav />

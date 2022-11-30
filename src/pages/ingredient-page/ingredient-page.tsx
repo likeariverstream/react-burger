@@ -5,13 +5,12 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "../../utils/hooks";
 
 export const IngredientPage: FC = () => {
+
   const { id } = useParams<{ id: string }>();
-  const findId = id.split(':')[1];
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients)
   const ingredient: TIngredient | undefined = React.useMemo(() => {
-    return ingredients.find(item => item._id === findId)
-  }, [ingredients, findId])
-
+    return ingredients.find(item => item._id === id)
+  }, [ingredients, id])
 
   return (
     <>{ingredient && <div className={styles.ingredient}>

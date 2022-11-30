@@ -135,7 +135,6 @@ export const App: FC = () => {
         }
         {background &&
           <Route path={'/profile/orders/:id'}>
-
             <Modal onClick={closeModal} onClose={closeModal} >
               <ProfileOrderInfo />
             </Modal>

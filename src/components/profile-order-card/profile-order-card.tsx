@@ -21,8 +21,8 @@ export const ProfileOrderCard: FC<TOrderCard> = ({ element }) => {
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients);
   const filter = filterIngredients(element.ingredients, ingredients);
   const handleProfileOrderCard = () => {
-    const { number } = element;
-    const url = `/profile/orders/:${number}`;
+    const { _id } = element;
+    const url = `/profile/orders/${_id}`;
     history.push({
       pathname: url,
       state: {

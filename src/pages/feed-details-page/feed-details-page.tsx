@@ -6,7 +6,6 @@ import { useParams } from 'react-router-dom';
 import { includesIngregients, filterIngredients, getOrderDate, calculatePrice } from '../../utils/utils';
 import {
   wsConnectionStart,
-  wsConnectionClosed
 } from '../../services/actions/socket';
 
 export const FeedDetailsPage: FC = () => {
@@ -15,16 +14,9 @@ export const FeedDetailsPage: FC = () => {
     dispatch(wsConnectionStart());
   }, []);
 
-  React.useEffect(() => {
-    return () => {
-      dispatch(wsConnectionClosed())
-    }
-  }, []);
-
   const { orders: data } = useSelector(state => state.socket);
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients);
-  const params: { id: string } = useParams();
-  const id = params.id.split(':')[1];
+  const { id } = useParams<{ id: string }>();
   const order = React.useMemo(() => {
     return data.find(item => item._id === id)
   }, [data, id])

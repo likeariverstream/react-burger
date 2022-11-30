@@ -21,7 +21,7 @@ export const OrderCard: FC<TOrderCard> = ({ element }) => {
   const filter = filterIngredients(element.ingredients, ingredients);
   const handleOrderCard = React.useCallback((element: TOrder): void => {
     const { _id } = element;
-    const url = `/feed/:${_id}`;
+    const url = `/feed/${_id}`;
     history.push({
       pathname: url,
       state: {

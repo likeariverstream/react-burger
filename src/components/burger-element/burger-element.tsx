@@ -2,7 +2,7 @@ import React, { FC } from 'react';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './burger-element.module.css'
 import { useDrop, useDrag, DropTargetMonitor, XYCoord } from "react-dnd";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/hooks';
 import {
   moveConstructorItem
 } from '../../services/actions/constructor';

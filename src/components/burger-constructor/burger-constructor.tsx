@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styles from './burger-constructor.module.css';
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../../utils/hooks';
 import { useDrop } from "react-dnd";
 import { useSelector } from "../../utils/hooks";
 import {

@@ -3,8 +3,7 @@ import styles from './profile-order-info.module.css';
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useLocation } from 'react-router-dom';
-import { getIngredients } from '../../services/actions/ingredients';
-import { userWsConnectionStart, userWsConnectionClosed } from '../../services/actions/user-orders-socket';
+import { userWsConnectionStart } from '../../services/actions/user-orders-socket';
 import {
   includesIngregients, filterIngredients,
   getOrderDate,
@@ -19,24 +18,20 @@ export const ProfileOrderInfo: FC = () => {
   React.useEffect(() => {
     const token = getCookie('access');
     dispatch(userWsConnectionStart(token));
-    return () => {
-      dispatch(userWsConnectionClosed())
-    }
   }, []);
-  
-  React.useEffect(() => {
-      
-  }, [])
 
   const { orders: data } = useSelector(state => state.userOrders);
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients);
-  const orderNumber = Number(location.pathname.split(':')[1]);
-  const order = data.find(item => item.number === orderNumber);
+  const id = location.pathname.split('/')[3];
+  console.log(id)
+  const order = React.useMemo(() => {
+    return data.find(item => item._id === id)
+  }, [data, id])
 
   return (
     <main className={styles.card}>
       <div className={styles.header}>
-        <p className={`${styles.id} text text_type_digits-default`}>#{orderNumber}</p>
+        <p className={`${styles.id} text text_type_digits-default`}>#{order?.number}</p>
       </div>
       <p className={`${styles.name} text text_type_main-medium mt-10`}>{order?.name}</p>
       <p className={`${styles.status} text text_type_main-default mt-3`}>{order?.status === 'done' ? `Выполнен` : `Готовится`}</p>
