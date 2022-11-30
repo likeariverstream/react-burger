@@ -1,9 +1,9 @@
 import { baseUrl } from "../../utils/constants";
 import { request } from '../../utils/utils';
-import { AppDispatch, AppThunk } from "../../utils/types";
+import { AppThunk } from "../../utils/types";
 
 
-export const GET_RESET_PASSWORD_SUCCESS = 'GET_RESET_PASSWORD_SUCCESS';
+export const GET_RESET_PASSWORD_SUCCESS: 'GET_RESET_PASSWORD_SUCCESS' = 'GET_RESET_PASSWORD_SUCCESS';
 
 export interface IGetResetPasswordSuccess {
   type: typeof GET_RESET_PASSWORD_SUCCESS,
@@ -28,7 +28,7 @@ export const getResetPasswordSuccessThunk: AppThunk = () => {
       token: ''
     })
   };
-  return (dispatch: AppDispatch) => {
+  return (dispatch) => {
     request(url, options)
       .then(({ success, message }) => {
         dispatch(getResetPasswordSuccess(success));

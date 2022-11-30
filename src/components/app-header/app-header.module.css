@@ -4,17 +4,16 @@
   max-width: 1920px;
   box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  margin: 0 auto;
 }
 
 .nav {
-  max-width: 1240px;
   min-height: 88px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0 auto;
 }
 
 .constructor {
@@ -85,7 +84,7 @@
   margin: 0 0 0 9px;
 }
 
-.personal {
+.profile {
   min-width: 159x;
   max-height: 56px;
   font-family: 'JetBrains Mono';
@@ -97,15 +96,23 @@
   align-items: center;
   flex-direction: row;
   text-decoration: none;
-
+  margin-right: 0;
+  margin-left: auto;
 }
 
 .container {
   display: flex;
   flex-direction: row;
+
 }
 
 .logo {
   justify-self: center;
   margin-right: 212px;
+  transition: .2s ease-in-out;
+}
+
+.logo:hover {
+  opacity: .6;
+  cursor: pointer;
 }

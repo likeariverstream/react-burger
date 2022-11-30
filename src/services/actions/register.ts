@@ -2,7 +2,7 @@ import { baseUrl } from "../../utils/constants";
 import { request } from '../../utils/utils';
 import { AppThunk, AppDispatch } from "../../utils/types";
 
-export const REGISTER_USER = 'REGISTER_USER';
+export const REGISTER_USER: 'REGISTER_USER' = 'REGISTER_USER';
 
 export type TUser = {
   email: string
@@ -40,7 +40,7 @@ export const getRegisterUser: AppThunk = (user: TUser) => {
     })
   };
 
-  return (dispatch: AppDispatch) => {
+  return (dispatch) => {
     request(url, options)
       .then((result) => {
         dispatch(registerUser(result));

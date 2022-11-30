@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
 import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+import { useSelector } from '../../utils/hooks';
 
 export const AppHeader: FC = () => {
-
-  const login: boolean = JSON.parse(sessionStorage.getItem('login') as string);
+  const { isLoggedIn: login } = useSelector(state => state.login)
 
   return (
     <header className={styles.header}>
@@ -21,7 +21,7 @@ export const AppHeader: FC = () => {
               Конструктор
             </p>
           </NavLink>
-          <NavLink to='/'
+          <NavLink to='/feed'
             className={styles.order}
           >
             <div className={styles.icon}>
@@ -32,9 +32,11 @@ export const AppHeader: FC = () => {
             </p>
           </NavLink>
         </div>
-        <div className={styles.logo}><Logo /></div>
+        <Link to='/'>
+          <div className={styles.logo} ><Logo />
+          </div></Link>
         <NavLink to={login ? { pathname: '/profile' } : { pathname: '/login' }}
-          className={styles.personal}
+          className={styles.profile}
         >
           <div className={styles.icon}>
             <ProfileIcon type="secondary" />

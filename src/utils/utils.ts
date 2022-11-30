@@ -1,5 +1,6 @@
 import { getCookie, setCookie } from "./coockie"
 import { baseUrl } from "./constants"
+import { TIngredient } from "./types"
 
 export type TRequest = {
   method?: string,
@@ -7,6 +8,14 @@ export type TRequest = {
     'Content-Type': string
   },
   body?: string
+}
+export type TOptions = {
+  month: 'long',
+  day: 'numeric',
+  timezone: 'Moscow',
+  hour: 'numeric',
+  minute: 'numeric',
+  timeZoneName: "short",
 }
 
 export const request = async (url: string, options?: TRequest): Promise<any> => {
@@ -34,5 +43,32 @@ export const refreshToken = () => {
   };
   request(url, options)
     .then(({ accessToken }) => setCookie('access', accessToken))
-    .catch (console.warn)
+    .catch(console.warn)
+}
+
+export const filterIngredients = (arr: string[], data: TIngredient[]) => arr.map(item => {
+  return data.filter(i => i._id === item);
+}).reduce((acc, item) => {
+  return acc.concat(item)
+})
+
+export const calculatePrice = (arr: string[], data: TIngredient[]) => {
+  return filterIngredients(arr, data).reduce((acc, item) => acc + item.price, 0)
+}
+
+export const includesIngregients = (data: TIngredient[], arr: string[]) => {
+  return data.filter((item) => arr.includes(item._id));
+}
+
+export const getOrderDate = (date: string) => {
+  const options: TOptions = {
+    month: 'long',
+    day: 'numeric',
+    timezone: 'Moscow',
+    hour: 'numeric',
+    minute: 'numeric',
+    timeZoneName: "short",
+  };
+  
+  return new Date(Date.parse(date)).toLocaleString("ru", options)
 }

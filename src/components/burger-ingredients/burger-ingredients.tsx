@@ -5,11 +5,8 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from '../../utils/hooks';
 import { TIngredient } from '../../utils/types';
 
-type TBurgerIngredients = {
-  handleOpenIngredientDetails: (element: TIngredient) => void
-}
 
-export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredientDetails }) => {
+export const BurgerIngredients: FC = () => {
 
   const { ingredientsList: data } = useSelector(state => state.ingredients);
   const bunsRef = React.useRef<HTMLParagraphElement>(null);
@@ -40,7 +37,7 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
     }
 
     const callback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry: IntersectionObserverEntry) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           if (entry.target === bunsRef.current) {
             setCurrent('one')
@@ -83,12 +80,12 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
           Булки
         </p>
         <div className={styles.buns}>
-          {data.map((element: TIngredient) => {
+          {data.map((element) => {
             if (element.type === 'bun') {
               return (<Ingredient
                 key={element._id}
                 element={element}
-                handleOpenIngredientDetails={handleOpenIngredientDetails} />);
+              />);
             }
           })
           }
@@ -97,12 +94,12 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
           Соусы
         </p>
         <div className={styles.sauces}>
-          {data.map((element: TIngredient) => {
+          {data.map((element) => {
             if (element.type === 'sauce') {
               return (<Ingredient
                 key={element._id}
                 element={element}
-                handleOpenIngredientDetails={handleOpenIngredientDetails} />);
+              />);
             }
           })
           }
@@ -111,12 +108,12 @@ export const BurgerIngredients: FC<TBurgerIngredients> = ({ handleOpenIngredient
           Начинки
         </p>
         <div className={styles.mains}>
-          {data.map((element: TIngredient) => {
+          {data.map((element) => {
             if (element.type === 'main') {
               return (<Ingredient
                 key={element._id}
                 element={element}
-                handleOpenIngredientDetails={handleOpenIngredientDetails} />);
+              />);
             }
           })
           }

@@ -4,27 +4,28 @@ import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burg
 import { Link, Redirect } from 'react-router-dom';
 import { getRegisterUser } from '../../services/actions/register'
 import { useDispatch, useSelector } from '../../utils/hooks';
+import { useForm } from '../../utils/hooks';
 
 export const RegisterPage: FC = () => {
   const success = useSelector(state => state.user.success);
-  const login: boolean = JSON.parse(sessionStorage.getItem('login') as string);
-
   const dispatch = useDispatch();
-  const hangleRegister: FormEventHandler = (e) => {
-    e.preventDefault();
-    const user = {
-      name: value.name,
-      email: value.email,
-      password: value.password
-    };
-    dispatch(getRegisterUser(user));
-  }
-
-  const [value, setValue] = React.useState({
+  const { isLoggedIn: login } = useSelector(state => state.login)
+  const { values, setValues } = useForm({
     name: '',
     email: '',
     password: ''
   });
+
+  const {
+    name,
+    email,
+    password } = values
+
+  const hangleRegister: FormEventHandler = (e) => {
+    e.preventDefault();
+    const user = values;
+    dispatch(getRegisterUser(user));
+  }
 
   const inputRef = React.useRef<HTMLInputElement>(null);
 
@@ -43,8 +44,8 @@ export const RegisterPage: FC = () => {
         <h3 className={`${styles.title} text text_type_main-medium`}>Регистрация</h3>
         <div className='mt-6 mb-6'>
           <Input type='text' placeholder={'Имя'}
-            onChange={e => setValue({ ...value, name: e.target.value })}
-            value={value.name}
+            onChange={e => setValues({ ...values, name: e.target.value })}
+            value={name}
             name={'name'}
             error={false}
             ref={inputRef}
@@ -53,8 +54,8 @@ export const RegisterPage: FC = () => {
         </div>
         <Input type='email'
           placeholder={'E-mail'}
-          onChange={e => setValue({ ...value, email: e.target.value })}
-          value={value.email}
+          onChange={e => setValues({ ...values, email: e.target.value })}
+          value={email}
           name={'name'}
           error={false}
           ref={inputRef}
@@ -62,8 +63,8 @@ export const RegisterPage: FC = () => {
           errorText={'Ошибка'} />
         <div className='mt-6 mb-6'>
           <PasswordInput
-            onChange={e => setValue({ ...value, password: e.target.value })}
-            value={value.password}
+            onChange={e => setValues({ ...values, password: e.target.value })}
+            value={password}
             placeholder={'Пароль'}
             icon={'ShowIcon'} />
         </div>

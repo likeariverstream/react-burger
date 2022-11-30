@@ -1,12 +1,15 @@
 import React, { FC } from 'react';
 import { AppHeader } from '../app-header/app-header';
 import { Modal } from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import { IngredientDetails } from '../ingredient-details/ingredient-details';
 import { OrderDetails } from '../order-details/order-details';
 import { getIngredients } from '../../services/actions/ingredients';
 import { Main } from '../main/main';
 import {
-  setIngredientDetails,
+  feedUrl,
+  profileOrdersUrl
+} from '../../utils/constants'
+import {
   deleteIngredientDetails
 } from '../../services/actions/ingredient-details';
 import { getOrderDetails } from '../../services/actions/order-details';
@@ -23,48 +26,47 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { deleteOrder } from '../../services/actions/order-details';
 import { useSelector, useDispatch } from '../../utils/hooks';
-import { TIngredient } from '../../utils/types';
+import { FeedPage } from '../../pages/feed-page/feed-page';
+import { FeedDetails } from '../../pages/feed-details/feed-details';
+import { ProfileOrderInfo } from '../../pages/profile-order-info/profile-order-info';
+import { ProfileOrders } from '../../pages/profile-orders/profile-orders';
+
+type TLocation = ReturnType<typeof useLocation>;
+
+export type TUseLocation = {
+  [key: string]: string | null | TUseLocation | TLocation,
+};
 
 export const App: FC = () => {
-  const { login: loginUser } = useSelector(state => state.login)
-  const login = loginUser || JSON.parse(sessionStorage.getItem('login') as string);
-  const location = useLocation();
+
+  const { isLoggedIn: login } = useSelector(state => state.login)
+  const location = useLocation<TUseLocation>();
+  let background = location.state && location.state.background
   const dispatch = useDispatch();
   const history = useHistory();
   const data = useSelector(state => state.constructorList.constructorList);
   const ingredients = useSelector(state => state.ingredients.ingredientsList);
-  const { _id } = useSelector(state => state.ingredientDetails.ingredientDetails);
   const idList = React.useMemo(() => {
     return data.map(element => element._id)
   }, [data])
   const [isOpen, setOpen] = React.useState(false)
-  const [element, setElement] = React.useState(false);  
 
   React.useEffect(() => {
-    dispatch(getIngredients())
+    dispatch(getIngredients());
   }, [dispatch]);
-
-  const handleOpenIngredientDetails = React.useCallback((element: TIngredient): void => {
-    const { _id } = element;
-    const url = `/ingredients/:${_id}`;
-    window.history.pushState(null, '', url);
-    sessionStorage
-      .setItem('ingredient', JSON.stringify(element));
-    dispatch(setIngredientDetails(element))
-    setElement(true);
-    setOpen(!isOpen);
-  }, [dispatch, isOpen]);
 
   const closeModal = () => {
     setOpen(false);
     dispatch(deleteIngredientDetails());
     dispatch(deleteOrder());
-    history.replace('/');
+    history.push({
+      ...location.state.background as TLocation | TUseLocation,
+      state: { background: null },
+    });
   }
 
   const handleButtonClick = React.useCallback(() => {
     if (login) {
-      setElement(false);
       dispatch(getOrderDetails(idList))
       setOpen(true);
     }
@@ -73,12 +75,19 @@ export const App: FC = () => {
     }
   }, [dispatch, history, login, idList])
 
+
   return (
     <DndProvider backend={HTML5Backend}>
       {ingredients && <div className="App">
         <AppHeader />
-        <Switch location={location}>
-          <Route path={`/ingredients/:${_id}`}>
+        <Switch location={background as TLocation || location}>
+          <Route path='/feed' exact>
+            <FeedPage />
+          </Route>
+          <Route path={`/feed/:id`}>
+            <FeedDetails />
+          </Route>
+          <Route path={`/ingredients/:id`}>
             <IngredientPage />
           </Route>
           <Route path='/login' exact>
@@ -90,29 +99,53 @@ export const App: FC = () => {
           <Route path='/forgot-password' exact>
             <ForgotPasswordPage />
           </Route>
+
           <ProtectedRoute path='/reset-password' >
             <ResetPasswordPage />
+          </ProtectedRoute>
+          <ProtectedRoute path='/profile/orders/:id'>
+            <ProfileOrderInfo />
+          </ProtectedRoute>
+          <ProtectedRoute path='/profile/orders'>
+            <ProfileOrders />
           </ProtectedRoute>
           <ProtectedRoute path='/profile'>
             <ProfilePage />
           </ProtectedRoute>
           <Route path='/' exact>
-            <Main handleOpenIngredientDetails={handleOpenIngredientDetails}
+            <Main
               handleButtonClick={handleButtonClick} />
           </Route>
           <Route path='*'>
             <NotFound404 />
           </Route>
         </Switch>
-        {isOpen ?
-          (
+        {background &&
+          <Route path={`/ingredients/:id`}>
+
             <Modal onClick={closeModal} onClose={closeModal} >
-              {element ?
-                <IngredientDetails />
-                : <OrderDetails />}
+              <IngredientDetails />
             </Modal>
-          )
-          : null}
+          </Route>}
+        {background &&
+          <Route path={`/feed/:id`}>
+
+            <Modal onClick={closeModal} onClose={closeModal} >
+              <FeedDetails />
+            </Modal>
+          </Route>
+        }
+        {background &&
+          <Route path={'/profile/orders/:id'}>
+
+            <Modal onClick={closeModal} onClose={closeModal} >
+              <ProfileOrderInfo />
+            </Modal>
+          </Route>
+        }
+        {isOpen && <Modal onClick={closeModal} onClose={closeModal} >
+          <OrderDetails />
+        </Modal>}
       </div>}
     </DndProvider>
   )

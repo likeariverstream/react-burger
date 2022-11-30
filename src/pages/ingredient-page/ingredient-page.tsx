@@ -1,13 +1,25 @@
 import React, { FC } from "react";
 import styles from './ingredient-page.module.css';
 import { TIngredient } from "../../utils/types";
+import { useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "../../utils/hooks";
+import { getIngredients } from "../../services/actions/ingredients";
 
 export const IngredientPage: FC = () => {
+  const { id } = useParams<{ id: string }>();
+  const findId = id.split(':')[1];
+  const dispatch = useDispatch();
+  const { ingredientsList: ingredients } = useSelector(state => state.ingredients)
+  const ingredient: TIngredient | undefined = React.useMemo(() => {
+    return ingredients.find(item => item._id === findId)
+  }, [ingredients, findId])
 
-  const ingredient: TIngredient = JSON.parse(sessionStorage.getItem('ingredient') as string);
+  React.useEffect(() => {
+    dispatch(getIngredients())
+  }, [dispatch]);
 
   return (
-    <div className={styles.ingredient}>
+    <>{ingredient && <div className={styles.ingredient}>
       <h2 className={`${styles.title} text text_type_main-large`}>Детали ингредиента</h2>
       <img className={styles.image}
         id={ingredient._id}
@@ -41,6 +53,6 @@ export const IngredientPage: FC = () => {
           {ingredient.carbohydrates}
         </p>
       </div>
-    </div>
+    </div>}</>
   )
 }
