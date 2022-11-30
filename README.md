@@ -12,3 +12,8 @@
 **GitHub**
 
 * [Ссылка на GitHub](https://github.com/likeariverstream/react-burger)
+
+
+Реализовано взаимодействие с сервером и GitHub Pages
+
+* [Ссылка на GitHub](https://likeariverstream.github.io/react-burger/index.html)
