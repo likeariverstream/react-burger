@@ -22,8 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "cypress:open": "./node_modules/.bin/cypress open"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -44,6 +43,7 @@
     ]
   },
   "devDependencies": {
+    "@4tw/cypress-drag-drop": "^2.2.2",
     "@reduxjs/toolkit": "^1.8.6",
     "@testing-library/react": "^13.4.0",
     "@types/react-router-dom": "^5.3.3",

@@ -11,7 +11,6 @@ type TInitialState = {
   ingredientsRequest: boolean,
   ingredientsSuccess: boolean,
   ingredientsFailed: boolean,
-  currentTab: string
 }
 
 const initialState: TInitialState = {
@@ -19,7 +18,6 @@ const initialState: TInitialState = {
   ingredientsRequest: false,
   ingredientsSuccess: false,
   ingredientsFailed: false,
-  currentTab: 'one'
 }
 
 export const ingredientsReducer = (state = initialState, action: TUnionAction): TInitialState => {

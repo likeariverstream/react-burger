@@ -3,14 +3,14 @@ import {
   WS_CONNECTION_ERROR,
   WS_CONNECTION_CLOSED,
   WS_GET_ORDERS,
-  WS_SEND_MESSAGE,
-  WS_USER_NAME_UPDATE
+  WS_CONNECTION_START
 } from '../actions/socket';
 import { TUnionAction } from '../actions';
 import { TOrder } from '../../utils/types'
 
 type TInitialState = {
-  wsConnected: boolean,
+  wsConnected: boolean
+  wsStarted: boolean
   orders: Array<TOrder> | []
   total: null | number,
   totalToday: null | number
@@ -18,6 +18,7 @@ type TInitialState = {
 
 const initialState: TInitialState = {
   wsConnected: false,
+  wsStarted: false,
   orders: [],
   total: null,
   totalToday: null
@@ -25,6 +26,12 @@ const initialState: TInitialState = {
 
 export const socketReduser = (state = initialState, action: TUnionAction): TInitialState => {
   switch (action.type) {
+    case WS_CONNECTION_START: {
+      return {
+        ...state,
+        wsStarted: true
+      }
+    }
     case WS_CONNECTION_SUCCESS: {
       return {
         ...state,
@@ -46,24 +53,14 @@ export const socketReduser = (state = initialState, action: TUnionAction): TInit
     case WS_GET_ORDERS: {
       return {
         ...state,
+        wsConnected: true,
+        wsStarted: true,
         orders: state.orders.length < 10
           ? [...state.orders, ...action.payload.orders]
           : [...state.orders],
           total: action.payload.total,
           totalToday: action.payload.totalToday
 
-      };
-    }
-    case WS_SEND_MESSAGE: {
-      return {
-        ...state,
-
-      };
-    }
-    case WS_USER_NAME_UPDATE: {
-      return {
-        ...state,
-        // user: action.payload
       };
     }
     default:

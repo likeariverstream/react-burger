@@ -1,35 +1,38 @@
 import React, { FC } from 'react';
-import styles from './feed-details.module.css';
+import styles from './feed-details-page.module.css';
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
 import { includesIngregients, filterIngredients, getOrderDate, calculatePrice } from '../../utils/utils';
-import { wsConnectionStart, wsConnectionClosed } from '../../services/actions/socket';
-import { getIngredients } from '../../services/actions/ingredients';
+import {
+  wsConnectionStart,
+  wsConnectionClosed
+} from '../../services/actions/socket';
 
-export const FeedDetails: FC = () => {
+export const FeedDetailsPage: FC = () => {
   const dispatch = useDispatch();
   React.useEffect(() => {
-    dispatch(getIngredients());
     dispatch(wsConnectionStart());
   }, []);
 
   React.useEffect(() => {
     return () => {
       dispatch(wsConnectionClosed())
-    };
-  }, [])
+    }
+  }, []);
 
   const { orders: data } = useSelector(state => state.socket);
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients);
   const params: { id: string } = useParams();
-  const orderNumber = Number(params.id.split(':')[1]);
-  const order = data.find(item => item.number === orderNumber)
+  const id = params.id.split(':')[1];
+  const order = React.useMemo(() => {
+    return data.find(item => item._id === id)
+  }, [data, id])
 
   return (
     <main className={styles.card}>
       <div className={styles.header}>
-        <p className={`${styles.id} text text_type_digits-default`}>#{orderNumber}</p>
+        <p className={`${styles.id} text text_type_digits-default`}>#{order?.number}</p>
       </div>
       <p className={`${styles.name} text text_type_main-medium mt-10`}>{order?.name}</p>
       <p className={`${styles.status} text text_type_main-default mt-3`}>{order?.status === 'done' ? `Выполнен` : `Готовится`}</p>

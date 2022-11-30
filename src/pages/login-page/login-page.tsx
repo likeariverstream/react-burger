@@ -1,12 +1,19 @@
 import styles from './login-page.module.css';
 import React, { FC, FormEventHandler } from 'react';
 import { Input, Button, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { getLoginUser } from '../../services/actions/login';
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { useForm } from '../../utils/hooks';
 
+type TLocation = ReturnType<typeof useLocation>;
+
+export type TUseLocation = {
+  [key: string]: string | null | TUseLocation | TLocation,
+};
+
 export const LoginPage: FC = () => {
+  const location = useLocation()
   const { isLoggedIn: login } = useSelector(state => state.login)
   const dispatch = useDispatch(); 
   const history = useHistory();
@@ -19,9 +26,12 @@ export const LoginPage: FC = () => {
   }
   React.useEffect(() => {
     if (login) {
-      history.push('/')
+      history.push({
+        pathname: '/',
+        state: { from: location } 
+      })
     }
-  }, [history, login])
+  }, [history, login, location])
 
   const inputRef = React.useRef<HTMLInputElement>(null)
 

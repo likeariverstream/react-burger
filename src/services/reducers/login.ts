@@ -4,12 +4,10 @@ import { getCookie } from "../../utils/coockie";
 
 type TInitialState = {
   isLoggedIn: boolean,
-  isLoggedOut: boolean,
 }
 
 const initialState = {
   isLoggedIn: !!getCookie('access') ? true: false,
-  isLoggedOut: false,
 };
 
 export const loginUserReducer = (state = initialState, action: TUnionAction): TInitialState => {
@@ -18,14 +16,12 @@ export const loginUserReducer = (state = initialState, action: TUnionAction): TI
       return {
         ...state,
         isLoggedIn: false,
-        isLoggedOut: action.payload,
       }
     }
     case LOGIN_USER: {
       return {
         ...state,
         isLoggedIn: action.payload,
-        isLoggedOut: !action.payload,
       }
     }
     default: {

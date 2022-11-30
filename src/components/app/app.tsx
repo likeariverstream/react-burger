@@ -27,7 +27,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { deleteOrder } from '../../services/actions/order-details';
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { FeedPage } from '../../pages/feed-page/feed-page';
-import { FeedDetails } from '../../pages/feed-details/feed-details';
+import { FeedDetailsPage } from '../../pages/feed-details-page/feed-details-page';
 import { ProfileOrderInfo } from '../../pages/profile-order-info/profile-order-info';
 import { ProfileOrders } from '../../pages/profile-orders/profile-orders';
 
@@ -37,7 +37,7 @@ export type TUseLocation = {
   [key: string]: string | null | TUseLocation | TLocation,
 };
 
-export const App: FC = () => {
+export const App: FC = () => {  
 
   const { isLoggedIn: login } = useSelector(state => state.login)
   const location = useLocation<TUseLocation>();
@@ -75,7 +75,6 @@ export const App: FC = () => {
     }
   }, [dispatch, history, login, idList])
 
-
   return (
     <DndProvider backend={HTML5Backend}>
       {ingredients && <div className="App">
@@ -85,7 +84,7 @@ export const App: FC = () => {
             <FeedPage />
           </Route>
           <Route path={`/feed/:id`}>
-            <FeedDetails />
+            <FeedDetailsPage />
           </Route>
           <Route path={`/ingredients/:id`}>
             <IngredientPage />
@@ -129,9 +128,8 @@ export const App: FC = () => {
           </Route>}
         {background &&
           <Route path={`/feed/:id`}>
-
             <Modal onClick={closeModal} onClose={closeModal} >
-              <FeedDetails />
+              <FeedDetailsPage />
             </Modal>
           </Route>
         }

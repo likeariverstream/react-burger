@@ -1,6 +1,7 @@
-import { getCookie, setCookie } from "./coockie"
-import { baseUrl } from "./constants"
-import { TIngredient } from "./types"
+import { getCookie, setCookie } from "./coockie";
+import { baseUrl } from "./constants";
+import { TIngredient } from "./types";
+import { nanoid } from "nanoid";
 
 export type TRequest = {
   method?: string,
@@ -46,11 +47,15 @@ export const refreshToken = () => {
     .catch(console.warn)
 }
 
+export const generateKey = (element: TIngredient, index: number) => {
+  return `${element._id}${index}`
+}
+
 export const filterIngredients = (arr: string[], data: TIngredient[]) => arr.map(item => {
   return data.filter(i => i._id === item);
 }).reduce((acc, item) => {
   return acc.concat(item)
-})
+}).map((item, index) => ({...item, key: generateKey(item, index)}))
 
 export const calculatePrice = (arr: string[], data: TIngredient[]) => {
   return filterIngredients(arr, data).reduce((acc, item) => acc + item.price, 0)

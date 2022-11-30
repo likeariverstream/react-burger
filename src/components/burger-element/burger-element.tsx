@@ -21,6 +21,8 @@ export const BurgerElement: FC<TBurgerElement> = ({ element, id, index, deleteEl
   const dispatch = useDispatch();
   const moveElement = React.useCallback((dragIndex: number, hoverIndex: number) => {
     dispatch(moveConstructorItem(dragIndex, hoverIndex))
+    console.log(dragIndex)
+    console.log(hoverIndex)
   }, [dispatch])
 
   const [{ handlerId }, drop] = useDrop<TBurgerElement, TBurgerElement, { handlerId: symbol | string | null }>({

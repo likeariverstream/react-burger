@@ -18,14 +18,14 @@ export const ProfileOrderInfo: FC = () => {
 
   React.useEffect(() => {
     const token = getCookie('access');
-    dispatch(getIngredients());
     dispatch(userWsConnectionStart(token));
-  }, []);
-
-  React.useEffect(() => {
     return () => {
-      dispatch(userWsConnectionClosed)
+      dispatch(userWsConnectionClosed())
     }
+  }, []);
+  
+  React.useEffect(() => {
+      
   }, [])
 
   const { orders: data } = useSelector(state => state.userOrders);
