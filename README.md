@@ -16,4 +16,4 @@
 
 Реализовано взаимодействие с сервером и GitHub Pages
 
-* [Ссылка на GitHub](https://likeariverstream.github.io/react-burger/index.html)
+* [Ссылка на GitHub Pages](https://likeariverstream.github.io/react-burger/index.html)
