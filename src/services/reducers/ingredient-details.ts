@@ -16,7 +16,7 @@ type TInitialState = {
     image?: string
   } | TIngredient
 }
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   ingredientDetails: {}
 }
 

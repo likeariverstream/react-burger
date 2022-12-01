@@ -13,7 +13,6 @@ export const FeedPage: FC = () => {
   const { orders: data } = useSelector(state => state.socket);
   const { total } = useSelector(state => state.socket);
   const { totalToday } = useSelector(state => state.socket);
-  
   React.useEffect(() => {
     dispatch(wsConnectionStart());
     return () => {

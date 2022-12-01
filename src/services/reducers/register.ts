@@ -3,7 +3,7 @@ import { TUnionAction } from "../actions";
 
 type TInitialState = TPayload
 
-const initialState: TInitialState = {
+export const initialState: TInitialState = {
   success: false,
   user: {}
 };

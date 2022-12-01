@@ -23,7 +23,6 @@ export const ProfileOrderInfo: FC = () => {
   const { orders: data } = useSelector(state => state.userOrders);
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients);
   const id = location.pathname.split('/')[3];
-  console.log(id)
   const order = React.useMemo(() => {
     return data.find(item => item._id === id)
   }, [data, id])

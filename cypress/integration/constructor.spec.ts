@@ -1,50 +1,62 @@
-export {}
+export { }
+import { baseUrl } from "../../src/utils/constants";
+
+import {testIdList,
+  ingredientSelector,
+  constructorSelector,
+  constructorElement,
+  orderButtonSelector,
+  ingredientImageSelector,
+  closeButtonSelector,
+  email,
+  password
+} from '../../src/utils/test-constants'
 
 describe('service is available', () => {
   beforeEach(() => {
     cy.viewport(1920, 1024)
   });
   it('should be available on localhost:3000', () => {
-    cy.visit('http://localhost:3000');
+    cy.visit('/');
   });
   it('should open constructor page by default', () => {
     cy.contains('Соберите бургер');
-
   });
 
   it('should open ingredient details', () => {
-    cy.get('img').first().click()
+    cy.visit('/');
+    cy.get(ingredientImageSelector).first().click()
     cy.contains('Детали ингредиента')
   });
 
   it('should close ingredient details by button', () => {
-    cy.get('[class^=modal_icon]').click();
-    cy.visit('http://localhost:3000');
+    cy.get(closeButtonSelector).click();
+    cy.visit('/');
   });
 
   it('should scroll', () => {
-    cy.get('[class^=burger-ingredients_scroll').scrollTo(0, 500);
+    cy.get('[class^=burger-ingredients_scroll]').scrollTo(0, 500);
     cy.get('[class^=tab]').last().click();
   });
 
   it('should dragndrop bun', () => {
-    cy.get('[class^=ingredient_image]').first().drag('[class^=burger-constructor_scroll]');
-    cy.get('[class^=ingredient_image]').first().drag('[class^=burger-constructor_scroll]');
-    cy.get('[class^=ingredient_ingredient]').eq(1).drag('[class^=burger-constructor_scroll]');
+    cy.get(ingredientImageSelector).first().drag(constructorSelector);
+    cy.get(ingredientImageSelector).first().drag(constructorSelector);
+    cy.get(ingredientSelector).eq(1).drag(constructorSelector);
   })
 
   it('should dragndrop ingredient', () => {
-    cy.get('[class^=ingredient_ingredient]').eq(2)
-      .drag('[class^=burger-constructor_scroll]');
-    cy.get('[class^=ingredient_ingredient]').eq(4)
-      .drag('[class^=burger-constructor_scroll]');
-    cy.get('[class^=ingredient_ingredient]').eq(3)
-      .drag('[class^=burger-constructor_scroll]');
-    cy.get('[class^=ingredient_ingredient]').eq(5)
-      .drag('[class^=burger-constructor_scroll]');
-    cy.get('[class^=ingredient_ingredient]').eq(3)
-      .drag('[class^=burger-constructor_scroll]');
-    cy.get('[class^=constructor-element]').eq(3)
+    cy.get(ingredientSelector).eq(2)
+      .drag(constructorSelector);
+    cy.get(ingredientSelector).eq(4)
+      .drag(constructorSelector);
+    cy.get(ingredientSelector).eq(3)
+      .drag(constructorSelector);
+    cy.get(ingredientSelector).eq(5)
+      .drag(constructorSelector);
+    cy.get(ingredientSelector).eq(3)
+      .drag(constructorSelector);
+    cy.get(constructorElement).eq(3)
       .and('be.visible');
   })
 
@@ -55,69 +67,84 @@ describe('service is available', () => {
   })
 
   it('should dragndrop constructor-element', () => {
-    cy.get('[class^=constructor-element]').eq(3)
-      .drag('[class^=constructor-element]')
-    cy.get('[class^=constructor-element]').eq(4)
-      .drag('[class^=constructor-element]')
+    cy.get(constructorElement).eq(3)
+      .drag(constructorElement)
+    cy.get(constructorElement).eq(4)
+      .drag(constructorElement)
   })
-  it('should open ingredients detail', () => {
-    cy.get('button').contains('Оформить заказ').click()
-    cy.visit('http://localhost:3000/login')
+  it('should open order details', () => {
+    cy.get('button').contains(orderButtonSelector).click()
   });
+
   it('should type email and password', () => {
-    const email = '123123@123.ru';
-    const password = '123123';
+    ;
     cy.get('input').first().type(email)
     cy.get('input').last().type(password)
-
   })
 
   it('should autorization', () => {
-    const email = '123123@123.ru';
-    const password = '123123';
-    const url = `https://norma.nomoreparties.space/api/auth/login`
 
     cy.get('button').contains('Войти').click();
-    // cy.intercept('POST', url).as('login');
-    // cy.wait('@login').its('response.statusCode').should('eq', 200);
+    cy.getCookies().should('be.empty')
+
+    cy.intercept('POST', `${baseUrl}/auth/login`).as('order')
+      .wait('@order').its('response.statusCode').should('eq', 200);
+    cy.url().should('not.contain', '/login')
+    cy.getCookie('access').should("not.be.empty");
+
+  })
+
+  it('should open order details and response', () => {
+
     cy.request({
-      url: url,
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+      url: `${baseUrl}/auth/login`,
+      body: {
         email,
-        password
-      }),
-    }).then((response) => {
-      expect(response.status).to.equal(200)
-      // expect(response.body).to.deep.equal({
-      // })
+        password,
+      }
     })
+      .as('loginResponse')
+      .then((response) => {
+        Cypress.env('token', response.body.accessToken);
+        return response;
+      })
+      .its('status')
+      .should('eq', 200);
+    const token = Cypress.env('token');
+    const authorization = `${token}`;
 
-  })
-
-  it('should open order details', () => {
-    cy.get('[class^=ingredient_ingredient]').eq(2)
-      .drag('[class^=burger-constructor_scroll]');
-    cy.get('[class^=ingredient_ingredient]').eq(4)
-      .drag('[class^=burger-constructor_scroll]');
-    cy.get('[class^=ingredient_ingredient]').eq(4)
+    cy.get(ingredientSelector).eq(2)
+      .drag(constructorSelector);
+    cy.get(ingredientSelector).eq(4)
+      .drag(constructorSelector);
+    cy.get(ingredientSelector).eq(4)
       .and('be.visible');
-      cy.contains('Оформить заказ');
-      cy.get('button').first().click();
-    const url = `https://norma.nomoreparties.space/api/orders`
-    cy.intercept('POST', url).as('order');
-    cy.wait('@order').its('response.statusCode').should('eq', 200)
-  });
+    cy.contains(orderButtonSelector);
+    cy.get('button').click();
 
-  it('should id be visible', () => {
-    cy.get('[class^=order-details_subtitle]').and('be.visible');
+    cy.request({
+      method: 'POST',
+      url: `${baseUrl}/orders`,
+      headers: {
+        'Content-Type': 'application/json',
+        authorization,
+      },
+      body: JSON.stringify({
+        ingredients: testIdList,
+      })
+    })
+      .then((response) => {
+        return response;
+      })
+      .its('status')
+      .should('eq', 200);
+
   })
 
-  it('should close order details by button', () => {
-    cy.get('[class^=modal_icon]').click();
-    cy.visit('http://localhost:3000');
-    cy.get('[class^=constructor-element]').and('not.exist');
-  });
-})
+  it('should id be visible and close order details', () => {
+    cy.get('[class^=order-details_subtitle]').and('exist');
+    cy.get(closeButtonSelector).click();
+  })
 
+})

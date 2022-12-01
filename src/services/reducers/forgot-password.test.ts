@@ -1,15 +1,15 @@
-import { recoverPasswordReducer as reducer } from './forgot-password';
+import {
+  recoverPasswordReducer as reducer,
+  initialState as state
+} from './forgot-password';
 import { GET_PASSWORD_SUCCESS } from '../actions/forgot-password';
-const initialState = {
-  success: false
-}
 
 describe('forgot-password reducer test', () => {
   it('should return the initial state', () => {
-    expect(reducer(undefined, { type: GET_PASSWORD_SUCCESS, payload: false })).toEqual(initialState)
+    expect(reducer(state, { type: GET_PASSWORD_SUCCESS, payload: false })).toEqual(state)
   })
   it('should handle GET_PASSWORD_SUCCESS and success', () => {
-    expect(reducer(undefined, { type: GET_PASSWORD_SUCCESS, payload: true })).toEqual({success: true})
+    expect(reducer({ success: false }, { type: GET_PASSWORD_SUCCESS, payload: true })).toEqual({ success: true })
   })
 })
 

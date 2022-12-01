@@ -29,7 +29,6 @@ export const BurgerConstructor: FC = () => {
   const addConstructorElement = (element: TIngredient) => {
     element = { ...element, id: nanoid() }
     dispatch(getConstructorItem(element))
-    console.log(element)
     dispatch(getBunItem(element))
   }
   const deleteElement = (element: TIngredient) => {

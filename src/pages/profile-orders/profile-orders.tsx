@@ -25,7 +25,6 @@ export const ProfileOrders: FC = () => {
   }, [location, dispatch])
 
   const { orders: data } = useSelector(state => state.userOrders);
-  
   return (
     data && <main className={styles.main}>
       <ProfileNav />
