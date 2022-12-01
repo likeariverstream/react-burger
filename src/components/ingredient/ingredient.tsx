@@ -1,10 +1,10 @@
-import React, { FC, MouseEventHandler } from 'react';
+import React, { FC } from 'react';
 import styles from './ingredient.module.css';
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useDrag } from "react-dnd";
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { TIngredient } from '../../utils/types';
-import { useLocation, useHistory, Link } from 'react-router-dom';
+import { useLocation, useHistory } from 'react-router-dom';
 import { setIngredientDetails } from '../../services/actions/ingredient-details'
 
 type TIngredientComponent = {
@@ -37,7 +37,7 @@ export const Ingredient: FC<TIngredientComponent> = ({ element }) => {
   }), []);
   const handleOpenIngredientDetails = React.useCallback((element: TIngredient): void => {
     const { _id } = element;
-    const url = `/ingredients/:${_id}`;
+    const url = `/ingredients/${_id}`;
     history.push({
       pathname: url,
       state: {
@@ -64,16 +64,11 @@ export const Ingredient: FC<TIngredientComponent> = ({ element }) => {
         <div className={styles.counter}>
           <Counter count={count} size="default" />
         </div>}
-      {/* <Link to={{
-        pathname: `/ingredients/:${element._id}`,
-        state: { background: location }
-      }}> */}
-        <img className={styles.image}
-          style={{ cursor: didDrop ? 'grab' : 'default' }}
-          {...options}
-          alt={element.name}
-        />
-      {/* </Link> */}
+      <img className={styles.image}
+        style={{ cursor: didDrop ? 'grab' : 'default' }}
+        {...options}
+        alt={element.name}
+      />
       <div className={styles.price}>
         <p className="text text_type_digits-default mr-2" >
           {element.price}

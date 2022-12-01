@@ -15,7 +15,10 @@ export const FeedPage: FC = () => {
   const { totalToday } = useSelector(state => state.socket);
   React.useEffect(() => {
     dispatch(wsConnectionStart());
+    return () => {
+    }
   }, [])
+
   React.useEffect(() => {
     if (location.pathname !== feedUrl)
       dispatch(wsConnectionClosed())

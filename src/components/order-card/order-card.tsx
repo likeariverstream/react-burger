@@ -9,7 +9,6 @@ import {
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TOrder } from '../../utils/types';
 import { useSelector } from '../../utils/hooks';
-import { nanoid } from 'nanoid';
 
 type TOrderCard = {
   element: TOrder
@@ -20,20 +19,21 @@ export const OrderCard: FC<TOrderCard> = ({ element }) => {
   const history = useHistory();
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients);
   const filter = filterIngredients(element.ingredients, ingredients);
-  const handleOrderCard = () => {
-    const { number } = element;
-    const url = `/feed/:${number}`;
+  const handleOrderCard = React.useCallback((element: TOrder): void => {
+    const { _id } = element;
+    const url = `/feed/${_id}`;
     history.push({
       pathname: url,
       state: {
         background: location,
         element: element
       }
-    })
-  }
+
+    }, [])
+  }, [history, location])
 
   return (
-    <li className={`${styles.card} ${styles.link}`} onClick={handleOrderCard}>
+    <li className={`${styles.card} ${styles.link}`} onClick={() => handleOrderCard(element)}>
       <div className={styles.header}>
         <p className={`${styles.id} text text_type_digits-default`}>#{element.number}</p>
 
@@ -45,7 +45,7 @@ export const OrderCard: FC<TOrderCard> = ({ element }) => {
         <div className={styles.images}>
           {filter.map((item, index) => {
             if (index < 5)
-              return <div className={styles.icon} key={nanoid()} style={{
+              return <div className={styles.icon} key={item.key} style={{
                 zIndex: index,
                 transform: `translateX(${- index * 18}px)`
               }}>
@@ -53,7 +53,7 @@ export const OrderCard: FC<TOrderCard> = ({ element }) => {
                 />
               </div>
             if (index >= 5)
-              return <div className={styles.box} key={nanoid()} style={{
+              return <div className={styles.box} key={item.key} style={{
                 zIndex: 2,
                 transform: `translateX(${- (index - 5) * 64}px)`,
               }}>
@@ -62,7 +62,7 @@ export const OrderCard: FC<TOrderCard> = ({ element }) => {
               </div>
 
           })}
-          {filter.length > 5 ? <p className={`${styles.count} text text_type_digits-small`} style={{zIndex: filter.length -1}}>+{filter.length - 5}</p> : null}
+          {filter.length > 5 ? <p className={`${styles.count} text text_type_digits-small`} style={{ zIndex: filter.length - 1 }}>+{filter.length - 5}</p> : null}
         </div>
         <div className={styles.container}>
           <p className={`${styles.price} text text_type_digits-default`}>

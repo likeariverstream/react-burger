@@ -2,21 +2,15 @@ import React, { FC } from "react";
 import styles from './ingredient-page.module.css';
 import { TIngredient } from "../../utils/types";
 import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "../../utils/hooks";
-import { getIngredients } from "../../services/actions/ingredients";
+import { useSelector } from "../../utils/hooks";
 
 export const IngredientPage: FC = () => {
+
   const { id } = useParams<{ id: string }>();
-  const findId = id.split(':')[1];
-  const dispatch = useDispatch();
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients)
   const ingredient: TIngredient | undefined = React.useMemo(() => {
-    return ingredients.find(item => item._id === findId)
-  }, [ingredients, findId])
-
-  React.useEffect(() => {
-    dispatch(getIngredients())
-  }, [dispatch]);
+    return ingredients.find(item => item._id === id)
+  }, [ingredients, id])
 
   return (
     <>{ingredient && <div className={styles.ingredient}>

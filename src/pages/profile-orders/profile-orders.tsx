@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import React, { FC } from 'react';
 import { ProfileNav } from '../../components/profile-nav/profile-nav';
 import { ProfileOrderCard } from '../../components/profile-order-card/profile-order-card';
@@ -19,17 +18,19 @@ export const ProfileOrders: FC = () => {
     const token = getCookie('access');
     dispatch(userWsConnectionStart(token));
   }, [])
+
   React.useEffect(() => {
     if (location.pathname !== profileOrdersUrl)
-      dispatch(userWsConnectionClosed())
+    dispatch(userWsConnectionClosed())
   }, [location, dispatch])
+
   const { orders: data } = useSelector(state => state.userOrders);
   return (
     data && <main className={styles.main}>
       <ProfileNav />
       <section className={styles.section}>
         <div className={`${styles.scroll} mt-10`}>
-          {data.map((element) => <ProfileOrderCard element={element} key={nanoid()} />)}
+          {data.map((element) => <ProfileOrderCard element={element} key={element._id} />)}
         </div>
       </section>
     </main>
