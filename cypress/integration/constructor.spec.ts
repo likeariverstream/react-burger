@@ -103,8 +103,8 @@ describe('service is available', () => {
       .drag('[class^=burger-constructor_scroll]');
     cy.get('[class^=ingredient_ingredient]').eq(4)
       .and('be.visible');
-    cy.get('button').first().click();
-    cy.contains('Оформить заказ');
+      cy.contains('Оформить заказ');
+      cy.get('button').first().click();
     const url = `https://norma.nomoreparties.space/api/orders`
     cy.intercept('POST', url).as('order');
     cy.wait('@order').its('response.statusCode').should('eq', 200)

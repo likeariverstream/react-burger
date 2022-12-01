@@ -9,7 +9,6 @@ import {
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TOrder } from '../../utils/types';
 import { useSelector } from '../../utils/hooks';
-import { nanoid } from 'nanoid';
 
 type TOrderCard = {
   element: TOrder
@@ -46,7 +45,7 @@ export const ProfileOrderCard: FC<TOrderCard> = ({ element }) => {
         <div className={styles.images}>
           {filter.map((item, index) => {
             if (index < 5)
-              return <div className={styles.icon} key={nanoid()} style={{
+              return <div className={styles.icon} key={item.key} style={{
                 zIndex: index,
                 transform: `translateX(${- index * 18}px)`
               }}>
@@ -54,7 +53,7 @@ export const ProfileOrderCard: FC<TOrderCard> = ({ element }) => {
                 />
               </div>
             if (index >= 5)
-              return <div className={styles.box} key={nanoid()} style={{
+              return <div className={styles.box} key={item.key} style={{
                 zIndex: 2,
                 transform: `translateX(${- (index - 5) * 64}px)`,
               }}>

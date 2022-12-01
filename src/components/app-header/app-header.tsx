@@ -1,11 +1,18 @@
 import React, { FC } from 'react';
 import styles from './app-header.module.css';
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { useSelector } from '../../utils/hooks';
 
 export const AppHeader: FC = () => {
-  const { isLoggedIn: login } = useSelector(state => state.login)
+  const { isLoggedIn: login } = useSelector(state => state.login);
+  const location = useLocation();
+  const personalIsActive = location.pathname.includes('/profile')
+    || location.pathname.includes('/login')
+    || location.pathname.includes('/register')
+    || location.pathname.includes('password');
+  const feedIsActive = location.pathname.includes('/feed');
+  const constructorIsActive = location.pathname === '/';
 
   return (
     <header className={styles.header}>
@@ -15,9 +22,13 @@ export const AppHeader: FC = () => {
             className={`${styles.constructor} ${styles.active}`}
           >
             <div className={styles.icon}>
-              <BurgerIcon type="primary" />
+              {constructorIsActive
+                ? <BurgerIcon type="primary" />
+                : <BurgerIcon type="secondary" />}
             </div>
-            <p className={`${styles.active}text text_type_main-default ml-2`}>
+            <p className={`${constructorIsActive
+              ? styles.active
+              : styles.title} text text_type_main-default ml-2`}>
               Конструктор
             </p>
           </NavLink>
@@ -25,9 +36,13 @@ export const AppHeader: FC = () => {
             className={styles.order}
           >
             <div className={styles.icon}>
-              <ListIcon type="secondary" />
+              {feedIsActive
+                ? <ListIcon type="primary" />
+                : <ListIcon type="secondary" />}
             </div>
-            <p className={`${styles.title} text text_type_main-default ml-2`}>
+            <p className={`${feedIsActive
+              ? styles.active
+              : styles.title} text text_type_main-default ml-2`}>
               Лента заказов
             </p>
           </NavLink>
@@ -39,9 +54,13 @@ export const AppHeader: FC = () => {
           className={styles.profile}
         >
           <div className={styles.icon}>
-            <ProfileIcon type="secondary" />
+            {personalIsActive
+              ? <ProfileIcon type="primary" />
+              : <ProfileIcon type="secondary" />}
           </div>
-          <p className={`${styles.title} text text_type_main-default ml-2`}>
+          <p className={`${personalIsActive ?
+            styles.active
+            : styles.title} text text_type_main-default ml-2`}>
             Личный кабинет
           </p>
         </NavLink>

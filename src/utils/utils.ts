@@ -1,7 +1,6 @@
 import { deleteCookie, getCookie, setCookie } from "./coockie";
 import { baseUrl } from "./constants";
 import { TIngredient } from "./types";
-import { nanoid } from "nanoid";
 
 export type TRequest = {
   method?: string,

@@ -2,7 +2,7 @@
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  border: 2px solid rgba(76, 76, 255, 0.2);
+  border: 3px solid rgba(76, 76, 255, 0.8);
   box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
   margin: 0;
   padding: 0;
@@ -55,6 +55,7 @@
   width: 137px;
   width: 436px;
   position: relative;
+
 }
 
 .container {
