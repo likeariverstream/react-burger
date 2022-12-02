@@ -24,6 +24,7 @@ export const LoginPage: FC = () => {
     const user = values
     dispatch(getLoginUser(user))
   }
+  
   React.useEffect(() => {
     if (login) {
       history.push({

@@ -5,12 +5,12 @@ import { App } from './components/app/app';
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './utils/store'
-import { HashRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLDivElement);
 
 root.render(
-  <Router>
+  <Router basename='/react-burger/'>
     <React.StrictMode>
       <Provider store={store}>
         <App />
@@ -19,10 +19,7 @@ root.render(
   </Router>
 );
 
-
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
-
-

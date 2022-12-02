@@ -10,9 +10,11 @@ import { feedUrl } from '../../utils/constants';
 export const FeedPage: FC = () => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const { orders: data } = useSelector(state => state.socket);
-  const { total } = useSelector(state => state.socket);
-  const { totalToday } = useSelector(state => state.socket);
+  const {
+    orders,
+    total,
+    totalToday
+  } = useSelector(state => state.socket);
   React.useEffect(() => {
     dispatch(wsConnectionStart());
     return () => {
@@ -25,11 +27,11 @@ export const FeedPage: FC = () => {
   }, [location, dispatch])
 
   return (
-    data && <main className={styles.main}>
+    orders && <main className={styles.main}>
       <section className={`${styles.feed} mt-10`}>
         <p className={`text text_type_main-large  ${styles.title} mb-6 ml-2`} >Лента заказов</p>
         <div className={styles.scroll}>
-          {data.map((element) => {
+          {orders.map((element) => {
             return (<OrderCard element={element} key={element._id} />)
           })}
         </div>
@@ -40,14 +42,14 @@ export const FeedPage: FC = () => {
             <p className='text text_type_main-medium mb-6'>Готовы:</p>
             <div className={styles.container}>
               <ul className={styles.done}>
-                {data.map((item, index) => {
+                {orders.map((item, index) => {
                   if (item.status === 'done' && index < 10)
                     return (<li key={item._id} className={`${styles.doneId} text text_type_digits-default`}>{item.number}</li>)
                 })
                 }
               </ul>
               <ul className={styles.done}>
-                {data.map((item, index) => {
+                {orders.map((item, index) => {
                   if (item.status === 'done' && index < 20 && index >= 10)
                     return (<li key={item._id} className={`${styles.doneId} text text_type_digits-default ml-2`}>{item.number}</li>)
                 })
@@ -58,7 +60,7 @@ export const FeedPage: FC = () => {
           </div>
           <div className={styles.work}>
             <p className='text text_type_main-medium mb-6'>В работе:</p>
-            {data.map((item, index) => {
+            {orders.map((item, index) => {
               if (item.status !== 'done' && index < 10)
                 return (<li key={item._id} className={`${styles.workId} text text_type_digits-default`}>{item.number}</li>)
             })
