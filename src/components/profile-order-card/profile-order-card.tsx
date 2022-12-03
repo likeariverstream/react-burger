@@ -9,6 +9,7 @@ import {
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TOrder } from '../../utils/types';
 import { useSelector } from '../../utils/hooks';
+import { routes } from '../../utils/constants';
 
 type TOrderCard = {
   element: TOrder
@@ -21,7 +22,7 @@ export const ProfileOrderCard: FC<TOrderCard> = ({ element }) => {
   const filter = filterIngredients(element.ingredients, ingredients);
   const handleProfileOrderCard = () => {
     const { _id } = element;
-    const url = `/profile/orders/${_id}`;
+    const url = `${routes.profileOrders}/${_id}`;
     history.push({
       pathname: url,
       state: {

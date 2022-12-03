@@ -12,7 +12,7 @@ export const socketMidlleware = (url: string, actions: TConstMiddlewareActions):
         const { wsInit, onOpen, onClose, onError, onOrders } = actions;
         const { isLoggedIn } = getState().login;
         if (type === wsInit) {
-          socket = new WebSocket(`${url}${type === wsInit && payload ? `?token=${payload}` : '' }`);
+          socket = new WebSocket(`${url}${type === wsInit && payload && isLoggedIn? `?token=${payload}` : '' }`);
         }
         if (socket) {
           socket.onopen = (event) => {

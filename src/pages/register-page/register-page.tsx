@@ -5,6 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { getRegisterUser } from '../../services/actions/register'
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { useForm } from '../../utils/hooks';
+import { routes } from '../../utils/constants';
 
 export const RegisterPage: FC = () => {
   const success = useSelector(state => state.user.success);
@@ -35,7 +36,7 @@ export const RegisterPage: FC = () => {
   }
 
   if (login) {
-    return (<Redirect to={'/profile'} />)
+    return (<Redirect to={routes.profile} />)
   }
 
   return (
@@ -73,10 +74,10 @@ export const RegisterPage: FC = () => {
           type='primary'
           size='medium'>Зарегистрироваться</Button>
         <p className={`${styles.text} text text_type_main-default mt-20 mb-4`}>Уже зарегистрированы?
-          <Link to='/login' className={`${styles.link} ml-2`}>Войти
+          <Link to={routes.login} className={`${styles.link} ml-2`}>Войти
           </Link>
         </p>
-        {success ? <Redirect to={'/login'} /> : <Redirect to={'/register'} />}
+        {success ? <Redirect to={routes.login} /> : <Redirect to={routes.register} />}
       </form>
     </main >
   )

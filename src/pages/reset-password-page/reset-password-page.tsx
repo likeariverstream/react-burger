@@ -5,6 +5,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { getResetPasswordSuccessThunk } from '../../services/actions/reset-password';
 import { useSelector } from '../../utils/hooks';
 import { useForm } from '../../utils/hooks';
+import { routes } from '../../utils/constants';
 
 export const ResetPasswordPage: FC = () => {
 
@@ -28,7 +29,7 @@ export const ResetPasswordPage: FC = () => {
   }
 
   if (!recovered) {
-    return (<Redirect to={'/forgot-password'} />)
+    return (<Redirect to={routes.forgotPassword} />)
   }
 
   return (
@@ -58,7 +59,7 @@ export const ResetPasswordPage: FC = () => {
           type='primary'
           size='medium'>Сохранить</Button>
         <p className={`${styles.text} text text_type_main-default mt-20 mb-4`}>Вспомнили пароль?
-          <Link to='/login' className={`${styles.link} ml-2`}>Войти</Link></p>
+          <Link to={routes.login} className={`${styles.link} ml-2`}>Войти</Link></p>
       </form>
     </main >
   )

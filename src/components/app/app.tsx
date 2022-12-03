@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import styles from './app.module.css'
 import { AppHeader } from '../app-header/app-header';
 import { Modal } from '../modal/modal';
 import { IngredientDetails } from '../ingredient-details/ingredient-details';
@@ -6,8 +7,7 @@ import { OrderDetails } from '../order-details/order-details';
 import { getIngredients } from '../../services/actions/ingredients';
 import { Main } from '../main/main';
 import {
-  feedUrl,
-  profileOrdersUrl
+  routes
 } from '../../utils/constants'
 import {
   deleteIngredientDetails
@@ -37,7 +37,7 @@ export type TUseLocation = {
   [key: string]: string | null | TUseLocation | TLocation,
 };
 
-export const App: FC = () => {  
+export const App: FC = () => {
 
   const { isLoggedIn: login } = useSelector(state => state.login)
   const location = useLocation<TUseLocation>();
@@ -71,47 +71,46 @@ export const App: FC = () => {
       setOpen(true);
     }
     if (!login) {
-      history.push('/login');
+      history.push(routes.login);
     }
   }, [dispatch, history, login, idList])
 
   return (
     <DndProvider backend={HTML5Backend}>
-      {ingredients && <div className="App">
+      {ingredients && <div className={styles.app}>
         <AppHeader />
         <Switch location={background as TLocation || location}>
-          <Route path='/feed' exact>
+          <Route path={routes.feed} exact>
             <FeedPage />
           </Route>
-          <Route path={`/feed/:id`}>
+          <Route path={`${routes.feed}/:id`}>
             <FeedDetailsPage />
           </Route>
-          <Route path={`/ingredients/:id`}>
+          <Route path={`${routes.ingredients}/:id`}>
             <IngredientPage />
           </Route>
-          <Route path='/login' exact>
+          <ProtectedRoute onlyForAuth={false} path={routes.login} exact>
             <LoginPage />
-          </Route>
-          <Route path='/register' exact>
+          </ProtectedRoute>
+          <Route path={routes.register} exact>
             <RegisterPage />
           </Route>
-          <Route path='/forgot-password' exact>
+          <Route path={routes.forgotPassword} exact>
             <ForgotPasswordPage />
           </Route>
-
-          <ProtectedRoute path='/reset-password' >
+          <ProtectedRoute path={routes.resetPassword} >
             <ResetPasswordPage />
           </ProtectedRoute>
-          <ProtectedRoute path='/profile/orders/:id'>
+          <ProtectedRoute onlyForAuth={true} path={`${routes.profileOrders}/:id`}>
             <ProfileOrderInfo />
           </ProtectedRoute>
-          <ProtectedRoute path='/profile/orders'>
+          <ProtectedRoute onlyForAuth={true} path={routes.profileOrders}>
             <ProfileOrders />
           </ProtectedRoute>
-          <ProtectedRoute path='/profile'>
+          <ProtectedRoute onlyForAuth={true} path={routes.profile}>
             <ProfilePage />
           </ProtectedRoute>
-          <Route path='/' exact>
+          <Route path={routes.home} exact>
             <Main
               handleButtonClick={handleButtonClick} />
           </Route>
@@ -120,21 +119,20 @@ export const App: FC = () => {
           </Route>
         </Switch>
         {background &&
-          <Route path={`/ingredients/:id`}>
-
+          <Route path={`${routes.ingredients}/:id`}>
             <Modal onClick={closeModal} onClose={closeModal} >
               <IngredientDetails />
             </Modal>
           </Route>}
         {background &&
-          <Route path={`/feed/:id`}>
+          <Route path={`${routes.feed}/:id`}>
             <Modal onClick={closeModal} onClose={closeModal} >
               <FeedDetailsPage />
             </Modal>
           </Route>
         }
         {background &&
-          <Route path={'/profile/orders/:id'}>
+          <Route path={`${routes.profileOrders}/:id`}>
             <Modal onClick={closeModal} onClose={closeModal} >
               <ProfileOrderInfo />
             </Modal>

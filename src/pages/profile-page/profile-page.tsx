@@ -7,6 +7,7 @@ import { patchUserInfoThunk, getUserInfoThunk } from '../../services/actions/use
 import { useForm } from '../../utils/hooks';
 import { ProfileOrders } from '../profile-orders/profile-orders';
 import { ProfileNav } from '../../components/profile-nav/profile-nav';
+import { routes } from '../../utils/constants';
 
 export const ProfilePage: FC = () => {
   const { isLoggedIn: login } = useSelector(state => state.login)
@@ -74,10 +75,10 @@ export const ProfilePage: FC = () => {
   return (
     <main className={styles.main}>
       <ProfileNav />
-      <Route path='/orders/'>
+      <Route path={routes.orders}>
         <ProfileOrders />
       </Route>
-      <Route path='/profile' exact>
+      <Route path={routes.profile} exact>
         <section className={styles.section}>
           <form className={styles.form} onSubmit={saveInfo}>
             <div className='mt-6'>

@@ -5,14 +5,12 @@ import { BurgerIngredients } from '../burger-ingredients/burger-ingredients';
 import { PriceCount } from '../price-count/price-count';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from '../../utils/hooks';
-import { TIngredient } from '../../utils/types'
 
 type TMain = {
   handleButtonClick: () => void
 }
 
 export const Main: FC<TMain> = ({
- 
   handleButtonClick }) => {
 
   const { constructorList: data } = useSelector(state => state.constructorList);

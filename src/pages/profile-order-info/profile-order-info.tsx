@@ -10,6 +10,7 @@ import {
   calculatePrice
 } from '../../utils/utils';
 import { getCookie } from '../../utils/coockie';
+import { routes } from '../../utils/constants';
 
 export const ProfileOrderInfo: FC = () => {
   const location = useLocation();
@@ -22,7 +23,7 @@ export const ProfileOrderInfo: FC = () => {
 
   const { orders: data } = useSelector(state => state.userOrders);
   const { ingredientsList: ingredients } = useSelector(state => state.ingredients);
-  const id = location.pathname.split('/')[3];
+  const id = location.pathname.split(routes.home)[3];
   const order = React.useMemo(() => {
     return data.find(item => item._id === id)
   }, [data, id])
@@ -53,8 +54,10 @@ export const ProfileOrderInfo: FC = () => {
         }
       </ul>
       <div className={`${styles.container} mb-6`}>
-        {order && <p className={`${styles.timestamp} text text_type_main-default text_color_inactive`}>{getOrderDate(order.createdAt)}</p>}
-        {order && <p className={`${styles.total} text text_type_digits-default ml-2`} >{calculatePrice(order.ingredients, ingredients)}<CurrencyIcon type='primary' /></p>}
+        {order && <p className={`${styles.timestamp} text text_type_main-default text_color_inactive`}>
+          {getOrderDate(order.createdAt)}</p>}
+        {order && <p className={`${styles.total} text text_type_digits-default ml-2`} >
+          {calculatePrice(order.ingredients, ingredients)}<CurrencyIcon type='primary' /></p>}
       </div>
     </main>
   )

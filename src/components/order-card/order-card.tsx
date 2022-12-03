@@ -9,6 +9,7 @@ import {
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TOrder } from '../../utils/types';
 import { useSelector } from '../../utils/hooks';
+import { routes } from '../../utils/constants';
 
 type TOrderCard = {
   element: TOrder
@@ -21,14 +22,13 @@ export const OrderCard: FC<TOrderCard> = ({ element }) => {
   const filter = filterIngredients(element.ingredients, ingredients);
   const handleOrderCard = React.useCallback((element: TOrder): void => {
     const { _id } = element;
-    const url = `/feed/${_id}`;
+    const url = `${routes.feed}/${_id}`;
     history.push({
       pathname: url,
       state: {
         background: location,
         element: element
       }
-
     }, [])
   }, [history, location])
 

@@ -1,19 +1,30 @@
 import { Route, Redirect, useLocation, RouteProps } from "react-router-dom";
 import React, { FC } from 'react';
-import { useSelector } from '../../utils/hooks'
+import { getCookie } from '../../utils/coockie'
+import {routes} from '../../utils/constants';
 
-type TProtectedRoute = RouteProps & { children?: React.ReactNode }
+type TProtectedRoute = RouteProps & {
+  children?: React.ReactNode,
+  onlyForAuth?: boolean
+}
 
-export const ProtectedRoute: FC<TProtectedRoute> = ({ children }) => {
-  const { isLoggedIn: login } = useSelector(state => state.login)
+export const ProtectedRoute: FC<TProtectedRoute> = ({ children, onlyForAuth, ...rest }) => {
+  const isLoggedIn = getCookie('access');
   const location = useLocation();
-  return (
-    <Route>
-      {login ? (
-        children
-      ) : (<Redirect to={{ pathname: '/login', state: { from: location } }} />)
-      // || (<Redirect to={{ pathname: '/profile', state: { from: location } }} />)
-      }
-    </Route>
-  );
+  if (!onlyForAuth && isLoggedIn) {
+    const { from }: any = location.state || { from: { pathname: '/' } }
+    return (
+      <Route {...rest}>
+        <Redirect to={from} />
+      </Route>
+    );
+  }
+  if (onlyForAuth && isLoggedIn) {
+    return (
+      <Route>
+        <Redirect to={{ pathname: routes.login, state: { from: location } }} />
+      </Route>
+    );
+  }
+  return <Route {...rest}>{children}</Route>
 }

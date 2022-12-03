@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from '../../utils/hooks';
 import { TIngredient } from '../../utils/types';
 import { useLocation, useHistory } from 'react-router-dom';
 import { setIngredientDetails } from '../../services/actions/ingredient-details'
+import { routes } from '../../utils/constants'
 
 type TIngredientComponent = {
   element: TIngredient,
@@ -37,7 +38,7 @@ export const Ingredient: FC<TIngredientComponent> = ({ element }) => {
   }), []);
   const handleOpenIngredientDetails = React.useCallback((element: TIngredient): void => {
     const { _id } = element;
-    const url = `/ingredients/${_id}`;
+    const url = `${routes.ingredients}/${_id}`;
     history.push({
       pathname: url,
       state: {

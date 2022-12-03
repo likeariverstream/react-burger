@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from '../../utils/hooks';
 import { getPasswordSuccessThunk } from '../../services/actions/forgot-password';
 import { Redirect } from 'react-router-dom';
 import { useForm } from '../../utils/hooks';
+import { routes } from '../../utils/constants'
 
 export const ForgotPasswordPage: FC = () => {
   const dispatch = useDispatch();
@@ -24,11 +25,11 @@ export const ForgotPasswordPage: FC = () => {
   }, [dispatch])
 
   if (login) {
-    return (<Redirect to={'/profile'} />)
+    return (<Redirect to={routes.profile} />)
   }
 
   if (success) {
-    return (<Redirect to={'/reset-password'} />)
+    return (<Redirect to={routes.resetPassword} />)
   }
 
   return (

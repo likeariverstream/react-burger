@@ -3,8 +3,6 @@ import styles from './burger-ingredients.module.css';
 import { Ingredient } from '../ingredient/ingredient';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector } from '../../utils/hooks';
-import { TIngredient } from '../../utils/types';
-
 
 export const BurgerIngredients: FC = () => {
 

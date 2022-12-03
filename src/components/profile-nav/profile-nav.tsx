@@ -3,6 +3,7 @@ import React, { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch } from '../../utils/hooks';
 import { logoutUserThunk } from '../../services/actions/login';
+import { routes } from '../../utils/constants';
 
 export const ProfileNav: FC = () => {
   const dispatch = useDispatch();
@@ -13,21 +14,21 @@ export const ProfileNav: FC = () => {
   return (
     <nav className={`${styles.nav} mr-15`}>
       <NavLink
-        to={{ pathname: '/profile' }} exact={true}
+        to={{ pathname: routes.profile }} exact={true}
         className={styles.tab}
         activeClassName={styles.active}>
         <h3 className='text text_type_main-medium mt-4 mb-8'>Профиль</h3>
       </NavLink>
       <NavLink
         to={{
-          pathname: '/profile/orders',
+          pathname: routes.profileOrders,
         }}
         className={styles.tab}
         activeClassName={styles.active}>
         <h3 className='text text_type_main-medium mb-8'>История заказов</h3>
       </NavLink>
       <NavLink
-        to={{ pathname: '/login' }}
+        to={{ pathname: routes.login }}
         className={styles.tab}
         activeClassName={styles.active}>
         <h3 onClick={logoutUser} className='text text_type_main-medium mb-4'>Выход</h3>
