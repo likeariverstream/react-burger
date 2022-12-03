@@ -28,7 +28,7 @@
     "cypress": "cypress open cache clear",
     "test:cypress": "cypress run"
   },
-  "homepage": "https://likeariverstream.github.io/react-burger/",
+  "homepage": "/react-burger",
   "eslintConfig": {
     "extends": [
       "react-app",
