@@ -10,7 +10,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLDivElement);
 
 root.render(
-  <Router basename='/react-burger/'>
+  <Router basename='/react-burger'>
     <React.StrictMode>
       <Provider store={store}>
         <App />

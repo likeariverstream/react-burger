@@ -5,7 +5,7 @@ import { useDispatch } from '../../utils/hooks';
 import { wsConnectionStart, wsConnectionClosed } from '../../services/actions/socket';
 import { OrderCard } from '../../components/order-card/order-card';
 import { useLocation } from 'react-router-dom';
-import { feedUrl } from '../../utils/constants';
+import { routes } from '../../utils/constants';
 
 export const FeedPage: FC = () => {
   const location = useLocation();
@@ -22,7 +22,7 @@ export const FeedPage: FC = () => {
   }, [])
 
   React.useEffect(() => {
-    if (location.pathname !== feedUrl)
+    if (location.pathname !== routes.feed)
       dispatch(wsConnectionClosed())
   }, [location, dispatch])
 

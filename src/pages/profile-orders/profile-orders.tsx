@@ -8,7 +8,7 @@ import {
   userWsConnectionClosed
 } from '../../services/actions/user-orders-socket';
 import { getCookie } from '../../utils/coockie';
-import { profileOrdersUrl } from '../../utils/constants';
+import { routes } from '../../utils/constants';
 import { useLocation } from 'react-router-dom';
 
 export const ProfileOrders: FC = () => {
@@ -20,7 +20,7 @@ export const ProfileOrders: FC = () => {
   }, [])
 
   React.useEffect(() => {
-    if (location.pathname !== profileOrdersUrl)
+    if (location.pathname !== routes.profileOrders)
     dispatch(userWsConnectionClosed())
   }, [location, dispatch])
 
