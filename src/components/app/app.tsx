@@ -47,12 +47,13 @@ export const App: FC = () => {
   const data = useSelector(state => state.constructorList.constructorList);
   const ingredients = useSelector(state => state.ingredients.ingredientsList);
   const idList = React.useMemo(() => {
-    return data.map(element => element._id)
+    return [...data.map(element => element._id), ...data.filter(element => element.type === 'bun')]
+
   }, [data])
   const [isOpen, setOpen] = React.useState(false)
 
   React.useEffect(() => {
-    dispatch(getIngredients());
+    dispatch(getIngredients()); 
   }, [dispatch]);
 
   const closeModal = () => {
@@ -85,20 +86,20 @@ export const App: FC = () => {
           </Route>
           <Route path={`${routes.feed}/:id`}>
             <FeedDetailsPage />
-          </Route>
+          </Route>  
           <Route path={`${routes.ingredients}/:id`}>
             <IngredientPage />
           </Route>
           <ProtectedRoute onlyForAuth={false} path={routes.login} exact>
             <LoginPage />
           </ProtectedRoute>
-          <Route path={routes.register} exact>
+          <ProtectedRoute onlyForAuth={false} path={routes.register} exact>
             <RegisterPage />
-          </Route>
-          <Route path={routes.forgotPassword} exact>
+          </ProtectedRoute>
+          <ProtectedRoute onlyForAuth={false} path={routes.forgotPassword} exact>
             <ForgotPasswordPage />
-          </Route>
-          <ProtectedRoute path={routes.resetPassword} >
+          </ProtectedRoute>
+          <ProtectedRoute onlyForAuth={false} path={routes.resetPassword} >
             <ResetPasswordPage />
           </ProtectedRoute>
           <ProtectedRoute onlyForAuth={true} path={`${routes.profileOrders}/:id`}>
@@ -118,26 +119,26 @@ export const App: FC = () => {
             <NotFound404 />
           </Route>
         </Switch>
-        {background &&
+        {background && <>
           <Route path={`${routes.ingredients}/:id`}>
             <Modal onClick={closeModal} onClose={closeModal} >
               <IngredientDetails />
             </Modal>
-          </Route>}
-        {background &&
+          </Route>
+    
           <Route path={`${routes.feed}/:id`}>
             <Modal onClick={closeModal} onClose={closeModal} >
               <FeedDetailsPage />
             </Modal>
           </Route>
-        }
-        {background &&
+        
+        
           <Route path={`${routes.profileOrders}/:id`}>
             <Modal onClick={closeModal} onClose={closeModal} >
               <ProfileOrderInfo />
             </Modal>
           </Route>
-        }
+        </>}
         {isOpen && <Modal onClick={closeModal} onClose={closeModal} >
           <OrderDetails />
         </Modal>}

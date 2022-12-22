@@ -7,8 +7,7 @@ import {
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 export type AppThunk<ReturnType = void> = ActionCreator<
-  ThunkAction<ReturnType, RootState, never, TUnionAction>
->;
+  ThunkAction<ReturnType, RootState, never, TUnionAction>>;
 
 export type TIngredient = {
   _id: string,
