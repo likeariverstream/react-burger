@@ -1,24 +1,22 @@
-import { GET_PASSWORD_SUCCESS } from "../actions/forgot-password";
-import { TUnionAction } from '../actions/index'
+import { getPasswordSuccessThunk } from "../actions/forgot-password";
+import { createSlice } from "@reduxjs/toolkit";
 
-type TIinitialState = {
-  success: boolean
-}
 
-export const initialState: TIinitialState = {
-  success: false
-}
-
-export const recoverPasswordReducer = (state = initialState, action: TUnionAction): TIinitialState => {
-  switch (action.type) {
-    case GET_PASSWORD_SUCCESS: {
-      return {
-        ...state,
-        success: action.payload
-      }
-    }
-    default: {
-      return state;
-    }
+const recoverPasswordSlice = createSlice({
+  name: 'recover-password',
+  initialState: {
+    success: false
+  },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getPasswordSuccessThunk.fulfilled, (state) => {
+      state.success = true
+    })
+    builder.addCase(getPasswordSuccessThunk.rejected, (state) => {
+      state.success = false
+    })
   }
-}
+})
+
+export const recoverPasswordReducer = recoverPasswordSlice.reducer;
+export const state = recoverPasswordSlice;

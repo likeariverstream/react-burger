@@ -16,6 +16,8 @@ export const initialState: TInitialState = {
   }
 };
 
+
+
 export const getUserInfoReducer = (state = initialState, action: TUnionAction): TInitialState => {
   switch (action.type) {
     case GET_USER_INFO: {
