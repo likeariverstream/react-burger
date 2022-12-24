@@ -1,26 +1,23 @@
 import {
   ingredientDetailsReducer as reducer,
-  initialState as state
+  setIngredientDetails,
+  deleteIngredientDetails,
+  state
 } from './ingredient-details'
-
-import {
-  SET_INGREDIENT_DETAILS,
-  DELETE_INGREDIENT_DETAILS
-} from '../actions/ingredient-details'
 
 import {
   element
 } from '../../utils/test-constants'
 
 describe('ingredient-details reducer test', () => {
-  it('should handle SET_INGREDIENT_DETAILS', () => {
-    expect(reducer(state, { type: SET_INGREDIENT_DETAILS, payload: element })).toEqual({
+  it('should handle setIngredientDetails', () => {
+    expect(reducer(state, setIngredientDetails(element))).toEqual({
       ingredientDetails: element
     })
   })
 
-  it('should handle DELETE_INGREDIENT_DETAILS', () => {
-    expect(reducer({ ingredientDetails: element }, { type: DELETE_INGREDIENT_DETAILS })).toEqual(state)
+  it('should handle deleteIngredientDetails', () => {
+    expect(reducer(state, deleteIngredientDetails())).toEqual(state)
   })
 
 })

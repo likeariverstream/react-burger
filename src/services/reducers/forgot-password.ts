@@ -19,4 +19,4 @@ const recoverPasswordSlice = createSlice({
 })
 
 export const recoverPasswordReducer = recoverPasswordSlice.reducer;
-export const state = recoverPasswordSlice;
+export const state = recoverPasswordSlice.getInitialState();

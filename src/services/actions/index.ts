@@ -1,5 +1,4 @@
 import { TIngredientsAction } from './ingredients';
-import { TIngredientDetailsAcion } from './ingredient-details';
 import { TConstructorAction } from './constructor';
 import { TLoginAction } from './login';
 import { TRegisterUserAction } from './register';
@@ -13,7 +12,6 @@ export type TUnionAction =
   | TUserWsActions
   | TWsActions
   | TIngredientsAction
-  | TIngredientDetailsAcion
   | TConstructorAction
   | TLoginAction
   | TRegisterUserAction
