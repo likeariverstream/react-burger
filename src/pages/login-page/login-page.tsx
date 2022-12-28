@@ -6,6 +6,7 @@ import { getLoginUser } from '../../services/actions/login';
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { useForm } from '../../utils/hooks';
 import { routes } from '../../utils/constants';
+import { GoogleAuth } from '../../components/google-auth/google-auth';
 
 type TLocation = ReturnType<typeof useLocation>;
 
@@ -60,6 +61,7 @@ export const LoginPage: FC = () => {
           htmlType='submit'
           type='primary'
           size='medium'>Войти</Button>
+        <GoogleAuth />
       </form>
       <p className={`${styles.text} text text_type_main-default mt-20 mb-4`}>Вы - новый пользователь?
         <Link to={routes.register} className={`${styles.link} ml-2`}>Зарегистрироваться</Link></p>
