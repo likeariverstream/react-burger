@@ -1,6 +1,6 @@
 import { baseUrl } from '../../utils/constants';
 import { request } from '../../utils/utils';
-import { clearConstructorList } from './constructor';
+// import { clearConstructorList } from '../reducers/constructor';
 import { AppThunk } from '../../utils/types';
 import { getCookie } from "../../utils/coockie";
 
@@ -54,7 +54,7 @@ export const getOrderDetails: AppThunk = (idList: string[]) => {
         }
       })
       .then(() => {
-        dispatch(clearConstructorList())
+        // dispatch(clearConstructorList())
       })
       .catch(console.warn)
   }

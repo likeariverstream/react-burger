@@ -17,7 +17,7 @@ type TItem = {
   id: string,
   element: TIngredient,
   type: string,
-}
+} 
 
 export const BurgerConstructor: FC = () => {
   const { constructorList: data } = useSelector(state => state.constructorList);

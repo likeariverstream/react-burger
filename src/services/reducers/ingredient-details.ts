@@ -1,29 +1,41 @@
-import { createSlice } from "@reduxjs/toolkit"
-import { TIngredient } from "../../utils/types"
+import {
+  SET_INGREDIENT_DETAILS,
+  DELETE_INGREDIENT_DETAILS,
+} from '../actions/ingredient-details';
+import { TIngredient } from '../../utils/types';
+import { TUnionAction } from '../actions/index'
 
-type TIinitialState = {
-  ingredientDetails: TIngredient | {}
+type TInitialState = {
+  ingredientDetails: {
+    _id?: string,
+    carbohydrates?: string,
+    fat?: string,
+    proteins?: string,
+    calories?: string
+    name?: string,
+    image?: string
+  } | TIngredient
+}
+export const initialState: TInitialState = {
+  ingredientDetails: {}
 }
 
-const ingredientDetailsSlice = createSlice({
-  name: 'ingredient-details',
-  initialState: {
-    ingredientDetails: {}
-  } as TIinitialState,
-  reducers: {
-    setIngredientDetails(state, action) {
-      state.ingredientDetails = action.payload
-    },
-    deleteIngredientDetails(state) {
-      state.ingredientDetails = {}
+export const ingredientDetailsReducer = (state = initialState, action: TUnionAction): TInitialState => {
+  switch (action.type) {
+    case SET_INGREDIENT_DETAILS: {
+      return {
+        ...state,
+        ingredientDetails: action.payload
+      }
+    }
+    case DELETE_INGREDIENT_DETAILS: {
+      return {
+        ...state,
+        ingredientDetails: {}
+      }
+    }
+    default: {
+      return state
     }
   }
-})
-
-export const ingredientDetailsReducer = ingredientDetailsSlice.reducer;
-export const {
-  setIngredientDetails,
-  deleteIngredientDetails
-} = ingredientDetailsSlice.actions;
-
-export const state = ingredientDetailsSlice.getInitialState()
+}
