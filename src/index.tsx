@@ -4,12 +4,12 @@ import './index.css';
 import { App } from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './utils/store'
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLDivElement);
 
 root.render(
-  <Router basename='/react-burger'>
+  <Router>
     <React.StrictMode>
       <Provider store={store}>
         <App />

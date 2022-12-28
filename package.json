@@ -30,7 +30,6 @@
     "cypress": "cypress open cache clear",
     "test:cypress": "cypress run"
   },
-  "homepage": "/react-burger",
   "eslintConfig": {
     "extends": [
       "react-app",
