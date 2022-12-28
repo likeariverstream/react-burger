@@ -4,7 +4,7 @@ import './index.css';
 import { App } from './components/app/app';
 import { Provider } from 'react-redux';
 import { store } from './utils/store'
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLDivElement);
 
