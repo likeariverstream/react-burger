@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.css": "/static/css/main.82e7815d.css",
-    "main.js": "/static/js/main.70853dd0.js",
-    "static/media/JetBrainsMono-Bold.woff": "/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
-    "static/media/JetBrainsMono-Regular.woff": "/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
-    "static/media/JetBrainsMono-Bold.woff2": "/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
-    "static/media/JetBrainsMono-Regular.woff2": "/static/media/JetBrainsMono-Regular.b60380891bcf2eb241ca.woff2",
-    "static/media/iceland.woff": "/static/media/iceland.77ad7fc2baffd9305538.woff",
-    "static/media/iceland.woff2": "/static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
-    "static/media/done.png": "/static/media/done.516856c7cd1a73874485.png",
-    "index.html": "/index.html",
-    "main.82e7815d.css.map": "/static/css/main.82e7815d.css.map",
-    "main.70853dd0.js.map": "/static/js/main.70853dd0.js.map"
+    "main.css": "/react-burger/static/css/main.1ce92ede.css",
+    "main.js": "/react-burger/static/js/main.1ba4a96e.js",
+    "static/media/JetBrainsMono-Bold.woff": "/react-burger/static/media/JetBrainsMono-Bold.3914674f1cb2335acf26.woff",
+    "static/media/JetBrainsMono-Regular.woff": "/react-burger/static/media/JetBrainsMono-Regular.f52bee61d00ce995b89f.woff",
+    "static/media/JetBrainsMono-Bold.woff2": "/react-burger/static/media/JetBrainsMono-Bold.c232d532ea5a5189a278.woff2",
+    "static/media/JetBrainsMono-Regular.woff2": "/react-burger/static/media/JetBrainsMono-Regular.b60380891bcf2eb241ca.woff2",
+    "static/media/iceland.woff": "/react-burger/static/media/iceland.77ad7fc2baffd9305538.woff",
+    "static/media/iceland.woff2": "/react-burger/static/media/iceland.4ae67a017a5ff82bbbb7.woff2",
+    "static/media/done.png": "/react-burger/static/media/done.516856c7cd1a73874485.png",
+    "index.html": "/react-burger/index.html",
+    "main.1ce92ede.css.map": "/react-burger/static/css/main.1ce92ede.css.map",
+    "main.1ba4a96e.js.map": "/react-burger/static/js/main.1ba4a96e.js.map"
   },
   "entrypoints": [
-    "static/css/main.82e7815d.css",
-    "static/js/main.70853dd0.js"
+    "static/css/main.1ce92ede.css",
+    "static/js/main.1ba4a96e.js"
   ]
 }
