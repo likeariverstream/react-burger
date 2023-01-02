@@ -4,9 +4,9 @@ import { request } from '../../utils/utils';
 import { AppThunk } from '../../utils/types';
 import { getCookie } from "../../utils/coockie";
 
-export const GET_ORDER_SUCCESS: 'GET_ORDER_SUCCESS' = 'GET_ORDER_SUCCESS';
-export const DELETE_ORDER: 'GET_ORDER_REQUEST' = 'GET_ORDER_REQUEST';
-export const GET_ORDER_FAILED: 'GET_ORDER_FAILED' = 'GET_ORDER_FAILED';
+export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
+export const DELETE_ORDER = 'GET_ORDER_REQUEST';
+export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
 
 export interface IGetOrderSucces {
   type: typeof GET_ORDER_SUCCESS,

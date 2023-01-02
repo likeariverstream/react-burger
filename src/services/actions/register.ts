@@ -2,7 +2,7 @@ import { baseUrl } from "../../utils/constants";
 import { request } from '../../utils/utils';
 import { AppThunk } from "../../utils/types";
 
-export const REGISTER_USER: 'REGISTER_USER' = 'REGISTER_USER';
+export const REGISTER_USER = 'REGISTER_USER';
 
 export type TUser = {
   email: string

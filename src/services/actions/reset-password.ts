@@ -3,7 +3,7 @@ import { request } from '../../utils/utils';
 import { AppThunk } from "../../utils/types";
 
 
-export const GET_RESET_PASSWORD_SUCCESS: 'GET_RESET_PASSWORD_SUCCESS' = 'GET_RESET_PASSWORD_SUCCESS';
+export const GET_RESET_PASSWORD_SUCCESS = 'GET_RESET_PASSWORD_SUCCESS';
 
 export interface IGetResetPasswordSuccess {
   type: typeof GET_RESET_PASSWORD_SUCCESS,
